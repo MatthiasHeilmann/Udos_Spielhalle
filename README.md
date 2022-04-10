@@ -7,3 +7,4 @@ Rot: RGB(225,5,31)
 Dunkelblau: RGB(0,66,136)
 
 igfbn idfgbui
+Der text ist von Sean
