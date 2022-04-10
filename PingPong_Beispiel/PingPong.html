@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link href="css/style.css" type="text/css" rel="stylesheet">
+    </head>
+    <body>
+        <div id="gameDiv">
+            <canvas id="gameCanvas" width="640" height="480" style="cursor: pointer" onclick="pause()">Your browser does not support the HTML canvas tag.</canvas>
+        </div>
+        <p id="gametime">Spielzeit: 0s</p>
+        <button class="button" id="pause" onclick="pause()">Pause</button>
+        <button class="button" id="reset" onclick="reset()">Reset</button>
+
+    </body>
+    <script src="js/pingpong.js"></script>
+</html>
