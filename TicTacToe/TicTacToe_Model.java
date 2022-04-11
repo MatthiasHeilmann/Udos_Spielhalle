@@ -49,8 +49,7 @@ public class TicTacToeFeld extends Observable{
         this.XO=null;
         this.zuege=0;
         this.start(s);
-        this.setChanged();
-        this.notifyObservers();
+        /******* notify observers *******/
     }
 
     public boolean getBesetzt(int row, int col){
@@ -71,8 +70,7 @@ public class TicTacToeFeld extends Observable{
 
     public void lockedIn(int col){
         this.start(col);
-        this.setChanged();
-        this.notifyObservers();
+        /******* notify observers *******/
     }
 
     public void besetzen(int row, int col){
@@ -84,8 +82,7 @@ public class TicTacToeFeld extends Observable{
             }
             zuege++;
             besetzt[row][col]=true;
-            this.setChanged();
-            this.notifyObservers();
+            /******* notify observers *******/
             if(Spielmodus==1){
                 if(zuege==1||zuege==3||zuege==5||zuege==7){
                     this.bot.play(this.besetzt,this.XO,this.zuege);
