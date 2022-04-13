@@ -83,6 +83,13 @@ xSpeed = -xSpeed;
 ySpeed = 3;
 lastPoint = 0;
 }
+function newGame(){
+    reset();
+    playing = true;
+    gametimeM = gametimeS = 0;
+    score1 = score2 = 0;
+    document.getElementById("gametime").innerHTML="Spielzeit: 0s";
+}
 
 function update() {
     // If paused, dont update
