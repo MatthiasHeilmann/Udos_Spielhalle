@@ -1,0 +1,48 @@
+<!Doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Udos Spielhalle</title>
+        <link href="../css/style.css" type="text/css" rel="stylesheet">
+        <link href="../css/all.min.css" type="text/css" rel="stylesheet">
+        <link href="../css/TicTacToe.css" type="text/css" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <header>
+            <div>
+                <div id="logo-div">
+                    <img src="../sources/Logo.png" alt="logo" id="logo">
+                </div>
+            </div>
+        </header>
+
+        <section id="main_section">
+            <div id="content_container">
+                <div id="game">
+                    <table id="tictactoe_table">
+                        <tr id="row_0">
+                            <td class="col_0" id="TicTacToe_00" onclick="besetzen(0,0)"></td>
+                            <td class="col_1" id="TicTacToe_01" onclick="besetzen(0,1)"></td>
+                            <td class="col_2" id="TicTacToe_02" onclick="besetzen(0,2)"></td>
+                        </tr>
+                        <tr id="row_1">
+                            <td class="col_0" id="TicTacToe_10" onclick="besetzen(1,0)"></td>
+                            <td class="col_1" id="TicTacToe_11" onclick="besetzen(1,1)"></td>
+                            <td class="col_2" id="TicTacToe_12" onclick="besetzen(1,2)"></td>
+                        </tr>
+                        <tr id="row_2">
+                            <td class="col_0" id="TicTacToe_20" onclick="besetzen(2,0)"></td>
+                            <td class="col_1" id="TicTacToe_21" onclick="besetzen(2,1)"></td>
+                            <td class="col_2" id="TicTacToe_22" onclick="besetzen(2,2)"></td>
+                        </tr>
+                    </table>
+                </div>    
+                <button class="game_button" id="reset" onclick="reset()">Neustart</button>    
+            </div>
+            
+        </section>
+    </body>
+    <script src="../js/TicTacToe.js"></script>
+</html>

@@ -182,8 +182,13 @@ function getGewinner(){
     
 }
 
-
 /******************* BOT *******************/
+/*******************************************/
+// Code aus altem Projekt                  //
+// pls dont judge me                       //
+/*******************************************/
+/******************* BOT *******************/
+
 var bef;
 function randombesetzenO(){
     for(i=0;i<besetzt.length;i++){
