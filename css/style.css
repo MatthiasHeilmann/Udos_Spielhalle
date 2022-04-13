@@ -57,8 +57,19 @@ li{list-style-type: none;}
 .vorschau_bild{
     height: 200px;
 }
-
-
+.game_button{
+    width: 100px;
+    height: 50px;
+    border-radius: 5px;
+    margin: 15px;
+    font-size: 20px;
+    color: #293c7f;
+    border-color: #293c7f;
+}
+.game_button:hover{
+    background-color: #293c7f;
+    color: white;
+}
 
 @media screen and (max-width:1024px){
     .vorschau_bild{
