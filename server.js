@@ -11,8 +11,27 @@ server.listen(port, function(){
 
 app.use(express.static(__dirname));
 app.use(express.json());
+app.use(function timeLog(req, res, next) {
+    console.log(new Date().toLocaleString("de-DE") + ": " + req.originalUrl);
+    next();
+});
 
 app.get('/' , (req, res) => {
-    console.log("Got get request!")
     res.sendFile(__dirname + '/main.html');
+});
+
+app.get('/schiffeversenken', (req, res) => {
+    res.sendFile(__dirname + '/games/schiffeversenken.html');
+});
+
+app.get('/svGetOpenGames', (req, res) => {
+
+});
+
+app.put('/svCreateOpenGame', (req, res) => {
+
+});
+
+app.post('/svConnectToGame', (req, res) => {
+
 });

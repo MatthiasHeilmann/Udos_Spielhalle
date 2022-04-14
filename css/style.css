@@ -1,17 +1,19 @@
-html, body{
+html, body {
     height: 100%;
     margin: 0;
     padding: 0;
     text-align: center;
     scroll-behavior: smooth;
 }
-body{
+
+body {
     background: url(../sources/background.jpg);
     background-position: center center;
     background-size: cover;
     background-attachment: fixed;
 }
-section{
+
+section {
     height: 250%;
     padding-bottom: 10px;
     background-color: white;
@@ -20,7 +22,8 @@ section{
     margin-bottom: 40px;
     width: 60%;
 }
-header{
+
+header {
     position: fixed;
     width: 100%;
     height: 80px;
@@ -29,35 +32,45 @@ header{
     background: #cccccc;
     box-shadow: 0 1px 3px darkgray;
 }
-li{list-style-type: none;}
-.content{
-    margin:auto;
+
+li {
+    list-style-type: none;
+}
+
+.content {
+    margin: auto;
     width: 60%;
 }
-#logo{
+
+#logo {
     margin-top: 15px;
     width: 200px;
     float: left;
 }
-#main_section{
+
+#main_section {
     background-color: white;
     margin: auto;
     margin-bottom: 40px;
     text-align: center;
 }
-#main_section ul{
+
+#main_section ul {
     width: 100%;
     padding: 0;
 }
-#main_section ul li{
+
+#main_section ul li {
     width: 100%;
     float: left;
     margin: auto;
 }
-.vorschau_bild{
+
+.vorschau_bild {
     height: 200px;
 }
-.game_button{
+
+.game_button {
     width: 100px;
     height: 50px;
     border-radius: 5px;
@@ -66,13 +79,14 @@ li{list-style-type: none;}
     color: #293c7f;
     border-color: #293c7f;
 }
-.game_button:hover{
+
+.game_button:hover {
     background-color: #293c7f;
     color: white;
 }
 
-@media screen and (max-width:1024px){
-    .vorschau_bild{
+@media screen and (max-width: 1024px) {
+    .vorschau_bild {
         height: 150px;
     }
 }
