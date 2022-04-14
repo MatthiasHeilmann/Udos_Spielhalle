@@ -628,279 +628,86 @@ function botPlay(){
 }
 
 function erkenneGefahr(){
+    //Es gibt 24 Möglichkeiten das Spiel zu verliern
+    //Hier werden alle ausprobiert und falls eine besteht zurückgegeben;
+    //0 steht für keine direkte Möglichkeit zu verlieren;
     var gefahr=0;
-    if(XO[1][1]=="X"){                      //Es gibt 24 Möglichkeiten das Spiel zu verliern
-        if(XO[0][0]=="X"){                  //Hier werden alle ausprobiert und falls eine besteht zurückgegeben;
-            if(XO[2][2]!="O"){              //0 steht für keine direkte Möglichkeit zu verlieren;
-                gefahr=1;
-            }
-        }
-        if(XO[0][1]=="X"){
-            if(XO[2][1]!="O"){
-                gefahr=2;
-            }
-        }
-        if(XO[0][2]=="X"){
-            if(XO[2][0]!="O"){
-                gefahr=3;
-            }
-        }
-        if(XO[1][2]=="X"){
-            if(XO[1][0]!="O"){
-                gefahr=4;
-            }
-        }
-        if(XO[2][2]=="X"){
-            if(XO[0][0]!="O"){
-                gefahr=5;
-            }
-        }
-        if(XO[2][1]=="X"){        
-            if(XO[0][1]!="O"){
-                gefahr=6;
-            }
-        }
-        if(XO[2][0]=="X"){
-            if(XO[0][2]!="O"){
-                gefahr=7;   
-            }
-        }
-        if(XO[1][0]=="X"){
-            if(XO[1][2]!="O"){
-                gefahr=8; 
-            }
-        }
+    if(XO[1][1]=="X"){                      
+        if(XO[0][0]=="X"){if(XO[2][2]!="O"){gefahr=1;}}
+        if(XO[0][1]=="X"){if(XO[2][1]!="O"){gefahr=2;}}
+        if(XO[0][2]=="X"){if(XO[2][0]!="O"){gefahr=3;}}
+        if(XO[1][2]=="X"){if(XO[1][0]!="O"){gefahr=4;}}
+        if(XO[2][2]=="X"){if(XO[0][0]!="O"){gefahr=5;}}
+        if(XO[2][1]=="X"){if(XO[0][1]!="O"){gefahr=6;}}
+        if(XO[2][0]=="X"){if(XO[0][2]!="O"){gefahr=7;}}
+        if(XO[1][0]=="X"){if(XO[1][2]!="O"){gefahr=8;}}
     }
     if(XO[0][2]=="X"){
-        if(XO[1][2]=="X"){
-            if(XO[2][2]!="O"){
-                gefahr=9; 
-            }
-        }
-        if(XO[2][0]=="X"){
-            if(XO[1][1]!="O"){
-                gefahr=10;
-            }
-        }
-        if(XO[0][1]=="X"){
-            if(XO[0][0]!="O"){
-                gefahr=11;
-            }
-        }
-        if(XO[2][2]=="X"){
-            if(XO[1][2]!="O"){
-                gefahr=24;
-            }
-        }
+        if(XO[1][2]=="X"){if(XO[2][2]!="O"){gefahr=9;}}
+        if(XO[2][0]=="X"){if(XO[1][1]!="O"){gefahr=10;}}
+        if(XO[0][1]=="X"){if(XO[0][0]!="O"){gefahr=11;}}
+        if(XO[2][2]=="X"){if(XO[1][2]!="O"){gefahr=24;}}
     }
     if(XO[0][0]=="X"){
-        if(XO[0][1]=="X"){
-            if(XO[0][2]!="O"){
-                gefahr=12;
-            }
-        }
-        if(XO[1][0]=="X"){
-            if(XO[2][0]!="O"){
-                gefahr=13;
-            }
-        }
-        if(XO[2][2]=="X"){
-            if(XO[1][1]!="O"){
-                gefahr=14;
-            }
-        }
-        if(XO[0][2]=="X"){
-            if(XO[0][1]!="O"){
-                gefahr=21;
-            }
-        }
-        if(XO[2][0]=="X"){
-            if(XO[1][0]!="O"){
-                gefahr=23;
-            }
-        }
+        if(XO[0][1]=="X"){if(XO[0][2]!="O"){gefahr=12;}}
+        if(XO[1][0]=="X"){if(XO[2][0]!="O"){gefahr=13;}}
+        if(XO[2][2]=="X"){if(XO[1][1]!="O"){gefahr=14;}}
+        if(XO[0][2]=="X"){if(XO[0][1]!="O"){gefahr=21;}}
+        if(XO[2][0]=="X"){if(XO[1][0]!="O"){gefahr=23;}}
     }
     if(XO[2][0]=="X"){
-        if(XO[1][0]=="X"){
-            if(XO[0][0]!="O"){
-                gefahr=15;
-            }
-        }
-        if(XO[2][1]=="X"){
-            if(XO[2][2]!="O"){
-                gefahr=16;
-            }
-        }
-        if(XO[2][2]=="X"){
-            if(XO[2][1]!="O"){
-                gefahr=22;
-            }
-        }    
+        if(XO[1][0]=="X"){if(XO[0][0]!="O"){gefahr=15;}}
+        if(XO[2][1]=="X"){if(XO[2][2]!="O"){gefahr=16;}}
+        if(XO[2][2]=="X"){if(XO[2][1]!="O"){gefahr=22;}}    
     }
     if(XO[2][2]=="X"){
-        if(XO[2][1]=="X"){
-            if(XO[2][0]!="O"){
-                gefahr=17;
-            }
-        }
-        if(XO[1][2]=="X"){
-            if(XO[0][2]!="O"){
-                gefahr=18;
-            }
-        }
+        if(XO[2][1]=="X"){if(XO[2][0]!="O"){gefahr=17;}}
+        if(XO[1][2]=="X"){if(XO[0][2]!="O"){gefahr=18;}}
     }
-    if(XO[1][0]=="X"){
-        if(XO[1][2]=="X"){
-            if(XO[1][1]!="O"){
-                gefahr=20;
-            }
-        }
-    }
-    if(XO[0][1]=="X"){
-        if(XO[2][1]=="X"){
-            if(XO[1][1]!="O"){
-                gefahr=19;
-            }
-        }
-    }
+    if(XO[1][0]=="X"){if(XO[1][2]=="X"){if(XO[1][1]!="O"){gefahr=20;}}}
+    if(XO[0][1]=="X"){if(XO[2][1]=="X"){if(XO[1][1]!="O"){gefahr=19;}}}
     return gefahr;
 }
 
 function erkenneWin(){
+    //Wie es 24 Möglichkeiten gibt zu verliern gibt es auch 24 zu gewinnen
+    //Hier werden alle ausprobiert und zurückgegeben;
+    //0 steht für keine direkte Möglichkeit zu gewinnen;
     var Win=0;
-    if(XO[1][1]=="O"){                      //Wie es 24 Möglichkeiten gibt zu verliern gibt es auch 24 zu gewinnen
-        if(XO[0][0]=="O"){                  //Hier werden alle ausprobiert und zurückgegeben;
-            if(XO[2][2]!="X"){              //0 steht für keine direkte Möglichkeit zu gewinnen;
-                Win=1;
-            }
-        }
-        if(XO[0][1]=="O"){
-            if(XO[2][1]!="X"){
-                Win=2;
-            }
-        }
-        if(XO[0][2]=="O"){
-            if(XO[2][0]!="X"){
-                Win=3;
-            }
-        }
-        if(XO[1][2]=="O"){
-            if(XO[1][0]!="X"){
-                Win=4;
-            }
-        }
-        if(XO[2][2]=="O"){
-            if(XO[0][0]!="X"){
-                Win=5;
-            }
-        }
-        if(XO[2][1]=="O"){        
-            if(XO[0][1]!="X"){
-                Win=6;
-            }
-        }
-        if(XO[2][0]=="O"){
-            if(XO[0][2]!="X"){
-                Win=7;   
-            }
-        }
-        if(XO[1][0]=="O"){
-            if(XO[1][2]!="X"){
-                Win=8; 
-            }
-        }
+    if(XO[1][1]=="O"){                      
+        if(XO[0][0]=="O"){if(XO[2][2]!="X"){Win=1;}}
+        if(XO[0][1]=="O"){if(XO[2][1]!="X"){Win=2;}}
+        if(XO[0][2]=="O"){if(XO[2][0]!="X"){Win=3;}}
+        if(XO[1][2]=="O"){if(XO[1][0]!="X"){Win=4;}}
+        if(XO[2][2]=="O"){if(XO[0][0]!="X"){Win=5;}}
+        if(XO[2][1]=="O"){if(XO[0][1]!="X"){Win=6;}}
+        if(XO[2][0]=="O"){if(XO[0][2]!="X"){Win=7;}}
+        if(XO[1][0]=="O"){if(XO[1][2]!="X"){Win=8;}}
     }
     if(XO[0][2]=="O"){
-        if(XO[1][2]=="O"){
-            if(XO[2][2]!="X"){
-                Win=9; 
-            }
-        }
-        if(XO[2][0]=="O"){
-            if(XO[1][1]!="X"){
-                Win=10;
-            }
-        }
-        if(XO[0][1]=="O"){
-            if(XO[0][0]!="X"){
-                Win=11;
-            }
-        }
-        if(XO[2][2]=="O"){
-            if(XO[1][2]!="X"){
-                Win=24;
-            }
-        }
+        if(XO[1][2]=="O"){if(XO[2][2]!="X"){Win=9;}}
+        if(XO[2][0]=="O"){if(XO[1][1]!="X"){Win=10;}}
+        if(XO[0][1]=="O"){if(XO[0][0]!="X"){Win=11;}}
+        if(XO[2][2]=="O"){if(XO[1][2]!="X"){Win=24;}}
     }
     if(XO[0][0]=="O"){
-        if(XO[0][1]=="O"){
-            if(XO[0][2]!="X"){
-                Win=12;
-            }
-        }
-        if(XO[1][0]=="O"){
-            if(XO[2][0]!="X"){
-                Win=13;
-            }
-        }
-        if(XO[2][2]=="O"){
-            if(XO[1][1]!="X"){
-                Win=14;
-            }
-        }
-        if(XO[0][2]=="O"){
-            if(XO[0][1]!="X"){
-                Win=21;
-            }
-        }
-        if(XO[2][0]=="O"){
-            if(XO[1][0]!="X"){
-                Win=23;
-            }
-        }
+        if(XO[0][1]=="O"){if(XO[0][2]!="X"){Win=12;}}
+        if(XO[1][0]=="O"){if(XO[2][0]!="X"){Win=13;}}
+        if(XO[2][2]=="O"){if(XO[1][1]!="X"){Win=14;}}
+        if(XO[0][2]=="O"){if(XO[0][1]!="X"){Win=21;}}
+        if(XO[2][0]=="O"){if(XO[1][0]!="X"){Win=23;}}
     }
     if(XO[2][0]=="O"){
-        if(XO[1][0]=="O"){
-            if(XO[0][0]!="X"){
-                Win=15;
-            }
-        }
-        if(XO[2][1]=="O"){
-            if(XO[2][2]!="X"){
-                Win=16;
-            }
-        }
-        if(XO[2][2]=="O"){
-            if(XO[2][1]!="X"){
-                Win=22;
-            }
-        }    
+        if(XO[1][0]=="O"){if(XO[0][0]!="X"){Win=15;}}
+        if(XO[2][1]=="O"){if(XO[2][2]!="X"){Win=16;}}
+        if(XO[2][2]=="O"){if(XO[2][1]!="X"){Win=22;}}
     }
     if(XO[2][2]=="O"){
-        if(XO[2][1]=="O"){
-            if(XO[2][0]!="X"){
-                Win=17;
-            }
-        }
-        if(XO[1][2]=="O"){
-            if(XO[0][2]!="X"){
-                Win=18;
-            }
-        }
-    }
+        if(XO[2][1]=="O"){if(XO[2][0]!="X"){Win=17;}}
+        if(XO[1][2]=="O"){if(XO[0][2]!="X"){Win=18;}}}
     if(XO[1][0]=="O"){
-        if(XO[1][2]=="O"){
-            if(XO[1][1]!="X"){
-                Win=20;
-            }
-        }
-    }
+        if(XO[1][2]=="O"){if(XO[1][1]!="X"){Win=20;}}}
     if(XO[0][1]=="O"){
-        if(XO[2][1]=="O"){
-            if(XO[1][1]!="X"){
-                Win=19;
-            }
-        }
-    }
+        if(XO[2][1]=="O"){if(XO[1][1]!="X"){Win=19;}}}
     return Win;
 }
