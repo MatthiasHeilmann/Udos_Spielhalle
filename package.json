@@ -1,0 +1,23 @@
+{
+  "name": "udos_spielhalle",
+  "version": "1.0.0",
+  "description": "Anwendungsprojekt Informatik (Projektmanagement)",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MatthiasHeilmann/Udos_Spielhalle.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MatthiasHeilmann/Udos_Spielhalle/issues"
+  },
+  "homepage": "https://github.com/MatthiasHeilmann/Udos_Spielhalle#readme",
+  "dependencies": {
+    "express": "^4.17.3"
+  }
+}
