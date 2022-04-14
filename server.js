@@ -11,6 +11,10 @@ server.listen(port, function(){
 
 app.use(express.static(__dirname));
 app.use(express.json());
+app.use(function timeLog(req, res, next) {
+    console.log(new Date().toLocaleString("de-DE") + ": " + req.originalUrl);
+    next();
+});
 
 app.get('/' , (req, res) => {
     console.log("Got get request!")
