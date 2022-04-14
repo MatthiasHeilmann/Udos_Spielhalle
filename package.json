@@ -1,0 +1,7 @@
+{
+  "name": "Udos_Spielhalle",
+  "version": "1.0.0",
+  "dependencies": {
+    "express": "^4.17.3"
+  }
+}
