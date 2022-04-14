@@ -401,230 +401,131 @@ function botPlay(){
         }
     }
     if(zuege==5){
+        //Wenn die Möglichkeit besteht zu gewinnen, wird diese ergriffen;
         var gefahr= erkenneGefahr();
         var Win= erkenneWin();
-        if(Win==1){                          //Wenn die Möglichkeit besteht zu gewinnen, wird diese ergriffen;
-            besetzenO(2,2);
-        }else if(Win==2){
-            besetzenO(2,1);
-        }else if(Win==3){
-            besetzenO(2,0);
-        }else if(Win==4){
-            besetzenO(1,0);
-        }else if(Win==5){
-            besetzenO(0,0);
-        }else if(Win==6){
-            besetzenO(0,1);
-        }else if(Win==7){
-            besetzenO(0,2);
-        }else if(Win==8){
-            besetzenO(1,2);
-        }else if(Win==9){
-            besetzenO(2,2);
-        }else if(Win==10){
-            besetzenO(1,1);
-        }else if(Win==11){
-            besetzenO(0,0);
-        }else if(Win==12){
-            besetzenO(0,2);
-        }else if(Win==13){
-            besetzenO(2,0);
-        }else if(Win==14){
-            besetzenO(1,1);
-        }else if(Win==15){
-            besetzenO(0,0);
-        }else if(Win==16){
-            besetzenO(2,2);
-        }else if(Win==17){
-            besetzenO(2,0);
-        }else if(Win==18){
-            besetzenO(0,2);
-        }else if(Win==19){
-            besetzenO(1,1);
-        }else if(Win==20){
-            besetzenO(1,1);
-        }else if(Win==21){
-            besetzenO(0,1);
-        }else if(Win==22){
-            besetzenO(2,1);
-        }else if(Win==23){
-            besetzenO(1,0);
-        }
-        else if(gefahr==1){                  //Gefahren zu verlieren abchecken;
-            besetzenO(2,2);
-        }else if(gefahr==2){
-            besetzenO(2,1);
-        }else if(gefahr==3){
-            besetzenO(2,0);
-        }else if(gefahr==4){
-            besetzenO(1,0);
-        }else if(gefahr==5){
-            besetzenO(0,0);
-        }else if(gefahr==6){
-            besetzenO(0,1);
-        }else if(gefahr==7){
-            besetzenO(0,2);
-        }else if(gefahr==8){
-            besetzenO(1,2);
-        }else if(gefahr==9){
-            besetzenO(2,2);
-        }else if(gefahr==10){
-            besetzenO(1,1);
-        }else if(gefahr==11){
-            besetzenO(0,0);
-        }else if(gefahr==12){
-            besetzenO(0,2);
-        }else if(gefahr==13){
-            besetzenO(2,0);
-        }else if(gefahr==14){
-            besetzenO(1,1);
-        }else if(gefahr==15){
-            besetzenO(0,0);
-        }else if(gefahr==16){
-            besetzenO(2,2);
-        }else if(gefahr==17){
-            besetzenO(2,0);
-        }else if(gefahr==18){
-            besetzenO(0,2);
-        }else if(gefahr==19){
-            besetzenO(1,1);
-        }else if(gefahr==20){
-            besetzenO(1,1);
-        }else if(gefahr==21){
-            besetzenO(0,1);
-        }else if(gefahr==22){
-            besetzenO(2,1);
-        }else if(gefahr==23){
-            besetzenO(1,0);
-        }else if(gefahr==24){
-            besetzenO(1,2);
-        }
-        else if(bef==11){                      //ein paar Sonderfälle bei denen Gefahr bestehen könnte;
-            besetzenO(2,0);
-            bef=41;
-        }else if(bef==14){
-            besetzenO(2,2);
-            bef=42;
-        }else if(bef==17){
-            besetzenO(0,2);
-            bef=43;
-        }else if(bef==28){
-            besetzenO(1,1);
-            bef=44;
-        }else if(bef==33){
-            besetzenO(1,1);
-            bef=45;
-        }else if(bef==38){
-            besetzenO(1,1);
-            bef=46;
-        }
-        else{                              //ansonsten kann von diesem Zug an keine Falle mehr bereitet werden;
-            randombesetzenO();              //es wird ein random Feld besetzt;
+        switch (Win) {
+            case 1:besetzenO(2,2);break;
+            case 2:besetzenO(2,1);break;
+            case 3:besetzenO(2,0);break;
+            case 4:besetzenO(1,0);break;
+            case 5:besetzenO(0,0);break;
+            case 6:besetzenO(0,1);break;
+            case 7:besetzenO(0,2);break;
+            case 8:besetzenO(1,2);break;
+            case 9:besetzenO(2,2);break;
+            case 10:besetzenO(1,1);break;
+            case 11:besetzenO(0,0);break;
+            case 12:besetzenO(0,2);break;
+            case 13:besetzenO(2,0);break;
+            case 14:besetzenO(1,1);break;
+            case 15:besetzenO(0,0);break;
+            case 16:besetzenO(2,2);break;
+            case 17:besetzenO(2,0);break;
+            case 18:besetzenO(0,2);break;
+            case 19:besetzenO(1,1);break;
+            case 20:besetzenO(1,1);break;
+            case 21:besetzenO(0,1);break;
+            case 22:besetzenO(2,1);break;
+            case 23:besetzenO(1,0);break;
+            default:
+                switch (gefahr) {
+                    case 1:besetzenO(2,2);break;
+                    case 2:besetzenO(2,1);break;
+                    case 3:besetzenO(2,0);break;
+                    case 4:besetzenO(1,0);break;
+                    case 5:besetzenO(0,0);break;
+                    case 6:besetzenO(0,1);break;
+                    case 7:besetzenO(0,2);break;
+                    case 8:besetzenO(1,2);break;
+                    case 9:besetzenO(2,2);break;
+                    case 10:besetzenO(1,1);break;
+                    case 11:besetzenO(0,0);break;
+                    case 12:besetzenO(0,2);break;
+                    case 13:besetzenO(2,0);break;
+                    case 14:besetzenO(1,1);break;
+                    case 15:besetzenO(0,0);break;
+                    case 16:besetzenO(2,2);break;
+                    case 17:besetzenO(2,0);break;
+                    case 18:besetzenO(0,2);break;
+                    case 19:besetzenO(1,1);break;
+                    case 20:besetzenO(1,1);break;
+                    case 21:besetzenO(0,1);break;
+                    case 22:besetzenO(2,1);break;
+                    case 23:besetzenO(1,0);break;
+                    case 24:besetzenO(1,2);break;
+                    default:
+                        switch (bef) {
+                            case 11:besetzenO(2,0);bef=41;break;
+                            case 14:besetzenO(2,2);bef=42;break;
+                            case 17:besetzenO(0,2);bef=43;break;
+                            case 28:besetzenO(1,1);bef=44;break;
+                            case 33:besetzenO(1,1);bef=45;break;
+                            case 38:besetzenO(1,1);bef=46;break;
+                            default:randombesetzenO();break;}
+                    break;
+                }
+            break;
         }
     }
     if(zuege==7){
         var gefahr= erkenneGefahr();
         var Win= erkenneWin();
-        if(Win==1){                         //Sieg priorisieren;
-            besetzenO(2,2);
-        }else if(Win==2){
-            besetzenO(2,1);
-        }else if(Win==3){
-            besetzenO(2,0);
-        }else if(Win==4){
-            besetzenO(1,0);
-        }else if(Win==5){
-            besetzenO(0,0);
-        }else if(Win==6){
-            besetzenO(0,1);
-        }else if(Win==7){
-            besetzenO(0,2);
-        }else if(Win==8){
-            besetzenO(1,2);
-        }else if(Win==9){
-            besetzenO(2,2);
-        }else if(Win==10){
-            besetzenO(1,1);
-        }else if(Win==11){
-            besetzenO(0,0);
-        }else if(Win==12){
-            besetzenO(0,2);
-        }else if(Win==13){
-            besetzenO(2,0);
-        }else if(Win==14){
-            besetzenO(1,1);
-        }else if(Win==15){
-            besetzenO(0,0);
-        }else if(Win==16){
-            besetzenO(2,2);
-        }else if(Win==17){
-            besetzenO(2,0);
-        }else if(Win==18){
-            besetzenO(0,2);
-        }else if(Win==19){
-            besetzenO(1,1);
-        }else if(Win==20){
-            besetzenO(1,1);
-        }else if(Win==21){
-            besetzenO(0,1);
-        }else if(Win==22){
-            besetzenO(2,1);
-        }else if(Win==23){
-            besetzenO(1,0);
-        }
-        else if(gefahr==1){                     //verhindern zu verlieren;
-            besetzenO(2,2);
-        }else if(gefahr==2){
-            besetzenO(2,1);
-        }else if(gefahr==3){
-            besetzenO(2,0);
-        }else if(gefahr==4){
-            besetzenO(1,0);
-        }else if(gefahr==5){
-            besetzenO(0,0);
-        }else if(gefahr==6){
-            besetzenO(0,1);
-        }else if(gefahr==7){
-            besetzenO(0,2);
-        }else if(gefahr==8){
-            besetzenO(1,2);
-        }else if(gefahr==9){
-            besetzenO(2,2);
-        }else if(gefahr==10){
-            besetzenO(1,1);
-        }else if(gefahr==11){
-            besetzenO(0,0);
-        }else if(gefahr==12){
-            besetzenO(0,2);
-        }else if(gefahr==13){
-            besetzenO(2,0);
-        }else if(gefahr==14){
-            besetzenO(1,1);
-        }else if(gefahr==15){
-            besetzenO(0,0);
-        }else if(gefahr==16){
-            besetzenO(2,2);
-        }else if(gefahr==17){
-            besetzenO(2,0);
-        }else if(gefahr==18){
-            besetzenO(0,2);
-        }else if(gefahr==19){
-            besetzenO(1,1);
-        }else if(gefahr==20){
-            besetzenO(1,1);
-        }else if(gefahr==21){
-            besetzenO(0,1);
-        }else if(gefahr==22){
-            besetzenO(2,1);
-        }else if(gefahr==23){
-            besetzenO(1,0);
-        }else if(gefahr==24){
-            besetzenO(1,2);
-        }else{
-            randombesetzenO();               //random Feld besetzen;
+        switch (Win) {
+            case 1:besetzenO(2,2);break;
+            case 2:besetzenO(2,1);break;
+            case 3:besetzenO(2,0);break;
+            case 4:besetzenO(1,0);break;
+            case 5:besetzenO(0,0);break;
+            case 6:besetzenO(0,1);break;
+            case 7:besetzenO(0,2);break;
+            case 8:besetzenO(1,2);break;
+            case 9:besetzenO(2,2);break;
+            case 10:besetzenO(1,1);break;
+            case 11:besetzenO(0,0);break;
+            case 12:besetzenO(0,2);break;
+            case 13:besetzenO(2,0);break;
+            case 14:besetzenO(1,1);break;
+            case 15:besetzenO(0,0);break;
+            case 16:besetzenO(2,2);break;
+            case 17:besetzenO(2,0);break;
+            case 18:besetzenO(0,2);break;
+            case 19:besetzenO(1,1);break;
+            case 20:besetzenO(1,1);break;
+            case 21:besetzenO(0,1);break;
+            case 22:besetzenO(2,1);break;
+            case 23:besetzenO(1,0);break;
+            default:
+                switch (gefahr) {
+                    case 1:besetzenO(2,2);break;
+                    case 2:besetzenO(2,1);break;
+                    case 3:besetzenO(2,0);break;
+                    case 4:besetzenO(1,0);break;
+                    case 5:besetzenO(0,0);break;
+                    case 6:besetzenO(0,1);break;
+                    case 7:besetzenO(0,2);break;
+                    case 8:besetzenO(1,2);break;
+                    case 9:besetzenO(2,2);break;
+                    case 10:besetzenO(1,1);break;
+                    case 11:besetzenO(0,0);break;
+                    case 12:besetzenO(0,2);break;
+                    case 13:besetzenO(2,0);break;
+                    case 14:besetzenO(1,1);break;
+                    case 15:besetzenO(0,0);break;
+                    case 16:besetzenO(2,2);break;
+                    case 17:besetzenO(2,0);break;
+                    case 18:besetzenO(0,2);break;
+                    case 19:besetzenO(1,1);break;
+                    case 20:besetzenO(1,1);break;
+                    case 21:besetzenO(0,1);break;
+                    case 22:besetzenO(2,1);break;
+                    case 23:besetzenO(1,0);break;
+                    case 24:besetzenO(1,2);break;
+                    default:randombesetzenO();break;
+                }
+            break;
         }
     }
-
 }
 
 function erkenneGefahr(){
