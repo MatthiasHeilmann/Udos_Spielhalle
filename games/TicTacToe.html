@@ -6,8 +6,8 @@
         <title>Udos Spielhalle</title>
         <link href="../css/style.css" type="text/css" rel="stylesheet">
         <link href="../css/all.min.css" type="text/css" rel="stylesheet">
-        <link href="../css/TicTacToe.css" type="text/css" rel="stylesheet">
         <link href="../css/switch.css" type="text/css" rel="stylesheet">
+        <link href="../css/TicTacToe.css" type="text/css" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300&display=swap" rel="stylesheet">
     </head>
     <body>
@@ -42,16 +42,18 @@
                         </tr>
                     </table>
                 </div>
-                <div class="switch">
-                    <input id="switch1" type="checkbox" onclick="switchSpielmodus();">
-                    <label for="switch1">
-                      <span class="buttonbackground">
-                        <span class="buttonslider"></span>
-                      </span>
-                    </label>
+                <div id="settings">
+                    <div class="switch" id="div_switch">
+                        <input id="switch1" type="checkbox" onclick="switchSpielmodus();">
+                        <label for="switch1">
+                            <span class="buttonbackground">
+                            <span class="buttonslider"></span>
+                            </span>
+                        </label>
+                    </div>        
                     <h2 id="txt_spielmodus">Spielmodus: Gegen den Computer</h2>
-                </div>    
-                <button class="game_button" id="reset" onclick="reset()">Neustart</button>    
+                    <button class="game_button" id="reset" onclick="reset()">Neustart</button>    
+                </div>
             </div>
             
         </section>
