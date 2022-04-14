@@ -15,6 +15,7 @@ const field22="TicTacToe_22";
 const winnerColor="red";
 const cellColor1="#CCCCCC";
 const cellColor2="#737272";
+const cb = document.querySelector('#switch1');
 
 window.onload = ()=> {newGame();};
 function newGame(){
@@ -31,6 +32,20 @@ function newGame(){
 }
 function reset(){
     document.location.reload();
+}
+function switchSpielmodus(){
+    if(zuege>0){
+        cb.checked= !cb.checked;
+    }else{
+        if(cb.checked){
+            Spielmodus=0;
+            document.getElementById("txt_spielmodus").innerHTML="Spielmodus: 1v1";
+        }else{
+            Spielmodus=1;
+            document.getElementById("txt_spielmodus").innerHTML="Spielmodus: Gegen den Computer";
+        }
+    }
+    console.log("neuer Spielmodus: "+Spielmodus);
 }
 
 function print(){

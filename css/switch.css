@@ -1,0 +1,44 @@
+.switch {
+    width: 9rem;
+    margin: 0 auto;
+    border-radius: 0.75rem;
+  }
+  .buttonbackground {
+    background-color:#293c7f;
+    width: 3rem;
+    height: 1.7rem;          /* = width/2 */
+    border-radius: 1.25rem;  /* = height/2 */
+    box-shadow:
+      0 2px 2px rgba(0,0,0,0.5) inset,
+      0 -2px 0px rgba(255,255,255,0.5) inset;
+    position: relative;
+    margin: 0.5rem auto;
+    display:block;
+    transition: background-color 0.2s ease;
+  }
+  #switch1 {
+    display:none;
+  }
+  .buttonslider {
+    background:#ddd;
+    width:1.7rem;
+    height:1.7rem;
+    border-radius:50%;
+    border:1px solid #aaa;
+    position: absolute;
+    left:0;
+    top:-0.15rem;
+    box-shadow: 0 4px 3px rgba(0,0,0,0.3);
+    display:block;
+    transition: all 0.2s ease;
+  }
+  #switch1:checked + label .buttonbackground {
+    background-color:#9e0624;
+  }
+ #switch1:checked + label .buttonslider {
+    left: 1.4rem;         /* = buttonbackground-width / 2 */
+    background:#eee;
+  }
+  #switch1 + label .buttonbackground:hover {
+    cursor:pointer;
+  }
