@@ -234,170 +234,156 @@ function botPlay(){
     }
     if(zuege==3){
         var gefahr= erkenneGefahr();        //wenn Gefahr besteht zu verlieren, dementsprechend handeln;
-        if(gefahr==1){
-            besetzenO(2,2);
-        }else if(gefahr==2){
-            besetzenO(2,1);
-        }else if(gefahr==3){
-            besetzenO(2,0);
-        }else if(gefahr==4){
-            besetzenO(1,0);
-        }else if(gefahr==5){
-            besetzenO(0,0);
-        }else if(gefahr==6){
-            besetzenO(0,1);
-        }else if(gefahr==7){
-            besetzenO(0,2);
-        }else if(gefahr==8){
-            besetzenO(1,2);
-        }else if(gefahr==9){
-            besetzenO(2,2);
-        }else if(gefahr==10){
-            besetzenO(1,1);
-        }else if(gefahr==11){
-            besetzenO(0,0);
-        }else if(gefahr==12){
-            besetzenO(0,2);
-        }else if(gefahr==13){
-            besetzenO(2,0);
-        }else if(gefahr==14){
-            besetzenO(1,1);
-        }else if(gefahr==15){
-            besetzenO(0,0);
-        }else if(gefahr==16){
-            besetzenO(2,2);
-        }else if(gefahr==17){
-            besetzenO(2,0);
-        }else if(gefahr==18){
-            besetzenO(0,2);
-        }else if(gefahr==19){
-            besetzenO(1,1);
-        }else if(gefahr==20){
-            besetzenO(1,1);
-        }else if(gefahr==21){
-            besetzenO(0,1);
-        }else if(gefahr==22){
-            besetzenO(2,1);
-        }else if(gefahr==23){
-            besetzenO(1,0);
-        }else if(gefahr==24){
-            besetzenO(1,2);
-        }else{                              //Wenn keine Gefahr besteht zu verlieren, müssen alle Fälle abgedeckt werden und vorrauschauend handeln;
-            if(bef==1){
-                if(besetzt[2][1]){
-                    besetzenO(1,2);
-                    bef=9;
-                }else if(besetzt[2][2]){
-                    besetzenO(1,0);
-                    bef=10;
-                }else if(besetzt[1][2]){
-                    besetzenO(0,1);
-                    bef=11;
+        switch (gefahr) {
+            case 1:besetzenO(2,2);break;
+            case 2:besetzenO(2,1);break;
+            case 3:besetzenO(2,0);break;
+            case 4:besetzenO(1,0);break;
+            case 5:besetzenO(0,0);break;
+            case 6:besetzenO(0,1);break;
+            case 7:besetzenO(0,2);break;
+            case 8:besetzenO(1,2);break;
+            case 9:besetzenO(2,2);break;
+            case 10:besetzenO(1,1);break;
+            case 11:besetzenO(0,0);break;
+            case 12:besetzenO(0,2);break;
+            case 13:besetzenO(2,0);break;
+            case 14:besetzenO(1,1);break;
+            case 15:besetzenO(0,0);break;
+            case 16:besetzenO(2,2);break;
+            case 17:besetzenO(2,0);break;
+            case 18:besetzenO(0,2);break;
+            case 19:besetzenO(1,1);break;
+            case 20:besetzenO(1,1);break;
+            case 21:besetzenO(0,1);break;
+            case 22:besetzenO(2,1);break;
+            case 23:besetzenO(1,0);break;
+            case 24:besetzenO(1,2);break;
+            default:                            //Wenn keine Gefahr besteht zu verlieren, müssen alle Fälle abgedeckt werden und vorrauschauend handeln;
+                switch (bef) {
+                    case 1:
+                        if(besetzt[2][1]){
+                            besetzenO(1,2);
+                            bef=9;
+                        }else if(besetzt[2][2]){
+                            besetzenO(1,0);
+                            bef=10;
+                        }else if(besetzt[1][2]){
+                            besetzenO(0,1);
+                            bef=11;
+                        }
+                        break;
+                    case 2:
+                        if(besetzt[1][2]){
+                            besetzenO(0,1);
+                            bef=12;
+                        }else if(besetzt[0][2]){
+                            besetzenO(2,1);
+                            bef=13;
+                        }else if(besetzt[0][1]){
+                            besetzenO(1,0);
+                            bef=14;
+                        }
+                        break;
+                    case 3:
+                        if(besetzt[0][1]){
+                            besetzenO(1,0);
+                            bef=15;
+                        }else if(besetzt[0][0]){
+                            besetzenO(2,1);
+                            bef=16;
+                        }else if(besetzt[1][0]){
+                            besetzenO(2,1);
+                            bef=17;
+                        }
+                        break;
+                    case 4:
+                        if(besetzt[1][0]){
+                            besetzenO(2,1);
+                            bef=18;
+                        }else if(besetzt[2][0]){
+                            besetzenO(0,1);
+                            bef=19;
+                        }else if(besetzt[2][1]){
+                            besetzenO(1,2);
+                            bef=20;
+                        } 
+                        break;
+                    case 5:
+                        if(besetzt[2][0]){
+                            besetzenO(1,1);
+                            bef=21;
+                        }else if(besetzt[2][1]){
+                            besetzenO(0,2);
+                            bef=22;
+                        }else if(besetzt[2][2]){
+                            besetzenO(0,2);
+                            bef=23;
+                        }else if(besetzt[0][2]){
+                            besetzenO(1,1);
+                            bef=24;
+                        }else if(besetzt[0][1]){
+                            besetzenO(1,1);
+                            bef=25;
+                        }
+                        break;
+                    case 6:
+                        if(besetzt[0][0]){
+                            besetzenO(1,1);
+                            bef=26;
+                        }else if(besetzt[1][0]){
+                            besetzenO(2,2);
+                            bef=27;
+                        }   else if(besetzt[2][0]){
+                            besetzenO(2,2);
+                            bef=28;
+                        }else if(besetzt[2][2]){
+                            besetzenO(1,1);
+                            bef=29;
+                        }else if(besetzt[1][2]){
+                            besetzenO(1,1);
+                            bef=30;
+                        }
+                        break;
+                    case 7:
+                        if(besetzt[0][2]){
+                            besetzenO(1,1);
+                            bef=31;
+                        }else if(besetzt[0][1]){
+                            besetzenO(2,0);
+                            bef=32;
+                        }else if(besetzt[0][0]){
+                            besetzenO(2,0);
+                            bef=33;
+                        }else if(besetzt[2][0]){
+                            besetzenO(1,1);
+                            bef=34;
+                        }else if(besetzt[2][1]){
+                            besetzenO(1,1);
+                            bef=35;
+                        }
+                        break;
+                    case 8:
+                        if(besetzt[2][2]){
+                            besetzenO(1,1);
+                            bef=36;
+                        }else if(besetzt[1][2]){
+                            besetzenO(0,0);
+                            bef=37;
+                        }else if(besetzt[0][2]){
+                            besetzenO(0,0);
+                            bef=38;
+                        }else if(besetzt[0][0]){
+                            besetzenO(1,1);
+                            bef=39;
+                        }else if(besetzt[1][0]){
+                            besetzenO(1,1);
+                            bef=40;
+                        }
+                        break;
+                    default:randombesetzenO();break;
                 }
-            }else if(bef==2){
-                if(besetzt[1][2]){
-                    besetzenO(0,1);
-                    bef=12;
-                }else if(besetzt[0][2]){
-                    besetzenO(2,1);
-                    bef=13;
-                }else if(besetzt[0][1]){
-                    besetzenO(1,0);
-                    bef=14;
-                }
-            }else if(bef==3){
-                if(besetzt[0][1]){
-                    besetzenO(1,0);
-                    bef=15;
-                }else if(besetzt[0][0]){
-                    besetzenO(2,1);
-                    bef=16;
-                }else if(besetzt[1][0]){
-                    besetzenO(2,1);
-                    bef=17;
-                }
-            }else if(bef==4){
-                if(besetzt[1][0]){
-                    besetzenO(2,1);
-                    bef=18;
-                }else if(besetzt[2][0]){
-                    besetzenO(0,1);
-                    bef=19;
-                }else if(besetzt[2][1]){
-                    besetzenO(1,2);
-                    bef=20;
-                }   
-            }else if(bef==5){
-                if(besetzt[2][0]){
-                    besetzenO(1,1);
-                    bef=21;
-                }else if(besetzt[2][1]){
-                    besetzenO(0,2);
-                    bef=22;
-                }else if(besetzt[2][2]){
-                    besetzenO(0,2);
-                    bef=23;
-                }else if(besetzt[0][2]){
-                    besetzenO(1,1);
-                    bef=24;
-                }else if(besetzt[0][1]){
-                    besetzenO(1,1);
-                    bef=25;
-                }
-            }else if(bef==6){
-                if(besetzt[0][0]){
-                    besetzenO(1,1);
-                    bef=26;
-                }else if(besetzt[1][0]){
-                    besetzenO(2,2);
-                    bef=27;
-                }   else if(besetzt[2][0]){
-                    besetzenO(2,2);
-                    bef=28;
-                }else if(besetzt[2][2]){
-                    besetzenO(1,1);
-                    bef=29;
-                }else if(besetzt[1][2]){
-                    besetzenO(1,1);
-                    bef=30;
-                }
-            }else if(bef==7){
-                if(besetzt[0][2]){
-                    besetzenO(1,1);
-                    bef=31;
-                }else if(besetzt[0][1]){
-                    besetzenO(2,0);
-                    bef=32;
-                }else if(besetzt[0][0]){
-                    besetzenO(2,0);
-                    bef=33;
-                }else if(besetzt[2][0]){
-                    besetzenO(1,1);
-                    bef=34;
-                }else if(besetzt[2][1]){
-                    besetzenO(1,1);
-                    bef=35;
-                }
-            }else if(bef==8){
-                if(besetzt[2][2]){
-                    besetzenO(1,1);
-                    bef=36;
-                }else if(besetzt[1][2]){
-                    besetzenO(0,0);
-                    bef=37;
-                }else if(besetzt[0][2]){
-                    besetzenO(0,0);
-                    bef=38;
-                }else if(besetzt[0][0]){
-                    besetzenO(1,1);
-                    bef=39;
-                }else if(besetzt[1][0]){
-                    besetzenO(1,1);
-                    bef=40;
-                }
-            }else{
-                randombesetzenO();
-            }
+            break;
         }
     }
     if(zuege==5){
