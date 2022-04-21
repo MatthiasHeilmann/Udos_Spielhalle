@@ -12,7 +12,7 @@ xSpeed = ySpeed = 10;
 score1 = score2 = 0;
 aiSpeed = 6;
 // game
-goal = 5;
+goal = 10;
 gametimeS = gametimeM = 0;
 lastPoint = 0;
 pausethick = 20;
@@ -20,20 +20,29 @@ pauseheight = 100;
 
 
 window.onload = ()=> {
-c = document.getElementById('gameCanvas');
+// get the canvas from the iframe
+var iframe = document.getElementById('iframe_pingpong_game');
+var iframeDocument = iframe.contentDocument;
+if(!iframeDocument){throw "iframe couldn't be found in DOM.";}
+c = iframeDocument.getElementById('gameCanvas');
+// ******************************* //
 cc = c.getContext('2d');
 cc.font = '20px Arial';
+// Click on the game to pause it
+c.addEventListener("click",pause);
+// Update 30 times per second
 setInterval(update, 1000/30);
-
 // Increase Gametime every Second
 setInterval(function(){
     if(playing){
+        // count gametime with minutes and seconds
         gametimeS++;
         lastPoint++;
         if(gametimeS == 60){
             gametimeM++;
             gametimeS = 0;
         }
+        // display gametime
         if(gametimeM==0){
             document.getElementById("gametime").innerHTML="Spielzeit: "+gametimeS+"s";
         }else{
@@ -41,16 +50,16 @@ setInterval(function(){
         }
     }
 },1000);
-
+// Mousemovement as Left paddle position
 c.addEventListener('mousemove', (e)=> {
     yPosLeftBat = e.clientY-batHeight/2;
 });
 }
 
 // Game pause
-document.body.onkeyup = function(e){
-    if(e.key == " " || e.code == "Space" || e.keycode == 32){pause();};
-};
+//document.body.onkeyup = function(e){
+//    if(e.key == " " || e.code == "Space" || e.keycode == 32){pause();};
+//};
 function pause(){
     if(playing){
         playing = false;
@@ -137,6 +146,9 @@ function update() {
         if (yPosRightBat+batHeight/2 > yPosBall || yPosRightBat+batHeight/2 > yPosBall-10) {
             yPosRightBat -= aiSpeed;
         }
+
+        // ********** DISPLAY GAME ********** //
+
         cc.font = "30px Arial";
         // Background
         cc.fillStyle = 'black';
@@ -145,11 +157,25 @@ function update() {
         cc.fillStyle = 'grey';
         cc.fillRect(xPosBall-ballWidth/2, yPosBall-ballWidth/2, ballWidth, ballWidth);
         // Paddle 1
-        cc.fillRect(batDistanceToBorder, yPosLeftBat, batWidth, batHeight);
+        // Paddle should not move out of the window
+        if(yPosLeftBat+batHeight>c.height){ // Paddle is partly under the window
+            cc.fillRect(batDistanceToBorder, c.height-batHeight, batWidth, batHeight);
+        }else if(false){ // Paddle is partly above the window
+            cc.fillRect(batDistanceToBorder, batHeight, batWidth, batHeight);
+        }else{
+            cc.fillRect(batDistanceToBorder, yPosLeftBat, batWidth, batHeight);
+        }
         // Score 1
         cc.fillText(score1, 100, 50);
         // Paddle 2
-        cc.fillRect(c.width-batWidth-batDistanceToBorder, yPosRightBat, batWidth, batHeight);
+        // Paddle should not move out of the window
+        if(yPosRightBat+batHeight>c.height){ // Paddle is partly under the window
+            cc.fillRect(c.width-batWidth-batDistanceToBorder, c.height-batHeight, batWidth, batHeight);
+        }else if(false){ // Paddle is partly above the window
+            cc.fillRect(c.width-batWidth-batDistanceToBorder, batHeight, batWidth, batHeight);
+        }else{
+            cc.fillRect(c.width-batWidth-batDistanceToBorder, yPosRightBat, batWidth, batHeight);
+        }
         // Score 2
         cc.fillText(score2, c.width-100, 50);
         if(score1==goal){
@@ -157,5 +183,6 @@ function update() {
         }else if(score2==goal){
             winner(2);
         }
+        // ********** ************ ********** //
     }
 }
