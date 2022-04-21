@@ -20,40 +20,40 @@ pauseheight = 100;
 
 
 window.onload = ()=> {
-// get the canvas from the iframe
-var iframe = document.getElementById('iframe_pingpong_game');
-var iframeDocument = iframe.contentDocument;
-if(!iframeDocument){throw "iframe couldn't be found in DOM.";}
-c = iframeDocument.getElementById('gameCanvas');
-// ******************************* //
-cc = c.getContext('2d');
-cc.font = '20px Arial';
-// Click on the game to pause it
-c.addEventListener("click",pause);
-// Update 30 times per second
-setInterval(update, 1000/30);
-// Increase Gametime every Second
-setInterval(function(){
-    if(playing){
-        // count gametime with minutes and seconds
-        gametimeS++;
-        lastPoint++;
-        if(gametimeS == 60){
-            gametimeM++;
-            gametimeS = 0;
+    // get the canvas from the iframe
+    var iframe = document.getElementById('iframe_pingpong_game');
+    var iframeDocument = iframe.contentDocument;
+    if(!iframeDocument){throw "iframe couldn't be found in DOM.";}
+    c = iframeDocument.getElementById('gameCanvas');
+    // ******************************* //
+    cc = c.getContext('2d');
+    cc.font = '20px Arial';
+    // Click on the game to pause it
+    c.addEventListener("click",pause);
+    // Update 30 times per second
+    setInterval(update, 1000/30);
+    // Increase Gametime every Second
+    setInterval(()=>{
+        if(playing){
+            // count gametime with minutes and seconds
+            gametimeS++;
+            lastPoint++;
+            if(gametimeS == 60){
+                gametimeM++;
+                gametimeS = 0;
+            }
+            // display gametime
+            if(gametimeM==0){
+                document.getElementById("gametime").innerHTML="Spielzeit: "+gametimeS+"s";
+            }else{
+                document.getElementById("gametime").innerHTML="Spielzeit: "+gametimeM+"m "+gametimeS+"s";
+            }
         }
-        // display gametime
-        if(gametimeM==0){
-            document.getElementById("gametime").innerHTML="Spielzeit: "+gametimeS+"s";
-        }else{
-            document.getElementById("gametime").innerHTML="Spielzeit: "+gametimeM+"m "+gametimeS+"s";
-        }
-    }
-},1000);
-// Mousemovement as Left paddle position
-c.addEventListener('mousemove', (e)=> {
-    yPosLeftBat = e.clientY-batHeight/2;
-});
+    },1000);
+    // Mousemovement as Left paddle position
+    c.addEventListener('mousemove', (e)=> {
+        yPosLeftBat = e.clientY-batHeight/2;
+    });
 }
 
 // Game pause
@@ -160,8 +160,8 @@ function update() {
         // Paddle should not move out of the window
         if(yPosLeftBat+batHeight>c.height){ // Paddle is partly under the window
             cc.fillRect(batDistanceToBorder, c.height-batHeight, batWidth, batHeight);
-        }else if(false){ // Paddle is partly above the window
-            cc.fillRect(batDistanceToBorder, batHeight, batWidth, batHeight);
+        }else if(yPosLeftBat<0){ // Paddle is partly above the window
+            cc.fillRect(batDistanceToBorder, 0, batWidth, batHeight);
         }else{
             cc.fillRect(batDistanceToBorder, yPosLeftBat, batWidth, batHeight);
         }
@@ -171,8 +171,8 @@ function update() {
         // Paddle should not move out of the window
         if(yPosRightBat+batHeight>c.height){ // Paddle is partly under the window
             cc.fillRect(c.width-batWidth-batDistanceToBorder, c.height-batHeight, batWidth, batHeight);
-        }else if(false){ // Paddle is partly above the window
-            cc.fillRect(c.width-batWidth-batDistanceToBorder, batHeight, batWidth, batHeight);
+        }else if(yPosRightBat<0){ // Paddle is partly above the window
+            cc.fillRect(c.width-batWidth-batDistanceToBorder, 0, batWidth, batHeight);
         }else{
             cc.fillRect(c.width-batWidth-batDistanceToBorder, yPosRightBat, batWidth, batHeight);
         }
