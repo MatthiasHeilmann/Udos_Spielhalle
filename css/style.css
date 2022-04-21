@@ -14,7 +14,7 @@ body {
 }
 
 section {
-    height: 250%;
+    height: calc(100% - 90px);
     padding-bottom: 10px;
     background-color: white;
     margin: auto;

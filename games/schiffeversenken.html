@@ -8,18 +8,18 @@
     <link href="../css/all.min.css" type="text/css" rel="stylesheet">
     <link href="../css/schiffeversenken.css" type="text/css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300&display=swap" rel="stylesheet">
+    <script src="/socket.io/socket.io.js"></script>
 </head>
 <body>
-<body>
-<header>
-    <div class="content">
-        <div id="logo-div">
-            <a href="/">
-                <img src="../sources/Logo.png" alt="logo" id="logo">
-            </a>
+    <header>
+        <div class="content">
+            <div id="logo-div">
+                <a href="/">
+                    <img src="../sources/Logo.png" alt="logo" id="logo">
+                </a>
+            </div>
         </div>
-    </div>
-</header>
+    </header>
     <section id="main_section">
         <div id="content_container">
             <div id="game">
@@ -29,8 +29,7 @@
             </div>
         </div>
     </section>
-    <script src="../js/schiffeversenken.js"></script>
-    <script src="../js/svLogic.js"></script>
-</body>
+    <script src="../js/svSocket.js" defer></script>
+    <script src="../js/svLogic.js" defer></script>
 </body>
 </html>
