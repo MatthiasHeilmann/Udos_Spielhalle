@@ -17,7 +17,19 @@ gametimeS = gametimeM = 0;
 lastPoint = 0;
 pausethick = 20;
 pauseheight = 100;
-
+// fillstyle & streak
+fillStyleDefault = 'RGB(204,204,204)'
+fillStyleLeft = fillStyleDefault;
+fillStyleRight = fillStyleDefault;
+streak = 0; // 
+streakGoal = 3;
+// colors for winstreak
+streakRed = 204;
+streakRedMovingUp = true;
+streakGreen = 204;
+streakGreenMovingUp = false;
+streakBlue = 204;
+streakBlueMovingUp = true;
 
 window.onload = ()=> {
     // get the canvas from the iframe
@@ -47,6 +59,14 @@ window.onload = ()=> {
                 document.getElementById("gametime").innerHTML="Spielzeit: "+gametimeS+"s";
             }else{
                 document.getElementById("gametime").innerHTML="Spielzeit: "+gametimeM+"m "+gametimeS+"s";
+            }
+            // to get some radom colors for the winstrek (-->getFillStyle())
+            if(streak>=0){
+                if(Math.floor((Math.random()*10)+1)%2==1){
+                    streakBlueMovingUp = !streakBlueMovingUp;
+                }else{
+                    streakGreenMovingUp = !streakGreenMovingUp;
+                }
             }
         }
     },1000);
@@ -99,6 +119,43 @@ function newGame(){
     score1 = score2 = 0;
     document.getElementById("gametime").innerHTML="Spielzeit: 0s";
 }
+// colors for the winstreaking side
+function getFillStyle(){
+    // RED
+    if(streakRedMovingUp){
+        streakRed+=10;
+    }else{
+        streakRed-=10;
+    }
+    if(streakRed>=255){
+        streakRedMovingUp = false;
+    }else if(streakRed<=0){
+        streakRedMovingUp = true;
+    }
+    // GREEN
+    if(streakGreenMovingUp){
+        streakGreen+=10;
+    }else{
+        streakGreen-=10;
+    }
+    if(streakGreen>=255){
+        streakGreenMovingUp = false;
+    }else if(streakGreen<=0){
+        streakGreenMovingUp = true;
+    }
+    // BLUE
+    if(streakBlueMovingUp){
+        streakBlue+=10;
+    }else{
+        streakBlue-=10;
+    }
+    if(streakBlue>=255){
+        streakBlueMovingUp = false;
+    }else if(streakBlue<=0){
+        streakBlueMovingUp = true;
+    }
+    return 'RGB('+streakRed+','+streakGreen+','+streakBlue+')';
+}
 
 function update() {
     // If paused, dont update
@@ -113,10 +170,16 @@ function update() {
         }
         // Where the game has to check, if the Ball hits the Bat
         ballHitsBat=batDistanceToBorder+batWidth;
-        // Goal left side
+        // Goal on the left side (AI)
         if (xPosBall < 0) {
                 score2++;
                 reset();
+                if(streak==1){
+                    streak = 0;
+                    fillStyleLeft = fillStyleDefault;
+                }else if(score2-score1>=streakGoal){
+                    streak = 2;
+                }
         }
         // Ball hits left Bat
         if (xPosBall==ballHitsBat){
@@ -126,10 +189,16 @@ function update() {
                 ySpeed = deltaY*0.3;
             }
         }
-        // Goal right side
+        // Goal on the right side (PLAYER)
         if (xPosBall > c.width) {
                 score1++;
                 reset();
+                if(streak==2){
+                    streak = 0;
+                    fillStyleRight = fillStyleDefault;
+                }else if(score1-score2>=streakGoal){
+                    streak = 1;
+                }
         }
         // Ball hits right Bat
         if(xPosBall==c.width-ballHitsBat){
@@ -147,16 +216,24 @@ function update() {
             yPosRightBat -= aiSpeed;
         }
 
+        // **********    STREAK    ********** //
+        if(streak==1){
+            fillStyleLeft = getFillStyle();
+        }
+        if(streak==2){
+            fillStyleRight = getFillStyle();
+        }
         // ********** DISPLAY GAME ********** //
 
-        cc.font = "30px Arial";
+        cc.font = "40px Arial";
         // Background
         cc.fillStyle = 'black';
         cc.fillRect(0, 0, c.width, c.height);
         // Ball
-        cc.fillStyle = 'grey';
+        cc.fillStyle = fillStyleDefault
         cc.fillRect(xPosBall-ballWidth/2, yPosBall-ballWidth/2, ballWidth, ballWidth);
         // Paddle 1
+        cc.fillStyle = fillStyleLeft; 
         // Paddle should not move out of the window
         if(yPosLeftBat+batHeight>c.height){ // Paddle is partly under the window
             cc.fillRect(batDistanceToBorder, c.height-batHeight, batWidth, batHeight);
@@ -168,6 +245,7 @@ function update() {
         // Score 1
         cc.fillText(score1, 100, 50);
         // Paddle 2
+        cc.fillStyle = fillStyleRight;
         // Paddle should not move out of the window
         if(yPosRightBat+batHeight>c.height){ // Paddle is partly under the window
             cc.fillRect(c.width-batWidth-batDistanceToBorder, c.height-batHeight, batWidth, batHeight);
