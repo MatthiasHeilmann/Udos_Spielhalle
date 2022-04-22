@@ -24,12 +24,9 @@ fillStyleRight = fillStyleDefault;
 streak = 0; // 
 streakGoal = 3;
 // colors for winstreak
-streakRed = 204;
-streakRedMovingUp = true;
-streakGreen = 204;
-streakGreenMovingUp = false;
-streakBlue = 204;
-streakBlueMovingUp = true;
+streakRed = 255;
+streakGreen = 0;
+streakBlue = 0;
 
 window.onload = ()=> {
     // get the canvas from the iframe
@@ -47,7 +44,7 @@ window.onload = ()=> {
     // Increase Gametime every Second
     setInterval(()=>{
         if(playing){
-            // count gametime with minutes and seconds
+            // count gametime with minutes&&seconds
             gametimeS++;
             lastPoint++;
             if(gametimeS == 60){
@@ -59,14 +56,6 @@ window.onload = ()=> {
                 document.getElementById("gametime").innerHTML="Spielzeit: "+gametimeS+"s";
             }else{
                 document.getElementById("gametime").innerHTML="Spielzeit: "+gametimeM+"m "+gametimeS+"s";
-            }
-            // to get some radom colors for the winstrek (-->getFillStyle())
-            if(streak>=0){
-                if(Math.floor((Math.random()*10)+1)%2==1){
-                    streakBlueMovingUp = !streakBlueMovingUp;
-                }else{
-                    streakGreenMovingUp = !streakGreenMovingUp;
-                }
             }
         }
     },1000);
@@ -121,40 +110,37 @@ function newGame(){
 }
 // colors for the winstreaking side
 function getFillStyle(){
-    // RED
-    if(streakRedMovingUp){
-        streakRed+=10;
-    }else{
-        streakRed-=10;
+    var s=20;
+    if (streakRed==255&&streakBlue==0&&streakGreen<255){
+        streakGreen+=s;
+    }else if(streakGreen==255&&streakBlue==0&&streakRed>0){
+        streakRed-=s;
+    }else if(streakRed==0&&streakGreen==255&&streakBlue<255){
+        streakBlue+=s;
+    }else if(streakRed==0&&streakBlue==255&&streakGreen>0){
+        streakGreen-=s;
+    }else if(streakGreen==0&&streakBlue==255&&streakRed<255){
+        streakRed+=s;
+    }else if(streakRed==255&&streakGreen==0&&streakBlue>0){
+        streakBlue-=s;
     }
-    if(streakRed>=255){
-        streakRedMovingUp = false;
-    }else if(streakRed<=0){
-        streakRedMovingUp = true;
+    if(streakRed>255){
+        streakRed=255;
+    }else if(streakRed<0){
+        streakRed=0;
     }
-    // GREEN
-    if(streakGreenMovingUp){
-        streakGreen+=10;
-    }else{
-        streakGreen-=10;
+    if(streakGreen>255){
+        streakGreen=255;
+    }else if(streakGreen<0){
+        streakGreen=0;
     }
-    if(streakGreen>=255){
-        streakGreenMovingUp = false;
-    }else if(streakGreen<=0){
-        streakGreenMovingUp = true;
+    if(streakBlue>255){
+        streakBlue=255;
+    }else if(streakBlue<0){
+        streakBlue=0;
     }
-    // BLUE
-    if(streakBlueMovingUp){
-        streakBlue+=10;
-    }else{
-        streakBlue-=10;
-    }
-    if(streakBlue>=255){
-        streakBlueMovingUp = false;
-    }else if(streakBlue<=0){
-        streakBlueMovingUp = true;
-    }
-    return 'RGB('+streakRed+','+streakGreen+','+streakBlue+')';
+    var rgb = 'RGB('+streakRed+','+streakGreen+','+streakBlue+')';
+    return rgb;
 }
 
 function update() {
@@ -172,14 +158,14 @@ function update() {
         ballHitsBat=batDistanceToBorder+batWidth;
         // Goal on the left side (AI)
         if (xPosBall < 0) {
-                score2++;
-                reset();
-                if(streak==1){
-                    streak = 0;
-                    fillStyleLeft = fillStyleDefault;
-                }else if(score2-score1>=streakGoal){
-                    streak = 2;
-                }
+            score2++;
+            reset();
+            if(streak>0){
+                streak = -1;
+                fillStyleLeft = fillStyleDefault;
+            }else{
+                streak--;
+            }
         }
         // Ball hits left Bat
         if (xPosBall==ballHitsBat){
@@ -191,14 +177,14 @@ function update() {
         }
         // Goal on the right side (PLAYER)
         if (xPosBall > c.width) {
-                score1++;
-                reset();
-                if(streak==2){
-                    streak = 0;
-                    fillStyleRight = fillStyleDefault;
-                }else if(score1-score2>=streakGoal){
-                    streak = 1;
-                }
+            score1++;
+            reset();
+            if(streak<0){
+                streak = 1;
+                fillStyleRight = fillStyleDefault;
+            }else{
+                streak++;
+            }
         }
         // Ball hits right Bat
         if(xPosBall==c.width-ballHitsBat){
@@ -217,10 +203,9 @@ function update() {
         }
 
         // **********    STREAK    ********** //
-        if(streak==1){
+        if(streak>=streakGoal){
             fillStyleLeft = getFillStyle();
-        }
-        if(streak==2){
+        }else if(Math.abs(streak)>=streakGoal){
             fillStyleRight = getFillStyle();
         }
         // ********** DISPLAY GAME ********** //
