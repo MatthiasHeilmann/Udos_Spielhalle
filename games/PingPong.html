@@ -17,9 +17,9 @@
 
         <section id="main_section">
             <div class="content" id="content_container">
-                <div id="game">
-                    <canvas id="gameCanvas" width="640" height="480" style="cursor: pointer" onclick="pause()">Your browser does not support the HTML canvas tag.</canvas>
-                </div>
+                <iframe id="iframe_pingpong_game" src="PingPong_game.html">
+                    <p>Ihr Browser unterstützt keinen iframe!</p>
+                </iframe>
                 <p id="gametime">Spielzeit: 0s</p>
                 <button class="game_button" id="pause" onclick="pause()">Pause</button>
                 <button class="game_button" id="reset" onclick="newGame()">Neustart</button>

@@ -1,3 +1,9 @@
 #content_container{
     margin: 0;
 }
+iframe{
+    overflow: hidden;
+    height: 485px;
+    width: 640px;
+    border: 0cm;
+}
