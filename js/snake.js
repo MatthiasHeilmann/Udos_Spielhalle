@@ -52,9 +52,6 @@ window.onload = ()=> {
                 fulllist=update_position(xpos,ypos,direction);
                 xpos=fulllist[0];
                 ypos=fulllist[1];
-                console.log(fulllist)
-                console.log(xpos)
-                console.log(ypos)
                 if(xpos>8 || xpos<0 || ypos>8 || ypos<0){
                     alive=false;
                 }
@@ -107,7 +104,6 @@ window.onload = ()=> {
             }
         }
         else{
-            console.log("Dead!")
             ind1=-1;
             fieldstate.forEach(i => {
                 ind1+=1;
@@ -134,7 +130,6 @@ window.onload = ()=> {
 
 //Definitions (GUI)
 function update_rect(logicgrid,snek){
-    console.log(logicgrid)
     ind1=-1
     logicgrid.forEach(i => {
         ind1+=1;
@@ -160,7 +155,6 @@ function update_rect(logicgrid,snek){
 //Definitions (Game Logic)
 function update_direction(direction, newdir){
     dir=direction;
-    console.log(newdir);
     if (newdir==="ArrowRight" && dir!=3){dir=1;};
     if (newdir ==="ArrowDown" && dir!=4){dir=2;};
     if (newdir ==="ArrowLeft" && dir!=1){dir=3;};
