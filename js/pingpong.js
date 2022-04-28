@@ -18,7 +18,7 @@ lastPoint = 0;
 pausethick = 20;
 pauseheight = 100;
 // fillstyle & streak
-fillStyleDefault = 'RGB(204,204,204)'
+const fillStyleDefault = 'RGB(204,204,204)'
 fillStyleLeft = fillStyleDefault;
 fillStyleRight = fillStyleDefault;
 streak = 0; // 
@@ -91,7 +91,7 @@ function winner(i){
     }
     score1 = score2 = 0;
     pause();
-    reset();
+    newGame();
 }
 
 function reset() {
@@ -106,6 +106,9 @@ function newGame(){
     playing = true;
     gametimeM = gametimeS = 0;
     score1 = score2 = 0;
+    streak = 0;
+    fillStyleLeft = fillStyleDefault;
+    fillStyleRight = fillStyleDefault;
     document.getElementById("gametime").innerHTML="Spielzeit: 0s";
 }
 // colors for the winstreaking side
@@ -241,6 +244,7 @@ function update() {
         }
         // Score 2
         cc.fillText(score2, c.width-100, 50);
+        // win
         if(score1==goal){
             winner(1);
         }else if(score2==goal){
