@@ -6,7 +6,7 @@ html, body{
     scroll-behavior: smooth;
 }
 body{
-    background: url(../sources/background.jpg);
+    background: url(../sources/background_main.jpg);
     background-position: center center;
     background-size: cover;
     background-attachment: fixed;
@@ -14,6 +14,11 @@ body{
 h1,h2,h3{
     font-family: 'Bangers', cursive;
     text-transform: uppercase;
+}
+h1{
+    margin: 0;
+    padding: 4% 4% 4% 4%;
+    font-size: 80px;
 }
 section{
     min-height: 100%;
@@ -24,12 +29,15 @@ section{
 li{list-style-type: none;}
 /* HEADER *********************/
 header{
-    position: fixed;
     width: 100%;
-    height: 80px;
+    height: 10%;
+    padding-left: 20%;
+    padding-right: 20%;
     top: 0;
     left: 0;
-    background: #cccccc;
+    background: url(../sources/background_header.jpg);
+    background-size: 100% 100%;
+    
     box-shadow: 0 1px 3px darkgray;
 }
 #logo{
@@ -39,7 +47,6 @@ header{
 }
 /* HOME *********************/
 #home{
-    padding-top: 80px;
     background-color: white;
     text-align: center;
 }
