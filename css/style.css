@@ -6,7 +6,7 @@ html, body{
     scroll-behavior: smooth;
 }
 body{
-    background: url(../sources/background2.jpg);
+    background: url(../sources/background_main.jpg);
     background-position: center center;
     background-size: cover;
     background-attachment:scroll;
@@ -25,7 +25,7 @@ h2{
 }
 h1{
     margin: 0;
-    padding: 4% 4% 4% 4%;
+    padding: 15% 4% 4% 4%;
     font-size: 80px;
 }
 p{
@@ -47,6 +47,7 @@ button{
 button:hover{
     background-color: #293c7f;
     color: white;
+    cursor: pointer;
 }
 /* sections */
 section{
@@ -92,6 +93,7 @@ li{list-style-type: none;}
 .static {
     position:absolute;
     background: white;
+    z-index: 1;
 }
 .static:hover {
     opacity:0;
@@ -104,10 +106,12 @@ header{
     padding-right: 20%;
     top: 0;
     left: 0;
-    background: url(../sources/background_header.jpg);
+    background-color: rgb(50,50,50);
+    /* background: url(../sources/background_header.jpg); */
     background-size: 100% 100%;
-    
+    position: fixed;
     box-shadow: 0 1px 3px darkgray;
+    z-index: 2;
 }
 #logo{
     margin-top: 15px;
