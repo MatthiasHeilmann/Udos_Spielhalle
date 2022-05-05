@@ -1,15 +1,48 @@
-const socket = io();
-const gameCanvas = document.querySelector("#game canvas");
-const canvasBoundings = gameCanvas.getBoundingClientRect();
+const socket = io('/sv');
 
-gameCanvas.addEventListener('mousemove', (e) => {
-    console.log((e.x - canvasBoundings.x) + ", " + (e.y - canvasBoundings.y));
-});
+socket.on('disconnect', () => {
+    alert("Der andere spieler hat die verbindung abgebrochen");
+})
 
-socket.on('connected', () => {
-    console.log(socket);
-    console.log(socket.connected);
-});
-socket.emit('svSetState', 'host');
-socket.emit('svSocketTest', socket.id);
-console.log("Ending message");
+function connect(config){
+    console.log("Connect as " + config.name + " (asHost: " + config.asHost + ")");
+
+    socket.emit('svSetName', config.name);
+
+    socket.on('svFire', (coordinates) => {
+        // TODO Koordinaten checken und antworten
+        coordinates.x;
+        coordinates.y;
+
+        socket.emit('svSendAnswer', {coordinates, result: "miss"});
+    });
+
+    socket.on('svAnswer', (answer) => {
+        // TODO result checken und Koordinaten markieren
+        answer.coordinates;
+        answer.result;
+    });
+
+    if(config.asHost){
+        socket.on('svAskJoinGame', (client) => {
+            // TODO Fragen ob der joinen erlaubt ist und antworten
+            client.name;
+            client.clientId;
+
+            socket.emit('svSendAnswerGameRequest', false);
+        });
+
+        socket.emit('svCreateOpenGame');
+    }
+    else{
+        socket.on('svSendOpenGames', (listHosts) => {
+            // TODO Hosts in Liste darstellen
+        });
+
+        socket.on('svAnswerGameRequest', (allowJoin) => {
+            // TODO Antwort verwalten
+        });
+
+        socket.emit('svGetOpenGames');
+    }
+}

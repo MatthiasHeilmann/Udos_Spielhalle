@@ -31,41 +31,53 @@ app.get('/schiffeversenken', (req, res) => {
     res.sendFile(__dirname + '/games/schiffeversenken.html');
 });
 
-io.on('connection', (socket) => {
+io.of('sv').on('connection', (socket) => {
     let isHost;
-    sockets[socket.id] = {socket, connectedSocket: null};
-    console.log("User connected: " + socket.id);
+    sockets[socket.id] = {socket, name:"", isHost: false, connectedSocket: null};
+
+    console.log("sv User connected: " + socket.id);
 
     socket.on('disconnect', () => {
-        console.log("User disconnected: " + socket.id);
+        console.log("sv User disconnected: " + socket.id);
+        // Disconnect connected socket
+        sockets[sockets[socket.id].connectedSocket]?.disconnect();
     });
 
-    socket.on('svSetState', (state) => {
-        isHost = (state === 'host');
-        console.log(socket.id + " set state to " + state + " (" + isHost + ")");
-    })
-
-    socket.on('svSocketTest', (text) => {
-        console.log("Got new connection!: " + text);
+    socket.on('svSetName', (name) => {
+        sockets[socket.id].name = name;
     });
 
-    socket.on('svCreateOpenGame', (hostId) => {
-
+    socket.on('svCreateOpenGame', () => {
+        sockets[socket.id].isHost = true;
     });
 
     socket.on('svGetOpenGames', () => {
-
+        let listHosts = [];
+        for(let host in sockets){
+            if(sockets[host].isHost && !sockets[host].connectedSocket)
+                listHosts.push({name: sockets[host].name, hostId: host});
+        }
+        socket.emit('svSendOpenGames', listHosts);
     });
 
-    socket.on('svAskJoinGame', (hostId) => {
-
+    socket.on('svSendAskJoinGame', (hostId) => {
+        sockets[hostId].emit('svAskJoinGame', {name: socket.name, clientId: socket.id});
     });
 
-    socket.on('svAnswerGameRequest', (clientId, allowJoin) => {
-
+    socket.on('svSendAnswerGameRequest', (clientId, allowJoin) => {
+        sockets[clientId].emit('svAnswerGameRequest', allowJoin);
     });
 
     socket.on('svJoinGame', (hostId) => {
-
+        sockets[socket.id].connectedSocket = hostId;
+        sockets[hostId].connectedSocket = socket.id;
     });
-})
+
+    socket.on('svSendFire', (coordinates) => {
+        sockets[sockets[socket].connectedSocket].emit('svFire', coordinates);
+    });
+
+    socket.on('svSendAnswer', (coordinates, result) => {
+        sockets[sockets[socket].connectedSocket].emit('svAnswer', {coordinates, result});
+    });
+});
