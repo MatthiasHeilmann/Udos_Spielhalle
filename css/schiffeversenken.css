@@ -1,6 +1,47 @@
+:root{
+    --white: rgb(255,255,255);
+    --black: rgb(0,0,0);
+    --gray: rgb(204,204,204);
+    --blue: rgb(41,60,127);
+    --red: rgb(158,6,36);
+}
+
 canvas {
     width: 400px;
     height: 400px;
     margin-top: 5px;
     border: 1px black solid;
+}
+
+.error{
+    color: var(--red) !important;
+    border-color: var(--red) !important;
+}
+
+label{
+    font-size: 12px;
+    margin: auto 5% auto 5%;
+    text-align: center;
+    user-select: none;
+}
+
+input{
+    border: 2px solid var(--gray);
+    border-image: initial;
+    border-radius: 5px;
+    outline: 0px;
+}
+
+input:hover, input:focus {
+    border: 2px solid var(--blue);
+}
+
+div#inputs{
+    display: flex;
+    flex-direction: row;
+}
+
+#inputs div#connectInputs{
+    display: flex;
+    flex-direction: column;
 }

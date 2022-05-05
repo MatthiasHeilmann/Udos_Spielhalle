@@ -7,6 +7,7 @@
     <link href="../css/style.css" type="text/css" rel="stylesheet">
     <link href="../css/all.min.css" type="text/css" rel="stylesheet">
     <link href="../css/schiffeversenken.css" type="text/css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300&display=swap" rel="stylesheet">
     <script src="/socket.io/socket.io.js"></script>
 </head>
@@ -27,9 +28,23 @@
 
                 </canvas>
             </div>
+            <div id="inputs">
+                <label id="name">
+                    Name <br>
+                    <input type="text" placeholder="Gib einen Namen ein" name="name">
+                </label>
+                <div id="connectInputs">
+                    <label id="asHost">
+                        Als Host
+                        <input type="checkbox">
+                    </label>
+                    <button id="connect">connect</button>
+                </div>
+            </div>
         </div>
     </section>
     <script src="../js/svSocket.js" defer></script>
-    <script src="../js/svLogic.js" defer></script>
+    <script src="../js/svLogic.js" type="module" defer></script>
+    <script src="../js/svUI.js" type="module" defer></script>
 </body>
 </html>
