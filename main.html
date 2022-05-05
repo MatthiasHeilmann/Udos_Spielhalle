@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Udos Spielhalle</title>
-        <link href="css/main-style.css" type="text/css" rel="stylesheet">
+        <link href="css/style.css" type="text/css" rel="stylesheet">
         <link href="css/all.min.css" type="text/css" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap" rel="stylesheet">
@@ -32,15 +32,20 @@
         <section id="home_Pong">
             <ul>
                 <li>
-                    <div id="vorschau_div" >
-                        <img class="vorschau" src="sources/Vorschau_Pong.png" href="games/PingPong.html">
-                    </div>
+                    <a href="/games/PingPong.html">
+                        <div id="vorschau_div" >
+                            <img class="vorschau" src="sources/Vorschau_Pong.png" href="games/PingPong.html">
+                        </div>
+                    </a>
+                    
                 </li>
                 <li>
                     <div class="vorschau_title">
                         <h2>Pong</h2>
                         <P>Spiele jetzt das legendäre Spiel Pong!</P>
-                        <button class="button_spielen">Spielen</button>
+                        <a href="/games/PingPong.html">
+                            <button class="button_spielen">Spielen</button>
+                        </a>
                     </div>
                 </li>
             </ul>
@@ -57,7 +62,32 @@
 
     <!-- TTT ------------------------------->
         <section id="home_TicTacToe">
-
+            <ul>
+                <li>
+                    <a href="/games/TicTacToe.html">
+                        <div>
+                            <!-- <img class="vorschau" id="tictactoe-static" src="sources/gifs/Vorschau_TicTacToe_static.jpg"> -->
+                            <img class="vorschau" id="tictactoe-active" src="sources/gifs/Vorschau_TicTacToe.gif">
+                            <!-- <img class="static vorschau" id="tictactoe-static" src="sources/gifs/Vorschau_TicTacToe_static.jpg">
+                            <img class="active vorschau" src="sources/gifs/Vorschau_TicTacToe.gif"> -->
+                        </div>
+                    </a>
+                    
+                </li>
+                <li>
+                    <div class="vorschau_title">
+                        <h2>Tic Tac Toe</h2>
+                        <P>Spiele jetzt das legendäre Spiel Tic Tac Toe!</P>
+                        <a href="/games/TicTacToe.html">
+                            <button class="button_spielen">Spielen</button>
+                        </a>
+                    </div>
+                </li>
+            </ul>
+            <div class="vorschau_info_text">
+                <p>Auf einem quadratischen, 3×3 Felder großen Spielfeld setzen die beiden Spieler abwechselnd ihr Zeichen (ein Spieler Kreuze, der andere Kreise) in ein freies Feld. Der Spieler, der als Erster drei Zeichen in eine Zeile, Spalte oder Diagonale setzen kann, gewinnt. Wenn allerdings beide Spieler optimal spielen, kann keiner gewinnen, und es kommt zu einem Unentschieden. Das heißt, alle neun Felder sind gefüllt, ohne dass ein Spieler die erforderlichen Zeichen in einer Reihe, Spalte oder Diagonalen setzen konnte.</p>
+                <button class="button_learn_more">Erfahre mehr</button>
+            </div>
         </section>
 
     <!-- MS -------------------------------->
