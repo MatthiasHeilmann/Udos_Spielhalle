@@ -1,3 +1,6 @@
+body{
+    overflow: hidden;
+}
 h2{
     text-align: left;
 }
@@ -10,7 +13,7 @@ h2{
 #game{
     width: auto;
     background-color: lightgray;
-    margin-top: 30px;
+    margin-top: 100px;
     padding: 20px;
 }
 #tictactoe_table{
@@ -35,9 +38,11 @@ td{
 }
 #settings div{
     float: left;
+    align-items: center;
 }
 #txt_spielmodus{
-    width: 450px;
+    width: 600px;
+    text-align: left;
 }
 #div_switch{
     width: 70px;

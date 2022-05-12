@@ -55,7 +55,7 @@ section{
     padding-bottom: 10px;
     width: 60%;
     margin: auto;
-    box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.2);
+    
 }
 section ul{
     margin: 0;
@@ -101,12 +101,12 @@ li{list-style-type: none;}
 /* HEADER *********************/
 header{
     width: 100%;
-    height: 10%;
+    height: 100px;
     padding-left: 20%;
     padding-right: 20%;
     top: 0;
     left: 0;
-    background-color: rgb(50,50,50);
+    background-color: #cccccc;
     /* background: url(../sources/background_header.jpg); */
     background-size: 100% 100%;
     position: fixed;
@@ -132,6 +132,7 @@ header{
 /* Pong *********************/
 #home_Pong{
     background-color: #cccccc;
+    box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.2);
 }
 /* SV *********************/
 #home_Schiffeversenken{
@@ -140,6 +141,7 @@ header{
 /* TTT *********************/
 #home_TicTacToe{
     background-color: #cccccc;
+    box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.2);
 }
 #home_TicTacToe .vorschau_info_text p{
     padding-top: 100px;
@@ -154,6 +156,7 @@ header{
 /* Snake *********************/
 #home_Snake{
     background-color: #cccccc;
+    box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.2);
 }
 #home_Snake .vorschau_info_text p{
     padding-top: 100px;
