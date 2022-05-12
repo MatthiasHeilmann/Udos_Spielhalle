@@ -85,10 +85,10 @@ li{list-style-type: none;}
 }
 .vorschau:hover{
     box-shadow: 5px 10px 15px 10px  rgba(0, 0, 0, 0.2);
-    transform: scale(1.1);
+    /* transform: scale(1.1);
     -webkit-transform: scale(1.1);
     -moz-transform: scale(1.1);
-    -o-transform: scale(1.1);
+    -o-transform: scale(1.1); */
 }
 .static {
     position:absolute;
@@ -148,9 +148,15 @@ header{
 #home_Minesweeper{
     background-color: white;
 }
+#home_Minesweeper .vorschau_info_text p{
+    padding-top: 100px;
+}
 /* Snake *********************/
 #home_Snake{
     background-color: #cccccc;
+}
+#home_Snake .vorschau_info_text p{
+    padding-top: 100px;
 }
 /* Dame *********************/
 #home_Dame{
