@@ -191,6 +191,8 @@ function gameOver(square) {
 //check gewonnen mit flags
 function checkForWin() {
    let matches = 0
+   let checks = 0
+
    for (let i = 0; i < squares.length; i++) {
       if (squares[i].classList.contains("flag") && squares[i].classList.contains("mine")) {
          matches ++
@@ -199,23 +201,14 @@ function checkForWin() {
          alert("Gewonnen!")
          isGameOver = true
       }
-   }
-}
-
-
-// check gewonnen mit aufgedeckten Feldern
-function checkForWinnn() {
-   let checks = 0
-   for (let i = 0; i < squares.length; i++) {
       if (squares[i].classList.contains("checked")) {
-         checks++
+            checks++
+         }
+      if (checks == (width*width - mines)) {
+         alert("Gewonnen!")
+         isGameOver = true
       }
    }
-   if (checks == (width*width - mines)) {
-      alert("Gewonnen!")
-      isGameOver = true
-   }
-   console.log(checks + "," + (width*width - mines))
 }
 
 //reset
