@@ -1,3 +1,5 @@
+// TODO: Fix Bug: wenn 10 flags gesetzt sind, kann man die flags nicht mehr entfernen
+
 const grid = document.querySelector(".grid")
 let width = 10
 let mines = 10
@@ -17,11 +19,11 @@ function createBoard() {
 
    // erzeuge einzelne Felder
    for (let i = 0; i < width * width; i++) {
-      const square = document.createElement("div")                    // erzeuge div für jedes Feld
-      square.setAttribute("id", i);                                   // gebe div eine ID (hier 0-99)
-      square.classList.add(shuffledArray[i])                          // gebe div eine Klasse (Mine/Leer)
-      grid.appendChild(square)
-      squares.push(square)                                            // erweitere squares-Array um neues square
+      const square = document.createElement("div")                      // erzeuge div für jedes Feld
+      square.setAttribute("id", i);                                     // gebe div eine ID (hier 0-99)
+      square.classList.add(shuffledArray[i])                            // gebe div eine Klasse ("mine" oder "leer")
+      grid.appendChild(square)                                          // div-Elemente werden an grid angehängt 
+      squares.push(square)                                              // erweitere squares-Array um neues square
 
       // Linksklick
       square.addEventListener('click', function (e) {
@@ -30,7 +32,7 @@ function createBoard() {
 
       // Rechtsklick
       square.addEventListener('contextmenu', function (e) {
-         e.preventDefault()                                            // verhindert, dass sich nach RK Menü öffnet
+         e.preventDefault()                                             // verhindert, dass sich nach RK Menü öffnet
          addFlag(square)
       })
 
@@ -55,14 +57,14 @@ function createBoard() {
       if (squares[i].classList.contains("leer")) {
          if (i > 0 && !isLeftEdge && squares[i - 1].classList.contains("mine")) total++             // links
          if (i < 99 && !isRightEdge && squares[i + 1].classList.contains("mine")) total++           // rechts
-         if (i > 9 && squares[i - width].classList.contains("mine")) total++                         // oben
-         if (i < 90 && squares[i + width].classList.contains("mine")) total++                        // unten
+         if (i > 9 && squares[i - width].classList.contains("mine")) total++                        // oben
+         if (i < 90 && squares[i + width].classList.contains("mine")) total++                       // unten
          if (i > 9 && !isRightEdge && squares[i + 1 - width].classList.contains("mine")) total++    // oben-rechts
          if (i > 10 && !isLeftEdge && squares[i - 1 - width].classList.contains("mine")) total++    // oben-links
          if (i < 90 && !isLeftEdge && squares[i - 1 + width].classList.contains("mine")) total++    // unten-links
          if (i < 89 && !isRightEdge && squares[i + 1 + width].classList.contains("mine")) total++   // unten-rechts
 
-         //Check in Konsole
+         //Check in Konsole (optional)
          squares[i].setAttribute("anzahl_minen", total)
          console.log(squares[i])
       }
@@ -81,22 +83,24 @@ function createBoard() {
 
 createBoard()
 
+
 // Setze Flagge in Feld via Rechtsklick
 function addFlag(square) {
    if (isGameOver) return
-   if (!square.classList.contains("checked") && (flags < mines)) {         
-      if (!square.classList.contains("flag")) {
+   if (!square.classList.contains("flag")) {                               // wenn Feld noch keine Flag
+   if (!square.classList.contains("checked") && (flags < mines)) {            // wenn Feld noch nicht aufgedeckt und flagcount < minecount
          square.classList.add("flag")
          square.innerHTML = "🚩"
          flags ++
          checkForWin()
-      } else {
-         square.classList.remove("flag")
-         square.innerHTML = ""
-         flags--
-      }
+      } 
+   } else {
+      square.classList.remove("flag")
+      square.innerHTML = ""
+      flags--
    }
 }
+
 
 
 //Linksklick auf Feld
@@ -111,6 +115,7 @@ function click(square) {
       if (total != 0) {
          square.classList.add("checked")
          square.innerHTML = total
+         checkForWinnn()
          return
       }
       checkSquare(square, currentId)
@@ -206,10 +211,11 @@ function checkForWinnn() {
          checks++
       }
    }
-   if (checks === (squares.length - mines)) {
+   if (checks == (width*width - mines)) {
       alert("Gewonnen!")
       isGameOver = true
    }
+   console.log(checks + "," + (width*width - mines))
 }
 
 //reset

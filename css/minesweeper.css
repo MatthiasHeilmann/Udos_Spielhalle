@@ -1,9 +1,10 @@
 .grid {
-    height: 500px;
-    width: 500px;
+    height: 520px;
+    width: 520px;
     display: flex;
     flex-wrap: wrap;
     background-color: lightblue;
+    border: black solid;
 }
 
 .checked {
@@ -13,8 +14,9 @@
 .grid div {
     height: 50px;
     width: 50px;
+    border: solid black 1px;
 }
 
-.mine {
+/* .mine {
     background-color: red;
-}
+} */
