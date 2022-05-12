@@ -67,7 +67,7 @@ window.onload = ()=> {
 
 // Game pause
 //document.body.onkeyup = function(e){
-//    if(e.key == " " || e.code == "Space" || e.keycode == 32){pause();};
+//    if(e.key == " " || e.code == "Space" || e.keycode == 32){pause();console.log("PAUSE!")};
 //};
 function pause(){
     if(playing){
