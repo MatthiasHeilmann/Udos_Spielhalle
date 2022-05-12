@@ -1,3 +1,5 @@
+import {Vector} from "./svShips.js";
+
 export const defaultSize = 10;
 
 export class FieldDrawer{
@@ -6,13 +8,12 @@ export class FieldDrawer{
      * @type {number}
      */
     size = defaultSize;
-
-    constructor() {
-        // Default constructor used for only the constant values
-    }
-
+    
     constructor(canvas){
         this.canvasBoundings = canvas.getBoundingClientRect();
+        /**
+         * @type CanvasRenderingContext2D
+         */
         this.context = canvas.getContext("2d");
         this.x = this.canvasBoundings.x;
         this.y = this.canvasBoundings.y;
@@ -25,37 +26,20 @@ export class FieldDrawer{
     }
 
     /**
-     * Draws the Tile lying directly under the current mouse position
-     * @param x x-Position of the mouse relative to the body element
-     * @param y y-Position of the mouse relative to the body element
-     * @param colour colour to paint the tile in
-     */
-    drawTileOnMouse(x, y, colour){
-        // Coordinates corresponding to the coordinate system of the canvas
-        let pos = this.#getCorrespondingCoordinates(x, y);
-
-        this.drawTile(pos.x, pos.y, colour);
-    }
-
-    /**
      * Draws the Tile which contains the given x-/y-coordinates
-     * @param x x-Position relative to the canvas element
-     * @param y y-Position relative to the canvas element
-     * @param colour colour to paint the tile in
+     * @param coordinate {Vector} x-/y-coordinates relative to the drawn system (getVectorCoordinate)
+     * @param colour {String} colour to paint the tile in
      */
-    drawTile(x, y, colour){
-        // Get the coordinates of the hovered tile
-        const tile  = this.#getVectorCoordinates(x, y);
-        console.log("Tile on: " + tile.x + ";" + tile.y)
-        this.drawRect(tile.x*this.tileWidth, tile.y*this.tileHeight, colour);
-    }
+    drawTile(coordinate, colour){
+        console.log("Tile for: " + coordinate.x + ";" + coordinate.y);
 
-    drawRect(x, y, colour){
-        this.#drawRect(x, y, this.tileWidth, this.tileHeight, colour);
+        this.#drawRect(coordinate.x*this.tileWidth, coordinate.y*this.tileHeight
+                        , this.tileWidth, this.tileHeight, colour);
     }
 
     #drawRect(x, y, width, height, colour){
         // Paint a new rectangle without overdrawing the lines
+        console.log("Rectangle: " + x + ";" + y + ", " + colour);
         this.context.beginPath();
         this.context.rect(x+1.5, y+1.5, width-1.5, height-1.5);
         this.context.fillStyle = colour;
@@ -63,8 +47,6 @@ export class FieldDrawer{
     }
 
     #drawLines(){
-        console.log("Drawing: " + this.width + "x" + this.height + ", " + this.tileWidth + ";" + this.tileHeight);
-
         this.context.lineWidth = 0.5;
         this.context.lineCap = "square";
         this.context.strokeStyle = "black";
@@ -98,12 +80,30 @@ export class FieldDrawer{
     /**
      * @param x x-Position relative to the canvas element
      * @param y y-Position relative to the canvas element
-     * @return {{x: number, y: number}} x-/y-Position relative to the painted coordinate system (0 - 9)
+     * @return {Vector} x-/y-Position relative to the painted coordinate system (0 - 9)
      */
-    #getVectorCoordinates(x, y){
-        console.log("Tile for: " + x + ";" + y);
-        console.log("Tile: " + Math.floor(x / this.tileWidth) + ";" + Math.floor(y / this.tileHeight))
-        return {x: Math.floor(x / this.tileWidth),
-                y: Math.floor(y / this.tileHeight)};
+    #getVectorCoordinate(x, y){
+        let cordX = Math.floor(x / this.tileWidth);
+        let cordY = Math.floor(y / this.tileHeight);
+
+        return new Vector(cordX, cordY);
+    }
+
+    /**
+     * Takes the current position of the mouse and returns the vector of the field direct below it
+     * @param x x-Position relative to the body element
+     * @param y y-Position relative to the body element
+     * @return {Vector}
+     */
+    getVectorCoordinate(x, y){
+        let pos = this.#getCorrespondingCoordinates(x, y);
+        return this.#getVectorCoordinate(pos.x, pos.y);
+    }
+
+    clear(){
+        this.context.rect(0, 0, this.width, this.height);
+        this.context.fillStyle = "white";
+        this.context.fill();
+        this.#drawLines()
     }
 }

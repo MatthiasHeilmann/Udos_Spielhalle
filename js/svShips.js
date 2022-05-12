@@ -20,9 +20,11 @@ const ShipId = {
  * This class represents the x- and y-Position, relative to the painted system.
  * It represents one square in the painted coordinate system
  */
-class Vector {
+export class Vector {
     #x;
     #y;
+
+    static defaultVector = new Vector(-1, -1);
 
     constructor(x, y) {
         this.#x = x;
@@ -40,8 +42,9 @@ class Vector {
      */
     distanceFrom(v) {
         let distance = 0;
-        distance += Math.abs(this.#x - v.x());
-        distance += Math.abs(this.#y - v.y());
+
+        distance += Math.abs(this.#x - v.x);
+        distance += Math.abs(this.#y - v.y);
 
         return distance;
     }
@@ -58,6 +61,13 @@ class Vector {
         return new Vector(xDiff, yDiff);
     }
 
+    /**
+     * Tells whether this coordinate exists on a only positive coordinate system
+     * @return {boolean}
+     */
+    exists(){
+        return !(this.#x <= -1 || this.#y <= -1);
+    }
 
     get x() {
         return this.#x;
@@ -112,7 +122,7 @@ class Tile {
     }
 }
 
-class Ship {
+export class Ship {
     #name = "Default";
     #shipId = ShipId.Default;
     #startingPosition = new Vector(0, 0);
@@ -176,7 +186,7 @@ class Ship {
 
     buildTiles() {
         for (let i = 0; i < length; i++) {
-            this.#tiles.append(new Tile(this.#shipId));
+            this.#tiles.push(new Tile(this.#shipId));
         }
     }
 
@@ -208,7 +218,26 @@ let placedShips = [];
  */
 let shipCounts = [0, 0, 0, 0, 0];
 const maxShipCounts = [10, 1, 2, 3, 4];
-const Placements = {
+export const Placements = {
+    /**
+     * uses getShipIdByVectors() and generateDirectionByVectors() to build a ship
+     * and then passes it to placeShip()
+     * @param coordinates {[Vector]}
+     * @return {number} 0 for success,
+     * 1 if the ship cannot be placed there,
+     * 2 if the amount of Ships (total or of just this kind) is maxed
+     */
+    placeShipByVectors(coordinates){
+        const shipId = this.getShipIdByVectors(coordinates);
+        const shipDir = this.generateDirectionByVectors(coordinates);
+
+        if(shipId === ShipId.Default || shipDir === Direction.Default){
+            this.addError("Illegal shipId or direction");
+            return 1;
+        }
+
+        return this.placeShip(new Ship(coordinates, shipDir, shipId));
+    },
     /**
      *
      * @param ship{Ship}
@@ -230,7 +259,6 @@ const Placements = {
         if(!this.canPlace(ship)){
             this.addError("Coordinates are already reserved");
             return 1;
-
         }
 
         shipCounts[0] = placedShips.push(ship);
@@ -295,7 +323,7 @@ const Placements = {
      * @return {number}
      */
     getShipIdByVectors(vectors) {
-        if (!this.generateDirectionByTiles(vectors)) return ShipId.Default;
+        if (!this.generateDirectionByVectors(vectors)) return ShipId.Default;
 
         switch (vectors.length) {
             case 2:
@@ -314,9 +342,9 @@ const Placements = {
     /**
      *
      * @param vectors {Vector[]}
-     * @return {null|number}
+     * @return {number}
      */
-    generateDirectionByTiles(vectors) {
+    generateDirectionByVectors(vectors) {
         if (vectors.length < 2 || vectors.length > 5) return Direction.Default;
 
         // Check if the tiles are all in one direction
@@ -334,8 +362,8 @@ const Placements = {
         return Direction.Default;
     },
 
-    getShipCount() {
-        return shipCounts[0];
+    getShipCount(shipId = ShipId.Default) {
+        return shipCounts[shipId];
     },
 
     addError(message){
