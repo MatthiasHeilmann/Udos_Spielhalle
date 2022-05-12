@@ -1,0 +1,20 @@
+.grid {
+    height: 500px;
+    width: 500px;
+    display: flex;
+    flex-wrap: wrap;
+    background-color: lightblue;
+}
+
+.checked {
+    background-color: orange;
+}
+
+.grid div {
+    height: 50px;
+    width: 50px;
+}
+
+.mine {
+    background-color: red;
+}
