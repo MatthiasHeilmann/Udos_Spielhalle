@@ -7,19 +7,40 @@
         <link rel="icon" type="image/png" href="sources/Udo_Gesicht.png">
         <link href="css/style.css" type="text/css" rel="stylesheet">
         <link href="css/all.min.css" type="text/css" rel="stylesheet">
+        <link href="css/nav.css" type="text/css" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"/>
     </head>
     <body>
     <!-- Header ---------------------------->
         <header>
-            <div class="content" >
-                <div id="logo-div">
-                    <a href="#home">
-                        <img src="sources/Udo_Gesicht.png" alt="logo" id="logo">
-                    </a>
-                    <h2 id="title">Udos Spielhalle</h2>
-                </div>
+            <div class="content" ></div>
+                <ul id="header-list">
+                    <li>
+                        <div id="logo-div">
+                            <a href="#home">
+                                <img src="sources/Udo_Gesicht.png" alt="logo" id="logo">
+                            </a>
+                            <h2 id="title">Udos Spielhalle</h2>
+                        </div>
+                    </li>
+                    <li id="navbar">
+                        <nav>
+                            <div class="dropdown">
+                                <span class="label"><i class="fa-solid fa-gamepad"></i>Games</span>
+                                <ul class="items">
+                                <li><a href="#home_Pong"><i class="fa-solid fa-circle"></i> Pong </a></li>
+                                <li><a href="#home_Schiffeversenken"><i class="fa-solid fa-ship"></i> Schiffeversenken </a></li>
+                                <li><a href="#home_TicTacToe"><i class="fa-solid fa-x"></i> Tic Tac Toe </a></li>
+                                <li><a href="#home_Minesweeper"><i class="fa-solid fa-land-mine-on"></i> Minesweeper </a></li>
+                                <li><a href="#home_Snake"><i class="fa-brands fa-python"></i> Snake </a></li>
+                                <li><a href="#home_Dame"><i class="fa-solid fa-chess-queen"></i> Dame </a></li>
+                                </ul>
+                            </div>
+                        </nav>
+                    </li>
+                </ul>   
             </div>
         </header>
 
@@ -52,8 +73,9 @@
                 </li>
             </ul>
             <div class="vorschau_info_text">
-                <p>Das Spielprinzip von Pong ist simpel und ähnelt dem des Tischtennis: Ein Punkt („Ball“) bewegt sich auf dem Bildschirm hin und her. Jeder der beiden Spieler steuert einen senkrechten Strich („Schläger“), den er mit einem Drehknopf (Paddle) nach oben und unten verschieben kann. Lässt man den „Ball“ am „Schläger“ vorbei, erhält der Gegner einen Punkt. Das programmtechnisch aufwändigste an Pong war die Anzeige des aktuellen Punktestandes. Da das Originalspiel nie von der USK geprüft wurde, ist in Deutschland die originale Version formal freigegeben ab 18 Jahren. Dies gilt jedoch nicht für die Version von 1999, die „ohne Altersbeschränkung“ freigegeben wurde.</p>
-                <button class="button_learn_more">Erfahre mehr</button>
+                <p>
+                    Das Spielprinzip von Pong ist simpel und ähnelt dem des Tischtennis: Ein Punkt („Ball“) bewegt sich auf dem Bildschirm hin und her. Jeder der beiden Spieler steuert einen senkrechten Strich („Schläger“), den er mit einem Drehknopf (Paddle) nach oben und unten verschieben kann. Lässt man den „Ball“ am „Schläger“ vorbei, erhält der Gegner einen Punkt. Das programmtechnisch aufwändigste an Pong war die Anzeige des aktuellen Punktestandes. Da das Originalspiel nie von der USK geprüft wurde, ist in Deutschland die originale Version formal freigegeben ab 18 Jahren. Dies gilt jedoch nicht für die Version von 1999, die „ohne Altersbeschränkung“ freigegeben wurde.
+                </p>
             </div>
         </section>
 
@@ -82,7 +104,6 @@
                 <p>
                     Schiffe versenken, auch Schiffchen versenken, Flottenmanöver, Kreuzerkrieg oder Seeschlacht genannt, ist ein Spiel, das klassischerweise mit Zettel und Stift gespielt wird. Es besitzt strategische Elemente, auch wenn man die einfache Version nicht unbedingt als strategisch relevant bezeichnen kann.
                 </p>
-                <button class="button_learn_more">Erfahre mehr</button>
             </div>
         </section>
 
@@ -109,7 +130,6 @@
             </ul>
             <div class="vorschau_info_text">
                 <p>Auf einem quadratischen, 3×3 Felder großen Spielfeld setzen die beiden Spieler abwechselnd ihr Zeichen (ein Spieler Kreuze, der andere Kreise) in ein freies Feld. Der Spieler, der als Erster drei Zeichen in eine Zeile, Spalte oder Diagonale setzen kann, gewinnt. Wenn allerdings beide Spieler optimal spielen, kann keiner gewinnen, und es kommt zu einem Unentschieden. Das heißt, alle neun Felder sind gefüllt, ohne dass ein Spieler die erforderlichen Zeichen in einer Reihe, Spalte oder Diagonalen setzen konnte.</p>
-                <button class="button_learn_more">Erfahre mehr</button>
             </div>
         </section>
 
@@ -138,7 +158,6 @@
                 <p>
                     Minesweeper ist ein simples, dem Betriebssystem Microsoft Windows bis einschließlich der Version Windows 7 beigelegtes Computerspiel, bei dem Spieler durch eine Kombination aus logischem Denken und (bisweilen) zufälligem Raten herausfinden sollen, unter welchen Feldern Minen versteckt sind. Das Ziel ist, alle Felder aufzudecken, hinter welchen keine Minen verborgen sind. Als zusätzliche Herausforderung läuft eine Stoppuhr, sodass das Spiel zumeist auf Zeit gespielt wird.
                 </p>
-                <button class="button_learn_more">Erfahre mehr</button>
             </div>
         </section>
 
@@ -167,7 +186,6 @@
                 <p>
                     Snake ist ein Computerspielklassiker, bei dem eine sich gerade oder rechtwinklig bewegende Schlange durch ein Spielfeld gesteuert wird. Ziel des Spieles ist, die als Futter angebotenen zufällig erscheinenden „Happen“ aufzunehmen und Hindernissen, einschließlich des eigenen Schlangenkörpers, auszuweichen. Während die Schlange mit jedem Happen wächst, wird das Manövrieren bei zunehmend vollerem Spielfeld – und bei evtl. schnellerem Grundtakt, immer schwieriger.
                 </p>
-                <button class="button_learn_more">Erfahre mehr</button>
             </div>
         </section>
 
@@ -196,8 +214,19 @@
                 <p>
                     Dame ist ein strategisches Brettspiel für zwei Spieler und wird auf einem Schachbrett mit 8×8 oder international 10×10 Feldern gespielt. Dabei werden nur die schwarzen Felder des Spielbretts genutzt, auf denen die typischen scheibenförmigen Spielsteine gezogen werden. Ziel des Spiels ist es, die gegnerischen Steine vollständig durch Überspringen zu schlagen oder bewegungsunfähig zu machen und so das Spiel zu gewinnen.Dame ist ein strategisches Brettspiel für zwei Spieler und wird auf einem Schachbrett mit 8×8 oder international 10×10 Feldern gespielt. Dabei werden nur die schwarzen Felder des Spielbretts genutzt, auf denen die typischen scheibenförmigen Spielsteine gezogen werden. Ziel des Spiels ist es, die gegnerischen Steine vollständig durch Überspringen zu schlagen oder bewegungsunfähig zu machen und so das Spiel zu gewinnen.
                 </p>
-                <button class="button_learn_more">Erfahre mehr</button>
             </div>
         </section>
+        <a href="#home">
+            <div id="Seitenanfang">
+                <p>
+                    Zurück zum Seitenanfang
+                </p>
+            </div>
+        </a>
+        <footer>
+            <p>
+                &copy; M. Heilmann, L. Müller, S. Schwarz, L. Stadtler
+            </p>
+        </footer>
     </body>
 </html>
