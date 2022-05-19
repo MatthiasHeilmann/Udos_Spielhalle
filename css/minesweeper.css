@@ -1,3 +1,12 @@
+
+button {
+    width: 100px;
+    height: 30px;
+    align-content: center;
+    margin-top: 10px;
+}
+
+
 .grid {
     height: 520px;
     width: 520px;
@@ -5,6 +14,7 @@
     flex-wrap: wrap;
     background-color: lightblue;
     border: black solid;
+
 }
 
 .checked {

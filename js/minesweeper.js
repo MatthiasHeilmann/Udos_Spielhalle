@@ -1,4 +1,6 @@
-// TODO: Fix Bug: wenn 10 flags gesetzt sind, kann man die flags nicht mehr entfernen
+// TODO: Reset bei GameOver
+// TODO: Reset allgemein
+// TODO: CSS
 
 const grid = document.querySelector(".grid")
 let width = 10
@@ -46,6 +48,11 @@ function createBoard() {
       // zur Kontrolle -> Nummern in Feld
       // square.innerHTML = i;
    }
+
+   // Minen übrig:
+   const p = document.createElement("p")
+   grid.appendChild(p)
+   p.innerHTML = "Minen übrig: " + (mines-flags)
 
    // Zähle Anzahl Minennachbarn
    for (let i = 0; i < squares.length; i++) {
@@ -201,6 +208,7 @@ function checkForWin() {
       }
    }
 }
+
 
 // check gewonnen mit aufgedeckten Feldern
 function checkForWinnn() {
