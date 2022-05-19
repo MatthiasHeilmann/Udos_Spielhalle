@@ -1,48 +1,85 @@
 const socket = io('/sv');
 
+const Call = {
+    AnswerGameRequest: "answerGameRequest",
+    SendOpenGames: "sendOpenGames",
+    AskJoinGame: "askJoinGame",
+    Fire: "fire",
+    Answer: "answer"
+};
+
+/**
+ * Defines on what call the socket should currently listen to
+ * @type {String}
+ */
+let listenCall = "";
+let selectedHost = 0;
+
 socket.on('disconnect', () => {
-    alert("Der andere spieler hat die verbindung abgebrochen");
+    lDisconnect();
 })
 
-function connect(config){
+function sConnect(config){
     console.log("Connect as " + config.name + " (asHost: " + config.asHost + ")");
 
     socket.emit('svSetName', config.name);
 
     socket.on('svFire', (coordinates) => {
-        // TODO Koordinaten checken und antworten
-        coordinates.x;
-        coordinates.y;
-
-        socket.emit('svSendAnswer', {coordinates, result: "miss"});
+        if(listenCall !== Call.Fire) return;
+        lGetFire(coordinates)
     });
 
     socket.on('svAnswer', (answer) => {
-        // TODO result checken und Koordinaten markieren
-        answer.coordinates;
-        answer.result;
+        if(listenCall !== Call.Answer) return;
+        lGetAnswer(answer.coordinates, answer.result);
     });
 
     if(config.asHost){
-        socket.on('svAskJoinGame', (client) => {
-            // TODO Fragen ob der joinen erlaubt ist und antworten
-            client.name;
-            client.clientId;
-
-            socket.emit('svSendAnswerGameRequest', false);
+        socket.on('svGameRequest', (client) => {
+            if(listenCall !== Call.AskJoinGame) return;
+            lOnConnectRequest(client);
         });
 
         socket.emit('svCreateOpenGame');
     }
     else{
         socket.on('svSendOpenGames', (listHosts) => {
+            if(listenCall !== Call.SendOpenGames) return;
             // TODO Hosts in Liste darstellen
         });
 
         socket.on('svAnswerGameRequest', (allowJoin) => {
-            // TODO Antwort verwalten
+            if(listenCall !== Call.AnswerGameRequest) return;
+            socket.emit('svJoinGame', selectedHost);
         });
 
+        sListenOn(Call.SendOpenGames);
         socket.emit('svGetOpenGames');
     }
+}
+
+function sListenOn(call){
+    listenCall = call;
+}
+
+function sSendGameRequest(hostId){
+    socket.emit('svSendGameRequest', hostId);
+    selectedHost = hostId;
+    listenCall = Call.AnswerGameRequest;
+}
+
+function sSendAnswerGameRequest(clientId, answer = false){
+    socket.emit('svSendAnswerGameRequest', clientId, answer);
+}
+
+function sSendFire(coordinates){
+    socket.emit(`svSendFire`, coordinates);
+}
+
+function sSendAnswer(coordinates, result){
+    socket.emit('svSendAnswer', {coordinates, result});
+}
+
+function sDisconnect(){
+    socket.disconnect();
 }

@@ -6,11 +6,20 @@
     --red: rgb(158,6,36);
 }
 
+#game{
+    position: relative;
+}
+
 canvas {
+    top: 0;
     width: 400px;
     height: 400px;
     margin-top: 5px;
     border: 1px black solid;
+}
+
+canvas.enemy{
+    visibility: hidden;
 }
 
 .error{

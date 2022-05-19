@@ -19,7 +19,7 @@ app.use(function timeLog(req, res, next) {
 });
 
 /**
- * TODO Learn https://stackoverflow.com/questions/29446462/nodejs-how-to-update-client-after-external-program-has-returned
+ * Learn https://stackoverflow.com/questions/29446462/nodejs-how-to-update-client-after-external-program-has-returned
  * For socket.io.
  * Lässt den server mit einem client verbinden. Antworten zu jeder zeit ohne gebraucht von fetch o.ä.
  */
@@ -60,8 +60,8 @@ io.of('sv').on('connection', (socket) => {
         socket.emit('svSendOpenGames', listHosts);
     });
 
-    socket.on('svSendAskJoinGame', (hostId) => {
-        sockets[hostId].emit('svAskJoinGame', {name: socket.name, clientId: socket.id});
+    socket.on('svSendGameRequest', (hostId) => {
+        sockets[hostId].emit('svGameRequest', {name: socket.name, clientId: socket.id});
     });
 
     socket.on('svSendAnswerGameRequest', (clientId, allowJoin) => {

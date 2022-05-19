@@ -2,7 +2,7 @@ import {Vector} from "./svShips.js";
 
 export const defaultSize = 10;
 
-export class FieldDrawer{
+export class CanvasDrawer{
     /**
      * size of the coordinate system in x and y direction
      * @type {number}
@@ -31,15 +31,37 @@ export class FieldDrawer{
      * @param colour {String} colour to paint the tile in
      */
     drawTile(coordinate, colour){
-        console.log("Tile for: " + coordinate.x + ";" + coordinate.y);
-
         this.#drawRect(coordinate.x*this.tileWidth, coordinate.y*this.tileHeight
                         , this.tileWidth, this.tileHeight, colour);
     }
 
+    /**
+     * Draws a X onto the given coordinate
+     * @param coordinate {Vector}
+     */
+    drawShotMark(coordinate){
+        // Top left corner of the Tile
+        const tileX = coordinate.x*this.tileWidth;
+        const tileY = coordinate.y*this.tileHeight;
+
+        this.context.lineWidth = 0.5;
+        this.context.lineCap = "square";
+        this.context.strokeStyle = "black";
+        this.context.beginPath();
+
+        // Draw vertical lines
+        this.context.moveTo( tileX + 0.5, tileY);
+        this.context.lineTo(tileX + this.tileWidth + 0.5, tileY + this.tileHeight);
+
+        // Draw horizontal lines
+        this.context.moveTo(tileX + this.tileWidth,  tileY + 0.5);
+        this.context.lineTo(this.width, tileY + this.tileHeight + 0.5);
+
+        this.context.stroke();
+    }
+
     #drawRect(x, y, width, height, colour){
         // Paint a new rectangle without overdrawing the lines
-        console.log("Rectangle: " + x + ";" + y + ", " + colour);
         this.context.beginPath();
         this.context.rect(x+1.5, y+1.5, width-1.5, height-1.5);
         this.context.fillStyle = colour;

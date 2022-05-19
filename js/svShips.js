@@ -1,14 +1,23 @@
 import {defaultSize} from "/js/svCanvasDrawer.js";
 
-const Direction = {
+export const Direction = {
     Default: 0,
     North: 1,
     East: 2,
     South: 3,
-    West: 4
+    West: 4,
+    getDirectionName(index){
+        switch (index){
+            case 0: return "Default";
+            case 1: return "North";
+            case 2: return "East";
+            case 3: return "South";
+            case 4: return "West";
+        }
+    }
 };
 
-const ShipId = {
+export const ShipId = {
     Default: 0,
     Battleship: 1,
     Cruiser: 2,
@@ -32,7 +41,7 @@ export class Vector {
     }
 
     add(v) {
-        return new Vector(this.#x + v.x(), this.#y + v.y());
+        return new Vector(this.#x + v.#x, this.#y + v.#y);
     }
 
     /**
@@ -43,8 +52,8 @@ export class Vector {
     distanceFrom(v) {
         let distance = 0;
 
-        distance += Math.abs(this.#x - v.x);
-        distance += Math.abs(this.#y - v.y);
+        distance += Math.abs(this.#x - v.#x);
+        distance += Math.abs(this.#y - v.#y);
 
         return distance;
     }
@@ -83,14 +92,15 @@ export class Vector {
  * Later being represented as a square inside the painted coordinate system
  */
 class Tile {
+    static  defaultTile = new Tile(null);
+
     #defaultColour = "#ffffff";
+    #destroyedColour = "red";
     #shotColour = "#ff0000";
-    #battleshipColour = "#7400b8";
-    #cruiserColour = "#5e60ce";
-    #destroyerColour = "#74c69d";
-    #submarineColour = "#40916c";
+    #shipColours = ["#7400b8", "#5e60ce", "#74c69d", "#40916c"];
 
     #ownerId;
+    #ownerDestroyed;
     #isShot = false;
 
     constructor(ownerShip) {
@@ -98,19 +108,14 @@ class Tile {
     }
 
     getColour() {
+        if(this.#ownerDestroyed) return this.#destroyedColour
         if (this.#isShot) return this.#shotColour;
 
-        switch (this.#ownerId) {
-            case ShipId.Submarine:
-                return this.#submarineColour;
-            case ShipId.Destroyer:
-                return this.#destroyerColour;
-            case ShipId.Cruiser:
-                return this.#cruiserColour;
-            case ShipId.Battleship:
-                return this.#battleshipColour;
-        }
-        return this.#defaultColour;
+        return this.#shipColours[this.#ownerId] || this.#defaultColour;
+    }
+
+    destroy(){
+        this.#ownerDestroyed = true;
     }
 
     shoot() {
@@ -128,7 +133,7 @@ export class Ship {
     #startingPosition = new Vector(0, 0);
     #direction = Direction.Default;
     #length = 0;
-    #tiles = [];
+    #tiles = [Tile.defaultTile];
     #shipNames = ["Battleship", "Cruiser", "Destroyer", "Submarine"];
 
     constructor(startingPosition, direction, shipId) {
@@ -141,20 +146,25 @@ export class Ship {
     }
 
     getTileVectors() {
+        console.log("Get vectors for ");
+        console.log(this.#startingPosition);
+        console.log("l:" + this.#length + ", d: " + this.#direction);
         let tileVectors = [];
         for (let i = 0; i < this.#length; i++) {
-            tileVectors.push(() => {
-                switch (this.#direction) {
-                    case Direction.North:
-                        return new Vector(this.#startingPosition.x(), this.#startingPosition.y() - i);
-                    case Direction.East:
-                        return new Vector(this.#startingPosition.x() + i, this.#startingPosition.y());
-                    case Direction.South:
-                        return new Vector(this.#startingPosition.x(), this.#startingPosition.y() + i);
-                    case Direction.West:
-                        return new Vector(this.#startingPosition.x() - i, this.#startingPosition.y());
-                }
-            })
+            switch (this.#direction) {
+                case Direction.North:
+                    tileVectors.push(new Vector(this.#startingPosition.x, this.#startingPosition.y - i));
+                    break;
+                case Direction.East:
+                    tileVectors.push(new Vector(this.#startingPosition.x + i, this.#startingPosition.y));
+                    break;
+                case Direction.South:
+                    tileVectors.push(new Vector(this.#startingPosition.x, this.#startingPosition.y + i));
+                    break;
+                case Direction.West:
+                    tileVectors.push(new Vector(this.#startingPosition - i, this.#startingPosition.y));
+                    break;
+            }
         }
         return tileVectors;
     }
@@ -164,30 +174,70 @@ export class Ship {
      * @param v {Vector}
      */
     getTileByVector(v) {
+        let tile;
         try {
             switch (this.#direction) {
                 case Direction.North:
                 case Direction.South:
-                    if (this.#startingPosition.x() - v.x() === 0) {
-                        return this.#tiles[Math.abs(this.#startingPosition.y() - v.y())];
+                    if (this.#startingPosition.x - v.x === 0) {
+                        tile = this.#tiles[Math.abs(this.#startingPosition.y - v.y)];
                     }
                     break;
                 case Direction.East:
                 case Direction.West:
-                    if (this.#startingPosition.y() - v.y() === 0) {
-                        return this.#tiles[Math.abs(this.#startingPosition.x() - v.x())];
+                    if (this.#startingPosition.y - v.y === 0) {
+                        tile = this.#tiles[Math.abs(this.#startingPosition.x - v.x)];
                     }
+                    break;
             }
         } catch (error) {
             console.log("Tile is not part of this ship");
         }
-        return null;
+        return tile || null;
     }
 
     buildTiles() {
-        for (let i = 0; i < length; i++) {
+        this.#tiles = [];
+        for (let i = 0; i < this.#length; i++) {
             this.#tiles.push(new Tile(this.#shipId));
         }
+    }
+
+    /**
+     * Set the, by the coordinate specified Tile, as hit
+     * @param coordinate {Vector}
+     */
+    hitTile(coordinate){
+        let hitTile = this.getTileByVector(coordinate);
+
+        if(hitTile === null) console.error("No Tile was hit but tried to set anyways: " + coordinate.x + ", " + coordinate.y)
+
+        hitTile.shoot()
+
+        if(this.isDestroyed){
+            for(let tile of this.#tiles){
+                tile.destroy();
+            }
+        }
+    }
+
+    get colours(){
+        let colours = [];
+        for(let tile of this.#tiles){
+            colours.push(tile.getColour());
+        }
+        return colours;
+    }
+
+    get isDestroyed(){
+        for(let tile of this.#tiles){
+            if(!tile.isShot) return false;
+        }
+        return true;
+    }
+
+    get tiles(){
+        return this.#tiles;
     }
 
     get shipId() {
@@ -220,23 +270,56 @@ let shipCounts = [0, 0, 0, 0, 0];
 const maxShipCounts = [10, 1, 2, 3, 4];
 export const Placements = {
     /**
+     * @param vector {Vector}
+     * @return {number} 0 = miss, 1 = hit, 2 = destroyed
+     */
+    hitsShip(vector){
+        for(let ship of placedShips){
+            let hitTile = ship.getTileByVector(vector);
+            if(hitTile !== null){
+                let allHit = true;
+                for(let tile of ship.tiles){
+                    if(!tile.isShot) allHit = false;
+                }
+                return allHit? 2 : 1;
+            }
+        }
+        return 0;
+    },
+
+    isGameOver(){
+        for(let ship of placedShips){
+            if(!ship.isDestroyed) return false;
+        }
+        return true;
+    },
+
+    /**
+     * Hits the ship's tile that owns the given coordinate
+     * @param coordinate {Vector}
+     */
+    hitShip(coordinate){
+        this.getShipFromVector(coordinate)?.hitTile(coordinate);
+    },
+
+    /**
      * uses getShipIdByVectors() and generateDirectionByVectors() to build a ship
      * and then passes it to placeShip()
      * @param coordinates {[Vector]}
-     * @return {number} 0 for success,
+     * @return {{ship: Ship, result: number}} 0 for success,
      * 1 if the ship cannot be placed there,
      * 2 if the amount of Ships (total or of just this kind) is maxed
      */
     placeShipByVectors(coordinates){
         const shipId = this.getShipIdByVectors(coordinates);
         const shipDir = this.generateDirectionByVectors(coordinates);
-
+        console.log("Placing with : " + Direction.getDirectionName(shipDir));
         if(shipId === ShipId.Default || shipDir === Direction.Default){
             this.addError("Illegal shipId or direction");
-            return 1;
+            return {ship: null, result: 1};
         }
-
-        return this.placeShip(new Ship(coordinates, shipDir, shipId));
+        let ship = new Ship(coordinates[0], shipDir, shipId);
+        return {ship, result: this.placeShip(ship)};
     },
     /**
      *
@@ -251,8 +334,8 @@ export const Placements = {
             return 2;
         }
 
-        if(shipCounts[ship.shipId()] >= maxShipCounts[ship.shipId()]){
-            this.addError(ship.name() + " is maxed out");
+        if(shipCounts[ship.shipId] >= maxShipCounts[ship.shipId]){
+            this.addError(ship.name + " is maxed out");
             return 2;
         }
 
@@ -262,7 +345,7 @@ export const Placements = {
         }
 
         shipCounts[0] = placedShips.push(ship);
-        shipCounts[ship.shipId()]++;
+        shipCounts[ship.shipId]++;
         console.log("Ship added: " + ship);
         return 0;
     },
@@ -273,8 +356,9 @@ export const Placements = {
      * @return {boolean}
      */
     canPlace(ship) {
+        console.log("Adding tiles: ");
         let shipCoordinates = ship.getTileVectors();
-
+        console.log(shipCoordinates);
         for(let coordinate of shipCoordinates){
             if(!this.checkPosition(coordinate)) return false;
         }
@@ -288,29 +372,33 @@ export const Placements = {
      * @return {boolean}
      */
     checkPosition(coordinate) {
+        console.log("Checking for")
+        console.log(JSON.stringify(placedShips))
         // Coordinates in bounds
-        if(coordinate.x() >= defaultSize
-        || coordinate.x() < 0
-        || coordinate.y() >= defaultSize
-        || coordinate.y() < 0){
+        if(coordinate.x >= defaultSize
+        || coordinate.x < 0
+        || coordinate.y >= defaultSize
+        || coordinate.y < 0){
             this.positionError("coordinate out of bounds", coordinate)
             return false;
         }
 
         // Coordinate is free to use
-        for(let placedShip of placedShips){
+        for(let ship of placedShips){
             // coordinate is on top of a ship
-            if(!placedShip.getTileByVector(coordinate)){
-                this.positionError("already placed ship here")
+            if(ship.getTileByVector(coordinate) !== null){
+                console.log("Fucked up: ")
+                console.log(ship.getTileByVector(coordinate));
+                this.positionError("already placed ship here", coordinate)
                 return false;
             }
 
             // coordinate is beside a ship
-            for(let placedVector of placedShip.getTileVectors()){
-                let xDiff = Math.abs(coordinate.x() - placedVector.x());
-                let yDiff = Math.abs(coordinate.y() - placedVector.y());
+            for(let placedVector of ship.getTileVectors()){
+                let xDiff = Math.abs(coordinate.x - placedVector.x);
+                let yDiff = Math.abs(coordinate.y - placedVector.y);
                 if(xDiff <= 1 && yDiff <= 1){
-                    this.positionError("placed ship nearby");
+                    this.positionError("placed ship nearby", coordinate);
                     return false;
                 }
             }
@@ -319,11 +407,23 @@ export const Placements = {
     },
 
     /**
+     * Returns the ship that owns the given vector
+     * @param vector {Vector}
+     * @return {Ship|null}
+     */
+    getShipFromVector(vector){
+      for(let ship of placedShips){
+          if(ship.getTileByVector(vector)) return ship;
+      }
+      return null;
+    },
+
+    /**
      * @param vectors {Vector[]}
      * @return {number}
      */
     getShipIdByVectors(vectors) {
-        if (!this.generateDirectionByVectors(vectors)) return ShipId.Default;
+        if (this.generateDirectionByVectors(vectors) === Direction.Default) return ShipId.Default;
 
         switch (vectors.length) {
             case 2:
@@ -345,7 +445,7 @@ export const Placements = {
      * @return {number}
      */
     generateDirectionByVectors(vectors) {
-        if (vectors.length < 2 || vectors.length > 5) return Direction.Default;
+        if (vectors === null || vectors.length < 2 || vectors.length > 5) return Direction.Default;
 
         // Check if the tiles are all in one direction
         let vDirection = vectors[0].directionFrom(vectors[1]);
@@ -354,10 +454,12 @@ export const Placements = {
                 return Direction.Default;
         }
 
-        if (!vDirection.x())
-            return vDirection.x() > 0 ? Direction.East : Direction.West;
-        if (!vDirection.y())
-            return vDirection.y() > 0 ? Direction.North : Direction.South;
+        console.log("Direction:")
+        console.log(vDirection);
+        if (vDirection.x !== 0)
+            return vDirection.x > 0 ? Direction.East : Direction.West;
+        if (vDirection.y !== 0)
+            return vDirection.y > 0 ? Direction.South : Direction.North;
 
         return Direction.Default;
     },
@@ -366,12 +468,20 @@ export const Placements = {
         return shipCounts[shipId];
     },
 
+    getMaxShipCount(shipId = ShipId.Default) {
+        return maxShipCounts[shipId];
+    },
+
+    getSpareShipCount(shipId = ShipId.Default) {
+        return this.getMaxShipCount(shipId) - this.getShipCount(shipId);
+    },
+
     addError(message){
         console.log("Skip add: " + message);
     },
 
     positionError(message, coordinate){
-        console.log("Illegal position: " + message + ": " + ('A'.charAt(0) + coordinate.x()) + "" + coordinate.y())
+        console.log("Illegal position: " + message + ": " + (String.fromCharCode('A'.charCodeAt(0) + coordinate.x)) + "" + coordinate.y)
     },
 
     clear(){
