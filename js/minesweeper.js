@@ -1,8 +1,6 @@
-// TODO: Reset bei GameOver
-// TODO: Reset allgemein
-// TODO: CSS
 
 const grid = document.querySelector(".grid")
+const minesLeft = document.querySelector(".minesLeft")
 let width = 10
 let mines = 10
 let squares = []
@@ -11,6 +9,7 @@ let flags = 0
 
 // erzeuge Spielfeld
 function createBoard() {
+   minesLeft.innerHTML = mines-flags
 
    // erzeuge Array zum Verteilen der Minen
    const minesArray = Array(mines).fill("mine")                        // erzeuge Array[mines] mit Bomben
@@ -48,12 +47,7 @@ function createBoard() {
       // zur Kontrolle -> Nummern in Feld
       // square.innerHTML = i;
    }
-
-   // Minen übrig:
-   const p = document.createElement("p")
-   grid.appendChild(p)
-   p.innerHTML = "Minen übrig: " + (mines-flags)
-
+   
    // Zähle Anzahl Minennachbarn
    for (let i = 0; i < squares.length; i++) {
       let total = 0                                                   // total = Anzahl an umliegenden Minen
@@ -100,14 +94,15 @@ function addFlag(square) {
          square.innerHTML = "🚩"
          flags ++
          checkForWin()
+         minesLeft.innerHTML = mines - flags
       } 
    } else {
       square.classList.remove("flag")
       square.innerHTML = ""
       flags--
+      minesLeft.innerHTML = mines - flags
    }
 }
-
 
 
 //Linksklick auf Feld
