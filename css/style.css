@@ -106,17 +106,28 @@ header{
     padding-right: 20%;
     top: 0;
     left: 0;
-    background-color: #cccccc;
-    /* background: url(../sources/background_header.jpg); */
-    background-size: 100% 100%;
+    /* background-color: #cccccc;
+    background: url(../sources/background_header3.jpg); 
+    background-size: 100% 100%; */
+    background-image: url(../sources/background_header.jpg);
+	background-position: bottom center; 
+	background-repeat: no-repeat; 
+	background-size:cover; 
+	background-attachment:fixed;
+
     position: fixed;
-    box-shadow: 0 1px 3px darkgray;
+    box-shadow: 0 1px 5px darkgray;
     z-index: 2;
 }
 #logo{
-    margin-top: 15px;
-    width: 200px;
+    margin-top: 10px;
+    width: 100px;
     float: left;
+}
+#title{
+    padding-top: 20px;
+    text-align: left;
+    color: white;
 }
 /* HOME *********************/
 #home{
