@@ -56,13 +56,12 @@ button {
     font-size: 25px;
     transition-duration: 0.2s;
     float: right;
-   
 }
 button:hover {
     cursor: pointer;
     color: white;
 }
-@keyframes bounce {
+@keyframes bounce{
     0% {
         transform: translateY(0);
     }

@@ -84,6 +84,24 @@ li{list-style-type: none;}
 .static:hover {
     opacity:0;
 }
+button {
+    background-color: rgb(16, 139, 183);
+    border-radius: 5px;
+    border: 2px solid black;
+    width: auto;
+    height: 50px;
+    font-family: "Bangers", cursive;
+    text-transform: uppercase;
+    font-size: 25px;
+    transition-duration: 0.2s;
+    float: center;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+button:hover {
+    cursor: pointer;
+    color: white;
+}
 /* HEADER *********************/
 header{
     width: 100%;

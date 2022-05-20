@@ -14,8 +14,8 @@ const FIELD_21="TicTacToe_21";
 const FIELD_22="TicTacToe_22";
 const WINNER_COLOR="rgb(189,15,22)";
 const CELL_COLOR_0="lightgray";
-const CELL_COLOR_1="#CCCCCC";
-const CELL_COLOR_2="#737272";
+const PLAYER_COLOR_1="rgb(16, 139, 183)";
+const PLAYER_COLOR_2="rgb(200,99,18)";
 const cb = document.querySelector('#switch1');
 
 window.onload = ()=> {newGame();};
@@ -32,6 +32,7 @@ function newGame(){
     ];
     zuege=0;
     playing=1;
+    boinkStop();
 }
 function reset(){
     newGame();
@@ -62,7 +63,7 @@ function reset(){
     document.getElementById("O_won").style.visibility="hidden";
     document.getElementById("unentschieden").style.display="none";
     document.getElementById("unentschieden").style.visibility="hidden";
-    document.getElementById("post_game").style.display="none";
+    // document.getElementById("post_game").style.display="none";
     document.getElementById("post_game").style.visibility="hidden";
 }
 function switchSpielmodus(){
@@ -85,6 +86,12 @@ function print(){
         console.log(XO[i][0]+XO[i][1]+XO[i][2]);
     }
 }
+function boink(){
+    document.getElementById("reset").style.animation = "bounce 1.5s infinite";
+}
+function boinkStop(){
+    document.getElementById("reset").style.animation = "paused";
+}
 
 function playerWon(player){
     console.log(player+" won!");
@@ -92,7 +99,7 @@ function playerWon(player){
     if(player=="X"){
         document.getElementById("X_won").style.display="inline";
         document.getElementById("X_won").style.visibility="visible";
-        document.getElementById("post_game").style.backgroundColor="rgb(16, 139, 183)";
+        document.getElementById("post_game").style.backgroundColor="rgb(200,99,18)";
     }else if(player=="O"){
         if(Spielmodus==1){
             document.getElementById("Udo_won").style.display="inline";
@@ -102,7 +109,7 @@ function playerWon(player){
         }else{
             document.getElementById("O_won").style.display="inline";
             document.getElementById("O_won").style.visibility="visible";
-            document.getElementById("post_game").style.backgroundColor="rgb(200,99,18)";
+            document.getElementById("post_game").style.backgroundColor="rgb(16, 139, 183)";
         }
     }else{
         document.getElementById("unentschieden").style.display="inline";
@@ -112,6 +119,7 @@ function playerWon(player){
     document.getElementById("txt_spielmodus").style.color="black";
     document.getElementById("post_game").style.display="inline";
     document.getElementById("post_game").style.visibility="visible";
+    boink();
 }
 
 function besetzen(row,col){
@@ -124,7 +132,8 @@ function besetzen(row,col){
                 if(Spielmodus!=1){
                     besetzenO(row,col);
                 }else{
-                    document.getElementById("txt_spielmodus").style.color="rgb(189,15,22)";
+                    console.log("forbidden");
+                    document.getElementById("txt_spielmodus").style.animation = "forbidden 1s";
                 }
             }
             if(Spielmodus==1){
@@ -141,33 +150,26 @@ function besetzenX(row,col){
     besetzt[row][col]=true;
     XO[row][col]="X";
     document.getElementById("TicTacToe_"+row+col).innerHTML="X";
-    document.getElementById("TicTacToe_"+row+col).style.background=CELL_COLOR_1;
+    document.getElementById("TicTacToe_"+row+col).style.color=PLAYER_COLOR_2;
     var win;
     win=getGewinner();
         if(win=="X"){
-            playerWon("X")
-            // console.log("X won!");
-            // playing=0;
-            // document.getElementById("txt_spielmodus").style.color="black";
+            playerWon("X");
         }
         if(zuege==9&&win!="X"){
             playerWon("unentschieden");
         }
 }
 function besetzenO(row,col){
-    // console.log("besetzenO"+row+col);
     zuege++;
     besetzt[row][col]=true;
     XO[row][col]="O";
     document.getElementById("TicTacToe_"+row+col).innerHTML="O";
-    document.getElementById("TicTacToe_"+row+col).style.background=CELL_COLOR_2;
+    document.getElementById("TicTacToe_"+row+col).style.color=PLAYER_COLOR_1;
     var win;
     win=getGewinner();
         if(win=="O"){
             playerWon("O");
-            // console.log("O won!");
-            // playing=0;
-            // document.getElementById("txt_spielmodus").style.color="black";
         }
         if(zuege==9&&win!="O"){
             playerWon("unentschieden");
