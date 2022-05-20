@@ -223,10 +223,10 @@ function checkForWinnn() {
    }
 }
 
-//reset blink
+//reset button go boink
 function reset() {
    var button = document.getElementById("btn");
    if (isGameOver) {
-      button.style.animation = "blink 1.5s infinite";
+      button.style.animation = "bounce 1.5s infinite";
    }
 }
