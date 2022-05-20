@@ -12,6 +12,8 @@ gameboard.push([2,0,2,0,2,0,2,0]);
 coordinates=[];
 oldcoordinates=[];
 legalmoves=[];
+turn="white";
+clickmade=true;
 //update_gameboard_gui(gameboard);
 
 //pieces: 2==white regular, 3==white queen, 4==black regular, 5==black queen
@@ -22,11 +24,7 @@ window.onload = ()=> {
     cc.font = '20py Arial';
     update_gameboard_gui(gameboard);
     turn="white";
-
-    while(check_gamegoing(gameboard)==true){
-        game_loop(gameboard,turn,c);
-        break;
-    }
+    game_loop(gameboard,c);
 }
 
 
@@ -55,33 +53,33 @@ function update_gameboard_gui(logicgrid){
                 if (y==2){
                     cc.fillStyle='rgb(255,255,255)';
                     cc.beginPath();
-                    cc.ellipse((ind1*70+35),(ind2*70)+35,35,20,0,0,2*Math.PI);
+                    cc.ellipse((ind1*70+35),(ind2*70)+35,30,20,0,0,2*Math.PI);
                     cc.fill();
                 }
                 if (y==3){
                     cc.fillStyle='rgb(255,255,255)';
                     cc.beginPath();
-                    cc.ellipse((ind1*70+35),(ind2*70)+25,35,20,0,0,2*Math.PI);
+                    cc.ellipse((ind1*70+35),(ind2*70)+25,30,20,0,0,2*Math.PI);
                     cc.fill();
                     cc.beginPath();
-                    cc.ellipse((ind1*70+35),(ind2*70)+45,35,20,0,0,2*Math.PI);
+                    cc.ellipse((ind1*70+35),(ind2*70)+45,30,20,0,0,2*Math.PI);
                     cc.fill();
 
                 }
                 if (y==4){
                     cc.fillStyle='rgb(0, 0, 0)';
                     cc.beginPath();
-                    cc.ellipse((ind1*70+35),(ind2*70)+35,35,20,0,0,2*Math.PI);
+                    cc.ellipse((ind1*70+35),(ind2*70)+33,30,20,0,0,2*Math.PI);
                     cc.fill();
 
                 }
                 if (y==5){
                     cc.fillStyle='rgb(0, 0, 0)';
                     cc.beginPath();
-                    cc.ellipse((ind1*70+35),(ind2*70)+25,35,20,0,0,2*Math.PI);
+                    cc.ellipse((ind1*70+35),(ind2*70)+25,30,20,0,0,2*Math.PI);
                     cc.fill();
                     cc.beginPath();
-                    cc.ellipse((ind1*70+35),(ind2*70)+45,35,20,0,0,2*Math.PI);
+                    cc.ellipse((ind1*70+35),(ind2*70)+45,30,20,0,0,2*Math.PI);
                     cc.fill();
 
                 }
@@ -100,6 +98,7 @@ function check_legal_moves(logicgrid,turn){
     cancapture=false;
     captures=[];
     noncaptures=[];
+    console.log(logicgrid);
     logicgrid.forEach((y,idxy) => {
         y.forEach((x,idxx) => {
             //white side
@@ -112,11 +111,11 @@ function check_legal_moves(logicgrid,turn){
 
                     //check for possible captures with regular pieces
                     if(logicgrid[idxy-1][idxx-1]>=4 && logicgrid[idxy-2][idxx-2]==1 && idxy>=2 && idxx>=2){
-                        captures.push("y"+idxy+"x"+idxx+"c"+"y"+idxy-2+"x"+idxx-2)
+                        captures.push("y"+idxy+"x"+idxx+"c"+"y"+(idxy-2)+"x"+(idxx-2))
                         cancapture=true
                     }
                     if(logicgrid[idxy-1][idxx+1]>=4 && logicgrid[idxy-2][idxx+2]==1 && idxy>=2 && idxx<=5){
-                        captures.push("y"+idxy+"x"+idxx+"c"+"y"+idxy-2+"x"+idxx+2)
+                        captures.push("y"+idxy+"x"+idxx+"c"+"y"+(idxy-2)+"x"+(idxx+2))
                         cancapture=true
                     }
                     if(cancapture==false){
@@ -125,7 +124,7 @@ function check_legal_moves(logicgrid,turn){
                             noncaptures.push("y"+idxy+"x"+idxx+" "+"y"+(idxy-1)+"x"+(idxx-1))
                         }
 
-                        if(logicgrid[idxy-1][idxx+1]==1 && idxy>=2 && idxx<=6){
+                        if(logicgrid[idxy-1][idxx+1]==1 && idxy>=1 && idxx<=6){
                             noncaptures.push("y"+idxy+"x"+idxx+" "+"y"+(idxy-1)+"x"+(idxx+1))
                         }
 
@@ -148,29 +147,32 @@ function check_legal_moves(logicgrid,turn){
                     //check for board boundaries
 
                     //check for possible captures with regular pieces
-                    if(logicgrid[idxy+1][idxx-1]==2 && logicgrid[idxy+2][idxx-2]==1){
+                    if(logicgrid[idxy+1][idxx-1]==2 && logicgrid[idxy+2][idxx-2]==1 && idxy<=5 && idxx>=2){
+                        captures.push("y"+idxy+"x"+idxx+"c"+"y"+(idxy+2)+"x"+(idxx-2))
+                        cancapture=true
+                    }
+                    /*if(logicgrid[idxy+1][idxx-1]==3 && logicgrid[idxy+2][idxx-2]==1 && idxy<=6 && idxx>=){
                         captures.push("y"+idxy+"x"+idxx+"c"+"y"+idxy+2+"x"+idxx-2)
                         cancapture=true
                     }
-                    if(logicgrid[idxy+1][idxx-1]==3 && logicgrid[idxy+2][idxx-2]==1){
-                        captures.push("y"+idxy+"x"+idxx+"c"+"y"+idxy+2+"x"+idxx-2)
+                    */
+                    if(logicgrid[idxy+1][idxx+1]==2 && logicgrid[idxy+2][idxx+2]==1 && idxy<=5 && idxx<=5){
+                        captures.push("y"+idxy+"x"+idxx+"c"+"y"+(idxy+2)+"x"+(idxx+2))
                         cancapture=true
                     }
-                    if(logicgrid[idxy+1][idxx+1]==2 && logicgrid[idxy+2][idxx+2]==1){
-                        captures.push("y"+idxy+"x"+idxx+" "+"y"+idxy+2+"x"+idxx+2)
-                        cancapture=true
-                    }
+                    /*
                     if(logicgrid[idxy+1][idxx+1]==3 && logicgrid[idxy+2][idxx+2]==1){
                         captures.push("y"+idxy+"x"+idxx+" "+"y"+idxy+2+"x"+idxx+2)
                         cancapture=true
                     }
+                    */
                     if(cancapture==false){
-                        if(logicgrid[idxy+1][idxx-1]==1){
-                            noncaptures.push("y"+idxy+"x"+idxx+" "+"y"+idxy+1+"x"+idxx-1)
+                        if(logicgrid[idxy+1][idxx-1]==1 && idxy<=6 && idxx>=1){
+                            noncaptures.push("y"+idxy+"x"+idxx+" "+"y"+(idxy+1)+"x"+(idxx-1))
                         }
 
-                        if(logicgrid[idxy+1][idxx+1]==1){
-                            noncaptures.push("y"+idxy+"x"+idxx+" "+"y"+idxy+1+"x"+idxx+1)
+                        if(logicgrid[idxy+1][idxx+1]==1 && idxy<=6 && idxx<=6){
+                            noncaptures.push("y"+idxy+"x"+idxx+" "+"y"+(idxy+1)+"x"+(idxx+1))
                         }
 
                     }
@@ -189,14 +191,14 @@ function check_legal_moves(logicgrid,turn){
     }
 }
 
-function check_promotion(logicgrid){
-    logicgrid.forEach((y,idxy) => {
+function check_promotion(){
+    gameboard.forEach((y,idxy) => {
         y.forEach((x,idxx) => {
-            if(x==2 && idxx==0){
-                x=3;
+            if(x==2 && idxy==0){
+                gameboard[0][idxx]=3;
             }
-            if(x==4 && idxx==7){
-                x=5;
+            if(x==4 && idxy==7){
+                gameboard[0][idxx]=5;
             }
         });
     });
@@ -231,7 +233,7 @@ function mouseposition(event){
     //console.log(event.clientX)
     //console.log(event.clientY)
     coordinates=getCorrespondingCoordinates(event.clientX,event.clientY);
-    console.log(coordinates);
+    //console.log(coordinates);
 }
 
 function getCorrespondingCoordinates(x, y){
@@ -276,7 +278,7 @@ function parse_moves(listmoves,coords){
     }
 
     
-    //c.removeEventListener("click", secondclick);
+    //
 
 
 }
@@ -306,13 +308,28 @@ function secondclick(event){
         //console.log(y[8]+y[6])
         //console.log(coordinates)
         if(parseInt(y[6])===coordinates[1] && parseInt(y[8])===coordinates[0] && secondclickbool==false && parseInt(y[1])===oldcoordinates[1] && parseInt(y[3])===oldcoordinates[0]){
-            console.log(y[8]+y[6])
-            console.log(coordinates)
+            //console.log(y[8]+y[6])
+            //console.log(coordinates)
             make_move(y);
             secondclickbool=true;
+            clickmade=true;
         }
     })
+
+    check_promotion();
     update_gameboard_gui(gameboard);
+    c=document.getElementById("gameCanvas");
+    c.removeEventListener("click", secondclick);
+    
+    if(turn=="white"){
+        turn="black";
+    }
+    else{
+        turn="white";
+    }
+    
+    game_loop(gameboard,c);
+    
     //while(secondclick==false){
         //pass
     //}
@@ -325,12 +342,13 @@ function secondclick(event){
 
 
 
-function game_loop(logicgrid,turn, context){
+function game_loop(logicgrid,context){
     if(check_gamegoing(logicgrid)==true){
+        clickmade=false;
         legalmoves=check_legal_moves(logicgrid, turn);
         console.log(legalmoves);
         //onclick function for each square displaying legal moves, second click makes the move
         context.addEventListener("click", firstclick)
-        check_promotion(logicgrid)
+        
     }
 }
