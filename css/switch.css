@@ -4,7 +4,7 @@
     border-radius: 0.75rem;
   }
   .buttonbackground {
-    background-color:#293c7f;
+    background-color:rgb(16, 139, 183);
     width: 3rem;
     height: 1.7rem;          /* = width/2 */
     border-radius: 1.25rem;  /* = height/2 */
@@ -32,7 +32,7 @@
     transition: all 0.2s ease;
   }
   #switch1:checked + label .buttonbackground {
-    background-color:#9e0624;
+    background-color:rgb(189,15,22);
   }
  #switch1:checked + label .buttonslider {
     left: 1.4rem;         /* = buttonbackground-width / 2 */

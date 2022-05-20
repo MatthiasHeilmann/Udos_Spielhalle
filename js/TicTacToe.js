@@ -1,20 +1,21 @@
 var besetzt;
 var XO;
-var zuege=0;
+var zuege;
 var Spielmodus=1;
-var playing=true;
-const field00="TicTacToe_00";
-const field01="TicTacToe_01";
-const field02="TicTacToe_02";
-const field10="TicTacToe_10";
-const field11="TicTacToe_11";
-const field12="TicTacToe_12";
-const field20="TicTacToe_20";
-const field21="TicTacToe_21";
-const field22="TicTacToe_22";
-const winnerColor="red";
-const cellColor1="#CCCCCC";
-const cellColor2="#737272";
+var playing=1;
+const FIELD_00="TicTacToe_00";
+const FIELD_01="TicTacToe_01";
+const FIELD_02="TicTacToe_02";
+const FIELD_10="TicTacToe_10";
+const FIELD_11="TicTacToe_11";
+const FIELD_12="TicTacToe_12";
+const FIELD_20="TicTacToe_20";
+const FIELD_21="TicTacToe_21";
+const FIELD_22="TicTacToe_22";
+const WINNER_COLOR="rgb(189,15,22)";
+const CELL_COLOR_0="lightgray";
+const CELL_COLOR_1="#CCCCCC";
+const CELL_COLOR_2="#737272";
 const cb = document.querySelector('#switch1');
 
 window.onload = ()=> {newGame();};
@@ -29,9 +30,40 @@ function newGame(){
         [false,false,false],
         [false,false,false]
     ];
+    zuege=0;
+    playing=1;
 }
 function reset(){
-    document.location.reload();
+    newGame();
+    document.getElementById(FIELD_00).style.background=CELL_COLOR_0;
+    document.getElementById(FIELD_00).innerHTML="";
+    document.getElementById(FIELD_01).style.background=CELL_COLOR_0;
+    document.getElementById(FIELD_01).innerHTML="";
+    document.getElementById(FIELD_02).style.background=CELL_COLOR_0;
+    document.getElementById(FIELD_02).innerHTML="";
+    document.getElementById(FIELD_10).style.background=CELL_COLOR_0;
+    document.getElementById(FIELD_10).innerHTML="";
+    document.getElementById(FIELD_11).style.background=CELL_COLOR_0;
+    document.getElementById(FIELD_11).innerHTML="";
+    document.getElementById(FIELD_12).style.background=CELL_COLOR_0;
+    document.getElementById(FIELD_12).innerHTML="";
+    document.getElementById(FIELD_20).style.background=CELL_COLOR_0;
+    document.getElementById(FIELD_20).innerHTML="";
+    document.getElementById(FIELD_21).style.background=CELL_COLOR_0;
+    document.getElementById(FIELD_21).innerHTML="";
+    document.getElementById(FIELD_22).style.background=CELL_COLOR_0;
+    document.getElementById(FIELD_22).innerHTML="";
+    document.getElementById("txt_spielmodus").style.color="black";
+    document.getElementById("X_won").style.display="none";
+    document.getElementById("X_won").style.visibility="hidden";
+    document.getElementById("Udo_won").style.display="none";
+    document.getElementById("Udo_won").style.visibility="hidden";
+    document.getElementById("O_won").style.display="none";
+    document.getElementById("O_won").style.visibility="hidden";
+    document.getElementById("unentschieden").style.display="none";
+    document.getElementById("unentschieden").style.visibility="hidden";
+    document.getElementById("post_game").style.display="none";
+    document.getElementById("post_game").style.visibility="hidden";
 }
 function switchSpielmodus(){
     if(zuege>0){
@@ -42,10 +74,10 @@ function switchSpielmodus(){
             document.getElementById("txt_spielmodus").innerHTML="Spielmodus: 1v1";
         }else{
             Spielmodus=1;
-            document.getElementById("txt_spielmodus").innerHTML="Spielmodus: Gegen den Computer";
+            document.getElementById("txt_spielmodus").innerHTML="Spielmodus: Gegen Udo";
         }
     }
-    console.log("neuer Spielmodus: "+Spielmodus);
+    // console.log("neuer Spielmodus: "+Spielmodus);
 }
 
 function print(){
@@ -54,143 +86,190 @@ function print(){
     }
 }
 
+function playerWon(player){
+    console.log(player+" won!");
+    playing=0;
+    if(player=="X"){
+        document.getElementById("X_won").style.display="inline";
+        document.getElementById("X_won").style.visibility="visible";
+        document.getElementById("post_game").style.backgroundColor="rgb(16, 139, 183)";
+    }else if(player=="O"){
+        if(Spielmodus==1){
+            document.getElementById("Udo_won").style.display="inline";
+            document.getElementById("Udo_won").style.visibility="visible";
+            document.getElementById("post_game").style.backgroundColor="rgb(189,15,22)";
+
+        }else{
+            document.getElementById("O_won").style.display="inline";
+            document.getElementById("O_won").style.visibility="visible";
+            document.getElementById("post_game").style.backgroundColor="rgb(200,99,18)";
+        }
+    }else{
+        document.getElementById("unentschieden").style.display="inline";
+        document.getElementById("unentschieden").style.visibility="visible";
+        document.getElementById("post_game").style.backgroundColor="rgb(200,118,140)";
+    }
+    document.getElementById("txt_spielmodus").style.color="black";
+    document.getElementById("post_game").style.display="inline";
+    document.getElementById("post_game").style.visibility="visible";
+}
+
 function besetzen(row,col){
-    if(playing){
+    if(playing==1){
+        // console.log("besetzen"+row+col);
         if(!besetzt[row][col]){
             if((zuege%2)==0){
                 besetzenX(row,col);
             }else{
-                besetzenO(row,col);
+                if(Spielmodus!=1){
+                    besetzenO(row,col);
+                }else{
+                    document.getElementById("txt_spielmodus").style.color="rgb(189,15,22)";
+                }
             }
             if(Spielmodus==1){
-                botPlay();
+                playing=2;
+                setTimeout(botPlay,1000);
+                playing=1;
             }
         }
     }
 }
 function besetzenX(row,col){
+    // console.log("besetzenX"+row+col);
     zuege++;
     besetzt[row][col]=true;
     XO[row][col]="X";
     document.getElementById("TicTacToe_"+row+col).innerHTML="X";
-    document.getElementById("TicTacToe_"+row+col).style.background=cellColor1;
+    document.getElementById("TicTacToe_"+row+col).style.background=CELL_COLOR_1;
     var win;
     win=getGewinner();
         if(win=="X"){
-            console.log("X won!");
-            playing=false;
+            playerWon("X")
+            // console.log("X won!");
+            // playing=0;
+            // document.getElementById("txt_spielmodus").style.color="black";
+        }
+        if(zuege==9&&win!="X"){
+            playerWon("unentschieden");
         }
 }
 function besetzenO(row,col){
+    // console.log("besetzenO"+row+col);
     zuege++;
     besetzt[row][col]=true;
     XO[row][col]="O";
     document.getElementById("TicTacToe_"+row+col).innerHTML="O";
-    document.getElementById("TicTacToe_"+row+col).style.background=cellColor2;
+    document.getElementById("TicTacToe_"+row+col).style.background=CELL_COLOR_2;
     var win;
     win=getGewinner();
         if(win=="O"){
-            console.log("O won!");
-            playing=false;
+            playerWon("O");
+            // console.log("O won!");
+            // playing=0;
+            // document.getElementById("txt_spielmodus").style.color="black";
+        }
+        if(zuege==9&&win!="O"){
+            playerWon("unentschieden");
         }
 }
   
 function getGewinner(){
     if(XO[0][0]=="X" && XO[1][1]=="X" && XO[2][2]=="X"){
-        document.getElementById(field00).style.background=winnerColor;
-        document.getElementById(field11).style.background=winnerColor;
-        document.getElementById(field22).style.background=winnerColor;
+        document.getElementById(FIELD_00).style.background=WINNER_COLOR;
+        document.getElementById(FIELD_11).style.background=WINNER_COLOR;
+        document.getElementById(FIELD_22).style.background=WINNER_COLOR;
         zuege=9;
         return "X";
     }else if(XO[0][0]=="X" && XO[0][1]=="X" && XO[0][2]=="X"){
-        document.getElementById(field00).style.background=winnerColor;
-        document.getElementById(field01).style.background=winnerColor;
-        document.getElementById(field02).style.background=winnerColor;
+        document.getElementById(FIELD_00).style.background=WINNER_COLOR;
+        document.getElementById(FIELD_01).style.background=WINNER_COLOR;
+        document.getElementById(FIELD_02).style.background=WINNER_COLOR;
         zuege=9;
         return "X";
     }else if(XO[0][0]=="X" && XO[1][0]=="X" && XO[2][0]=="X"){
-        document.getElementById(field00).style.background=winnerColor;
-        document.getElementById(field10).style.background=winnerColor;
-        document.getElementById(field20).style.background=winnerColor;
+        document.getElementById(FIELD_00).style.background=WINNER_COLOR;
+        document.getElementById(FIELD_10).style.background=WINNER_COLOR;
+        document.getElementById(FIELD_20).style.background=WINNER_COLOR;
         zuege=9;
         return "X";
     }else if(XO[0][1]=="X" && XO[1][1]=="X" && XO[2][1]=="X"){
-        document.getElementById(field01).style.background=winnerColor;
-        document.getElementById(field11).style.background=winnerColor;
-        document.getElementById(field21).style.background=winnerColor;
+        document.getElementById(FIELD_01).style.background=WINNER_COLOR;
+        document.getElementById(FIELD_11).style.background=WINNER_COLOR;
+        document.getElementById(FIELD_21).style.background=WINNER_COLOR;
         zuege=9;
         return "X";
     }else if(XO[0][2]=="X" && XO[1][2]=="X" && XO[2][2]=="X"){
-        document.getElementById(field02).style.background=winnerColor;
-        document.getElementById(field12).style.background=winnerColor;
-        document.getElementById(field22).style.background=winnerColor;
+        document.getElementById(FIELD_02).style.background=WINNER_COLOR;
+        document.getElementById(FIELD_12).style.background=WINNER_COLOR;
+        document.getElementById(FIELD_22).style.background=WINNER_COLOR;
         zuege=9;
         return "X";
     }else if(XO[0][2]=="X" && XO[1][1]=="X" && XO[2][0]=="X"){
-        document.getElementById(field02).style.background=winnerColor;
-        document.getElementById(field11).style.background=winnerColor;
-        document.getElementById(field20).style.background=winnerColor;
+        document.getElementById(FIELD_02).style.background=WINNER_COLOR;
+        document.getElementById(FIELD_11).style.background=WINNER_COLOR;
+        document.getElementById(FIELD_20).style.background=WINNER_COLOR;
         zuege=9;
         return "X";
     }else if(XO[1][0]=="X" && XO[1][1]=="X" && XO[1][2]=="X"){
-        document.getElementById(field10).style.background=winnerColor;
-        document.getElementById(field11).style.background=winnerColor;
-        document.getElementById(field12).style.background=winnerColor;
+        document.getElementById(FIELD_10).style.background=WINNER_COLOR;
+        document.getElementById(FIELD_11).style.background=WINNER_COLOR;
+        document.getElementById(FIELD_12).style.background=WINNER_COLOR;
         zuege=9;
         return "X";
     }else if(XO[2][0]=="X" && XO[2][1]=="X" && XO[2][2]=="X"){
-        document.getElementById(field20).style.background=winnerColor;
-        document.getElementById(field21).style.background=winnerColor;
-        document.getElementById(field22).style.background=winnerColor;
+        document.getElementById(FIELD_20).style.background=WINNER_COLOR;
+        document.getElementById(FIELD_21).style.background=WINNER_COLOR;
+        document.getElementById(FIELD_22).style.background=WINNER_COLOR;
         zuege=9;
         return "X";
     }
     else if(XO[0][0]=="O" && XO[1][1]=="O" && XO[2][2]=="O"){
-        document.getElementById(field00).style.background=winnerColor;
-        document.getElementById(field11).style.background=winnerColor;
-        document.getElementById(field22).style.background=winnerColor;
+        document.getElementById(FIELD_00).style.background=WINNER_COLOR;
+        document.getElementById(FIELD_11).style.background=WINNER_COLOR;
+        document.getElementById(FIELD_22).style.background=WINNER_COLOR;
         zuege=9;
         return "O";
     }else if(XO[0][0]=="O" && XO[0][1]=="O" && XO[0][2]=="O"){
-        document.getElementById(field00).style.background=winnerColor;
-        document.getElementById(field01).style.background=winnerColor;
-        document.getElementById(field02).style.background=winnerColor;
+        document.getElementById(FIELD_00).style.background=WINNER_COLOR;
+        document.getElementById(FIELD_01).style.background=WINNER_COLOR;
+        document.getElementById(FIELD_02).style.background=WINNER_COLOR;
         zuege=9;
         return "O";
     }else if(XO[0][0]=="O" && XO[1][0]=="O" && XO[2][0]=="O"){
-        document.getElementById(field00).style.background=winnerColor;
-        document.getElementById(field10).style.background=winnerColor;
-        document.getElementById(field20).style.background=winnerColor;
+        document.getElementById(FIELD_00).style.background=WINNER_COLOR;
+        document.getElementById(FIELD_10).style.background=WINNER_COLOR;
+        document.getElementById(FIELD_20).style.background=WINNER_COLOR;
         zuege=9;
         return "O";
     }else if(XO[0][1]=="O" && XO[1][1]=="O" && XO[2][1]=="O"){
-        document.getElementById(field01).style.background=winnerColor;
-        document.getElementById(field11).style.background=winnerColor;
-        document.getElementById(field21).style.background=winnerColor;
+        document.getElementById(FIELD_01).style.background=WINNER_COLOR;
+        document.getElementById(FIELD_11).style.background=WINNER_COLOR;
+        document.getElementById(FIELD_21).style.background=WINNER_COLOR;
         zuege=9;
         return "O";
     }else if(XO[0][2]=="O" && XO[1][2]=="O" && XO[2][2]=="O"){
-        document.getElementById(field02).style.background=winnerColor;
-        document.getElementById(field12).style.background=winnerColor;
-        document.getElementById(field22).style.background=winnerColor;
+        document.getElementById(FIELD_02).style.background=WINNER_COLOR;
+        document.getElementById(FIELD_12).style.background=WINNER_COLOR;
+        document.getElementById(FIELD_22).style.background=WINNER_COLOR;
         zuege=9;
         return "O";
     }else if(XO[0][2]=="O" && XO[1][1]=="O" && XO[2][0]=="O"){
-        document.getElementById(field02).style.background=winnerColor;
-        document.getElementById(field11).style.background=winnerColor;
-        document.getElementById(field20).style.background=winnerColor;
+        document.getElementById(FIELD_02).style.background=WINNER_COLOR;
+        document.getElementById(FIELD_11).style.background=WINNER_COLOR;
+        document.getElementById(FIELD_20).style.background=WINNER_COLOR;
         zuege=9;
         return "O";
     }else if(XO[1][0]=="O" && XO[1][1]=="O" && XO[1][2]=="O"){
-        document.getElementById(field10).style.background=winnerColor;
-        document.getElementById(field11).style.background=winnerColor;
-        document.getElementById(field12).style.background=winnerColor;
+        document.getElementById(FIELD_10).style.background=WINNER_COLOR;
+        document.getElementById(FIELD_11).style.background=WINNER_COLOR;
+        document.getElementById(FIELD_12).style.background=WINNER_COLOR;
         zuege=9;
         return "O";
     }else if(XO[2][0]=="O" && XO[2][1]=="O" && XO[2][2]=="O"){
-        document.getElementById(field20).style.background=winnerColor;
-        document.getElementById(field21).style.background=winnerColor;
-        document.getElementById(field22).style.background=winnerColor;
+        document.getElementById(FIELD_20).style.background=WINNER_COLOR;
+        document.getElementById(FIELD_21).style.background=WINNER_COLOR;
+        document.getElementById(FIELD_22).style.background=WINNER_COLOR;
         zuege=9;
         return "O";
     }else{return "nope";}
