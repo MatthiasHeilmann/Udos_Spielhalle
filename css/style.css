@@ -22,6 +22,8 @@ h2{
     margin: 0;
     padding-top: 40%;
     font-size: 60px;
+    color: rgb(16, 139, 183);
+    -webkit-text-stroke: 0.5px black;
 }
 h1{
     margin: 0;
@@ -77,10 +79,10 @@ section ul li div{
 }
 li{list-style-type: none;}
 .vorschau{
-    margin: 5%;
+    margin: 10%;
     margin-top: 20%;
     box-shadow: 3px 3px 10px 5px  rgba(0, 0, 0, 0.2);
-    width: 100%;
+    width: 85%;
     height: auto;
 }
 .vorschau:hover{
@@ -152,7 +154,9 @@ header{
     width: 233px;
     border-radius: 5px;
 }
-
+#udo-blase{
+    text-align: left;
+}
 /* Pong *********************/
 #home_Pong{
     background-color: #cccccc;
