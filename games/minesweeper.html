@@ -1,22 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Minesweeper</title>
-    <link rel="icon" type="image/png" href="../sources/Udo_Gesicht.png">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/minesweeper.css">
-    <link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet">
-</head>
-<body>
-    <div class="container">
-        <h1>Minesweeper</h1>
-        <div class="grid"></div>
-        <div class="bottom">Minen übrig: <span class="minesLeft"></span>
-            <button id="btn" onClick="window.location.reload();">Reset</button>
-        </div>
-    </div>  
-</body>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Minesweeper</title>
+        <link rel="icon" type="image/png" href="../sources/Udo_Gesicht.png">
+        <!-- CSS -->
+        <link href="../css/style.css" type="text/css" rel="stylesheet">
+        <link rel="stylesheet" href="../css/minesweeper.css">
+        <link href="../css/nav.css" type="text/css" rel="stylesheet">
+        <!-- FONTS -->
+        <link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap" rel="stylesheet">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" rel="stylesheet">
+    </head>
+    <body>
+        <header>
+            <div class="content" ></div>
+                <ul id="header-list">
+                    <li>
+                        <div id="logo-div">
+                            <a href="../main.html">
+                                <img src="../sources/Udo_Gesicht.png" alt="logo" id="logo">
+                                <h2 id="title">Udos Spielhalle</h2>
+                            </a>
+                        </div>
+                    </li>
+                    <li id="navbar">
+                        <nav>
+                            <div class="dropdown">
+                                <span class="label"><i class="fa-solid fa-gamepad"></i>Games</span>
+                                <ul class="items">
+                                    <li><a href="../games/PingPong.html"><i class="fa-solid fa-circle"></i> Pong </a></li>
+                                    <li><a href="../games/Schiffeversenken.html"><i class="fa-solid fa-ship"></i> Schiffeversenken </a></li>
+                                    <li><a href="../games/TicTacToe.html"><i class="fa-solid fa-x"></i> Tic Tac Toe </a></li>
+                                    <li><a href="../games/minesweeper.html"><i class="fa-solid fa-land-mine-on"></i> Minesweeper </a></li>
+                                    <li><a href="../games/Snake.html"><i class="fa-brands fa-python"></i> Snake </a></li>
+                                    <li><a href="../games/Dame.html"><i class="fa-solid fa-chess-queen"></i> Dame </a></li>
+                                </ul>
+                            </div>
+                        </nav>
+                    </li>
+                </ul>   
+            </div>
+        </header>
+        <section id="main_section">
+            <div class="content" id="content_container">
+                <h1>Minesweeper</h1>
+                <div class="container">
+                    <div class="grid"></div>
+                    <div class="bottom">Minen übrig: <span class="minesLeft"></span>
+                        <button id="btn" onClick="window.location.reload();">Reset</button>
+                    </div>
+                </div>  
+            </div>
+        </section>
+    </body>
 </html>
 <script src="../js/minesweeper.js"></script>

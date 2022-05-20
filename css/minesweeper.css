@@ -1,19 +1,24 @@
 .container{
-    width: 600px;
+    width: 525px;
     margin: 0 auto;
 }
-
+section{
+    background-color: white;
+}
 h1{
+    text-align: center;
+    color: rgb(16, 139, 183);
+    -webkit-text-stroke: 0.5px black;
+}
+/* h1{
     margin-left: 140px;
     margin-bottom: 15px;
     font-family: "Bangers", cursive;
     text-transform: uppercase;
     font-size: 50px;
-
     color: rgb(16, 139, 183);
     -webkit-text-stroke: 0.5px black;
-}
-
+} */
 .grid {
     height: 520px;
     width: 520px;
@@ -22,11 +27,9 @@ h1{
     background-color: rgb(16, 139, 183);
     border: black solid;
 }
-
 .checked {
     background-color: rgb(200,99,18);
 }
-
 .grid div {
     height: 50px;
     width: 50px;
@@ -35,11 +38,6 @@ h1{
     line-height: 50px;
     font-family: "Bangers";
 }
-
-.mine {
-    /* background-color: rgb(189,15,22); */
-}
-
 .bottom {
     margin-top: 15px;
     font-family: "Bangers", cursive;
@@ -47,29 +45,23 @@ h1{
     font-size: 30px;
 
 }
-
 button {
     background-color: rgb(16, 139, 183);
     border-radius: 5px;
     border: 2px solid black;
     width: 120px;
     height: 35px;
-
     font-family: "Bangers", cursive;
     text-transform: uppercase;
     font-size: 25px;
     transition-duration: 0.2s;
-
     float: right;
-    margin-right: 75px;
    
 }
-
 button:hover {
     cursor: pointer;
     color: white;
 }
-
 @keyframes bounce {
     0% {
         transform: translateY(0);
