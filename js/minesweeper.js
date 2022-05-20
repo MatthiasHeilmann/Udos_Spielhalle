@@ -190,6 +190,8 @@ function gameOver(square) {
    squares.forEach(square => {
       if (square.classList.contains("mine")) {
          square.innerHTML = "💣"
+         var field = document.getElementById(square.id)
+         field.style.backgroundColor = "rgb(189,15,22)"
       }
    })
 }
