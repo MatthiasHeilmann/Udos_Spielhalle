@@ -101,7 +101,7 @@ function check_legal_moves(logicgrid,turn){
     logicgrid.forEach((y,idxy) => {
         y.forEach((x,idxx) => {
             //white side
-            if(turn=="white"){
+            if(turn==="white"){
             //can capture
                 
                 //regular pieces
@@ -118,6 +118,7 @@ function check_legal_moves(logicgrid,turn){
                         cancapture=true
                     }
                     if(cancapture==false){
+                        console.log(logicgrid[idxy-1][idxx-1])
                         if(logicgrid[idxy-1][idxx-1]==0){
                             noncaptures.push("y"+idxy+"x"+idxx+" "+"y"+idxy-1+"x"+idxx-1)
                         }
@@ -139,7 +140,7 @@ function check_legal_moves(logicgrid,turn){
             
 
             //black side
-            if(turn=="black"){
+            if(turn==="black"){
                 //regular pieces
                 if(x==4){
                     //check for board boundaries
@@ -177,9 +178,11 @@ function check_legal_moves(logicgrid,turn){
         });
     });
     if(cancapture==true){
+        console.log(captures)
         return captures;
     }
     else{
+        console.log(noncaptures)
         return noncaptures;
     }
 }
@@ -243,8 +246,8 @@ function getCorrespondingCoordinates(x, y){
 
 //70 is the Tile-height and -width
 function getVectorCoordinate(x, y){
-    let cordX = Math.floor(x / 70);
-    let cordY = Math.floor(y / 70);
+    let cordX = Math.floor(x / 40);
+    let cordY = Math.floor(y / 90);
     console.log(cordX)
     console.log(cordY)
     return [cordX,cordY];
