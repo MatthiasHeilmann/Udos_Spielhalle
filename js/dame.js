@@ -10,6 +10,8 @@ gameboard.push([0,2,0,2,0,2,0,2]);
 gameboard.push([2,0,2,0,2,0,2,0]);
 
 coordinates=[];
+oldcoordinates=[];
+legalmoves=[];
 //update_gameboard_gui(gameboard);
 
 //pieces: 2==white regular, 3==white queen, 4==black regular, 5==black queen
@@ -109,22 +111,22 @@ function check_legal_moves(logicgrid,turn){
                     //check for board boundaries
 
                     //check for possible captures with regular pieces
-                    if(logicgrid[idxy-1][idxx-1]>=4 && logicgrid[idxy-2][idxx-2]==0){
+                    if(logicgrid[idxy-1][idxx-1]>=4 && logicgrid[idxy-2][idxx-2]==1 && idxy>=2 && idxx>=2){
                         captures.push("y"+idxy+"x"+idxx+"c"+"y"+idxy-2+"x"+idxx-2)
                         cancapture=true
                     }
-                    if(logicgrid[idxy-1][idxx+1]>=4 && logicgrid[idxy-2][idxx+2]==0){
+                    if(logicgrid[idxy-1][idxx+1]>=4 && logicgrid[idxy-2][idxx+2]==1 && idxy>=2 && idxx<=5){
                         captures.push("y"+idxy+"x"+idxx+"c"+"y"+idxy-2+"x"+idxx+2)
                         cancapture=true
                     }
                     if(cancapture==false){
                         console.log(logicgrid[idxy-1][idxx-1])
-                        if(logicgrid[idxy-1][idxx-1]==0){
-                            noncaptures.push("y"+idxy+"x"+idxx+" "+"y"+idxy-1+"x"+idxx-1)
+                        if(logicgrid[idxy-1][idxx-1]==1 && idxy>=1 && idxx>=1){
+                            noncaptures.push("y"+idxy+"x"+idxx+" "+"y"+(idxy-1)+"x"+(idxx-1))
                         }
 
-                        if(logicgrid[idxy-1][idxx+1]==0){
-                            noncaptures.push("y"+idxy+"x"+idxx+" "+"y"+idxy-1+"x"+idxx+1)
+                        if(logicgrid[idxy-1][idxx+1]==1 && idxy>=2 && idxx<=6){
+                            noncaptures.push("y"+idxy+"x"+idxx+" "+"y"+(idxy-1)+"x"+(idxx+1))
                         }
 
                     }
@@ -146,28 +148,28 @@ function check_legal_moves(logicgrid,turn){
                     //check for board boundaries
 
                     //check for possible captures with regular pieces
-                    if(logicgrid[idxy+1][idxx-1]==2 && logicgrid[idxy+2][idxx-2]==0){
+                    if(logicgrid[idxy+1][idxx-1]==2 && logicgrid[idxy+2][idxx-2]==1){
                         captures.push("y"+idxy+"x"+idxx+"c"+"y"+idxy+2+"x"+idxx-2)
                         cancapture=true
                     }
-                    if(logicgrid[idxy+1][idxx-1]==3 && logicgrid[idxy+2][idxx-2]==0){
+                    if(logicgrid[idxy+1][idxx-1]==3 && logicgrid[idxy+2][idxx-2]==1){
                         captures.push("y"+idxy+"x"+idxx+"c"+"y"+idxy+2+"x"+idxx-2)
                         cancapture=true
                     }
-                    if(logicgrid[idxy+1][idxx+1]==2 && logicgrid[idxy+2][idxx+2]==0){
+                    if(logicgrid[idxy+1][idxx+1]==2 && logicgrid[idxy+2][idxx+2]==1){
                         captures.push("y"+idxy+"x"+idxx+" "+"y"+idxy+2+"x"+idxx+2)
                         cancapture=true
                     }
-                    if(logicgrid[idxy+1][idxx+1]==3 && logicgrid[idxy+2][idxx+2]==0){
+                    if(logicgrid[idxy+1][idxx+1]==3 && logicgrid[idxy+2][idxx+2]==1){
                         captures.push("y"+idxy+"x"+idxx+" "+"y"+idxy+2+"x"+idxx+2)
                         cancapture=true
                     }
                     if(cancapture==false){
-                        if(logicgrid[idxy+1][idxx-1]==0){
+                        if(logicgrid[idxy+1][idxx-1]==1){
                             noncaptures.push("y"+idxy+"x"+idxx+" "+"y"+idxy+1+"x"+idxx-1)
                         }
 
-                        if(logicgrid[idxy+1][idxx+1]==0){
+                        if(logicgrid[idxy+1][idxx+1]==1){
                             noncaptures.push("y"+idxy+"x"+idxx+" "+"y"+idxy+1+"x"+idxx+1)
                         }
 
@@ -223,11 +225,11 @@ function check_gamegoing(logicgrid){
     }
     return true;
 }
-
+/////////////////////////////////////////////////////////////
 //get Position of cursor functions
 function mouseposition(event){
-    console.log(event.clientX)
-    console.log(event.clientY)
+    //console.log(event.clientX)
+    //console.log(event.clientY)
     coordinates=getCorrespondingCoordinates(event.clientX,event.clientY);
     console.log(coordinates);
 }
@@ -248,56 +250,77 @@ function getCorrespondingCoordinates(x, y){
 function getVectorCoordinate(x, y){
     let cordX = Math.floor(x / 40);
     let cordY = Math.floor(y / 90);
-    console.log(cordX)
-    console.log(cordY)
+    //console.log(cordX)
+    //console.log(cordY)
     return [cordX,cordY];
 }
 
+/////////////////////////////////////////////////////////////
+
 function parse_moves(listmoves,coords){
     update_gameboard_gui(gameboard);
+    legalmovechosen=false;
     listmoves.forEach(y => {
         if(y[1]===coords[1].toString() && y[3]===coords[0].toString()){
             cc.fillStyle='rgb(0, 0, 255)';
-            cc.fillRect(ind1*70, ind2*70, 69 ,69);
+            cc.fillRect(y[8]*70,y[6]*70, 69 ,69);
+            legalmovechosen=true;
         }
     })
-    secondclick=false;
-    c=document.getElementById("gameCanvas");
-    c.removeEventListener("click",mouseposition);
-    c.addEventListener("click", event =>{
-        mouseposition(event);
-        listmoves.forEach(y => {
-            if(y[8]===coords2[1].toString() && y[6]===coords2[0].toString() && secondclick==false){
-                make_move(y)
-            }
-            update_gameboard_gui(logicgrid);
-            secondclick=true;
+    if(legalmovechosen==true){
+        oldcoordinates=coordinates;
+        c=document.getElementById("gameCanvas");
+        c.removeEventListener("click",firstclick);
+        c.addEventListener("click", secondclick); 
 
-    })
-    //while(secondclick==false){
-        //pass
-    //}
-    })
+    }
+
+    
+    //c.removeEventListener("click", secondclick);
 
 
 }
 
 function make_move(move){
-    gameboard[move[8].parseInt()][move[6].parseInt()]=gameboard[move[3].parseInt()][move[1].parseInt()];
-    gameboard[move[3].parseInt()][move[1].parseInt()]=1;
+    console.log("MOVE CHOSEN:"+ move)
+    gameboard[parseInt(move[6])][parseInt(move[8])]=gameboard[parseInt(move[1])][parseInt(move[3])];
+    gameboard[parseInt(move[1])][parseInt(move[3])]=1;
     if(move[4]=="c"){
         coord1=1
         coord2=1
-        if(move[8].parseInt()-move[3].parseInt()>0){coord2=-1}
-        if(move[6].parseInt()-move[1].parseInt()>0){coord1=-1}
-        gameboard[coord1][coord2]=1;
+        if(parseInt(move[8])-parseInt(move[3])>0){coord2=-1}
+        if(parseInt(move[6])-parseInt(move[1])>0){coord1=-1}
+        gameboard[parseInt(move[6])+coord1][parseInt(move[8])+coord2]=1;
     }
 }
 
 function firstclick(event){
     mouseposition(event);
-    parse_moves(game_loop,coordinates);
+    parse_moves(legalmoves,coordinates);
 }
+
+function secondclick(event){
+    secondclickbool=false;
+    mouseposition(event);
+    legalmoves.forEach(y => {
+        //console.log(y[8]+y[6])
+        //console.log(coordinates)
+        if(parseInt(y[6])===coordinates[1] && parseInt(y[8])===coordinates[0] && secondclickbool==false && parseInt(y[1])===oldcoordinates[1] && parseInt(y[3])===oldcoordinates[0]){
+            console.log(y[8]+y[6])
+            console.log(coordinates)
+            make_move(y);
+            secondclickbool=true;
+        }
+    })
+    update_gameboard_gui(gameboard);
+    //while(secondclick==false){
+        //pass
+    //}
+
+}
+
+
+
 
 
 
@@ -307,9 +330,7 @@ function game_loop(logicgrid,turn, context){
         legalmoves=check_legal_moves(logicgrid, turn);
         console.log(legalmoves);
         //onclick function for each square displaying legal moves, second click makes the move
-        context.addEventListener("click", mouseposition)
-        parse_moves(legalmoves,coordinates);
-
+        context.addEventListener("click", firstclick)
         check_promotion(logicgrid)
     }
 }
