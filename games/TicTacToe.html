@@ -33,12 +33,12 @@
                             <div class="dropdown">
                                 <span class="label"><i class="fa-solid fa-gamepad"></i>Games</span>
                                 <ul class="items">
-                                <li><a href="#home_Pong"><i class="fa-solid fa-circle"></i> Pong </a></li>
-                                <li><a href="#home_Schiffeversenken"><i class="fa-solid fa-ship"></i> Schiffeversenken </a></li>
-                                <li><a href="#home_TicTacToe"><i class="fa-solid fa-x"></i> Tic Tac Toe </a></li>
-                                <li><a href="#home_Minesweeper"><i class="fa-solid fa-land-mine-on"></i> Minesweeper </a></li>
-                                <li><a href="#home_Snake"><i class="fa-brands fa-python"></i> Snake </a></li>
-                                <li><a href="#home_Dame"><i class="fa-solid fa-chess-queen"></i> Dame </a></li>
+                                    <li><a href="../games/PingPong.html"><i class="fa-solid fa-circle"></i> Pong </a></li>
+                                    <li><a href="../games/Schiffeversenken.html"><i class="fa-solid fa-ship"></i> Schiffeversenken </a></li>
+                                    <li><a href="../games/TicTacToe.html"><i class="fa-solid fa-x"></i> Tic Tac Toe </a></li>
+                                    <li><a href="../games/minesweeper.html"><i class="fa-solid fa-land-mine-on"></i> Minesweeper </a></li>
+                                    <li><a href="../games/Snake.html"><i class="fa-brands fa-python"></i> Snake </a></li>
+                                    <li><a href="../games/Dame.html"><i class="fa-solid fa-chess-queen"></i> Dame </a></li>
                                 </ul>
                             </div>
                         </nav>
@@ -69,6 +69,20 @@
                         </tr>
                     </table>
                 </div>
+                <div id="post_game">
+                    <h3 class="post_game_winner" id="unentschieden">
+                        Untenschieden! Spiele nocheinmal!
+                    </h3>
+                    <h3 class="post_game_winner" id="X_won">
+                        X gewinnt! Spiele nocheinmal!
+                    </h3>
+                    <h3 class="post_game_winner" id="O_won">
+                        O gewinnt! Spiele nocheinmal!
+                    </h3>
+                    <h3 class="post_game_winner" id="Udo_won">
+                        Udo hat gewonnen! Versuch's doch nocheinmal!
+                    </h3>
+                </div>
                 <div id="settings">
                     <div class="switch" id="div_switch">
                         <input id="switch1" type="checkbox" onclick="switchSpielmodus();">
@@ -78,7 +92,7 @@
                             </span>
                         </label>
                     </div>        
-                    <h3 id="txt_spielmodus">Spielmodus: Gegen den Computer</h3>
+                    <h3 id="txt_spielmodus">Spielmodus: Gegen Udo</h3>
                     <button class="game_button" id="reset" onclick="reset()">Neustart</button>
                     <button class="game_button">Hauptmenü</button>
                 </div>
