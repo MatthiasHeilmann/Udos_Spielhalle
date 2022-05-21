@@ -488,10 +488,10 @@ function parse_moves(listmoves,coords){
     listmoves.forEach(y => {
         if(y[1]===coords[1].toString() && y[3]===coords[0].toString()){
             if(y[4]=="c"){
-                cc.fillStyle='rgb(255, 50, 50)';
+                cc.fillStyle='rgb(189, 15, 22)';
             }
             else{
-            cc.fillStyle='rgb(0, 50, 255)';
+            cc.fillStyle='rgb(16, 139, 183)';
             }
             cc.fillRect(y[8]*70,y[6]*70, 69 ,69);
             legalmovechosen=true;
