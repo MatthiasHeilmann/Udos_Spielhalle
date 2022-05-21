@@ -1,3 +1,7 @@
+//LEFT TO DO:  online
+
+
+
 //initialiye the gameboard, 1==dark square, 0==light square, [0][0] is a8, [0][1] is b8 and so on
 gameboard=[];
 
@@ -35,7 +39,6 @@ window.onload = ()=> {
     cc = c.getContext('2d');
     cc.font = '20py Arial';
     update_gameboard_gui(gameboard);
-    turn="white";
     game_loop(gameboard,c);
 }
 
@@ -76,7 +79,7 @@ function update_gameboard_gui(logicgrid){
                 if (y==3){
                     cc.fillStyle='rgb(255,255,255)';
                     cc.beginPath();
-                    cc.ellipse((ind1*70+35),(ind2*70)+25,30,20,0,0,2*Math.PI);
+                    cc.ellipse((ind1*70+35),(ind2*70)+45,30,20,0,0,2*Math.PI);
                     cc.fill();
                     cc.strokeStyle='rgb(0,0,0)';
                     cc.beginPath();
@@ -85,13 +88,12 @@ function update_gameboard_gui(logicgrid){
 
                     cc.fillStyle='rgb(255,255,255)';
                     cc.beginPath();
-                    cc.ellipse((ind1*70+35),(ind2*70)+45,30,20,0,0,2*Math.PI);
+                    cc.ellipse((ind1*70+35),(ind2*70)+25,30,20,0,0,2*Math.PI);
                     cc.fill();
                     cc.strokeStyle='rgb(0,0,0)';
                     cc.beginPath();
                     cc.ellipse((ind1*70+35),(ind2*70)+25,30,20,0,0,2*Math.PI);
                     cc.stroke();
-
                 }
                 if (y==4){
                     cc.fillStyle='rgb(0, 0, 0)';
@@ -127,8 +129,8 @@ function update_gameboard_gui(logicgrid){
                 }
                 
             }
-            cc.fillStyle='rgb(255,0,0)';
-            cc.fillText("y"+ycoord.toString()+" "+"x"+xcoord.toString(),ind1*70, ind2*70+30);
+            //cc.fillStyle='rgb(255,0,0)';
+            //cc.fillText("y"+ycoord.toString()+" "+"x"+xcoord.toString(),ind1*70, ind2*70+30);
             
             
         });
@@ -140,7 +142,8 @@ function check_legal_moves(logicgrid,turn){
     cancapture=false;
     captures=[];
     noncaptures=[];
-    console.log(logicgrid);
+    //console.log(logicgrid);
+    const isBetween = (num1,num2,value) => value >= num1 && value <= num2 ;
     logicgrid.forEach((y,idxy) => {
         y.forEach((x,idxx) => {
             //white side
@@ -152,22 +155,29 @@ function check_legal_moves(logicgrid,turn){
                     //check for board boundaries
 
                     //check for possible captures with regular pieces
-                    if(logicgrid[idxy-1][idxx-1]>=4 && logicgrid[idxy-2][idxx-2]==1 && idxy>=2 && idxx>=2){
-                        captures.push("y"+idxy+"x"+idxx+"c"+"y"+(idxy-2)+"x"+(idxx-2))
-                        cancapture=true
+                    if(idxy>=2 && idxx>=2){
+                        if(logicgrid[idxy-1][idxx-1]>=4 && logicgrid[idxy-2][idxx-2]==1){
+                            captures.push("y"+idxy+"x"+idxx+"c"+"y"+(idxy-2)+"x"+(idxx-2))
+                            cancapture=true
+                        }
                     }
-                    if(logicgrid[idxy-1][idxx+1]>=4 && logicgrid[idxy-2][idxx+2]==1 && idxy>=2 && idxx<=5){
-                        captures.push("y"+idxy+"x"+idxx+"c"+"y"+(idxy-2)+"x"+(idxx+2))
-                        cancapture=true
-                    }
+                    if(idxy>=2 && idxx<=5){
+                        if(logicgrid[idxy-1][idxx+1]>=4 && logicgrid[idxy-2][idxx+2]==1){
+                            captures.push("y"+idxy+"x"+idxx+"c"+"y"+(idxy-2)+"x"+(idxx+2))
+                            cancapture=true
+                        }
+                     }
                     if(cancapture==false){
                         //console.log(logicgrid[idxy-1][idxx-1])
-                        if(logicgrid[idxy-1][idxx-1]==1 && idxy>=1 && idxx>=1){
-                            noncaptures.push("y"+idxy+"x"+idxx+" "+"y"+(idxy-1)+"x"+(idxx-1))
+                        if(idxy>=1 && idxx>=1){
+                            if(logicgrid[idxy-1][idxx-1]==1){
+                                noncaptures.push("y"+idxy+"x"+idxx+" "+"y"+(idxy-1)+"x"+(idxx-1))
+                            }
                         }
-
-                        if(logicgrid[idxy-1][idxx+1]==1 && idxy>=1 && idxx<=6){
-                            noncaptures.push("y"+idxy+"x"+idxx+" "+"y"+(idxy-1)+"x"+(idxx+1))
+                        if(idxy>=1 && idxx<=6){
+                            if(logicgrid[idxy-1][idxx+1]==1){
+                                noncaptures.push("y"+idxy+"x"+idxx+" "+"y"+(idxy-1)+"x"+(idxx+1))
+                            }
                         }
 
                     }
@@ -272,18 +282,17 @@ function check_legal_moves(logicgrid,turn){
                     //check for board boundaries
 
                     //check for possible captures with regular pieces
-                    if(logicgrid[idxy+1][idxx-1]==2 && logicgrid[idxy+2][idxx-2]==1 && idxy<=5 && idxx>=2){
-                        captures.push("y"+idxy+"x"+idxx+"c"+"y"+(idxy+2)+"x"+(idxx-2))
-                        cancapture=true
+                    if(idxy<=5 && idxx>=2){
+                        if(isBetween(2,3,logicgrid[idxy+1][idxx-1]) && logicgrid[idxy+2][idxx-2]==1){
+                            captures.push("y"+idxy+"x"+idxx+"c"+"y"+(idxy+2)+"x"+(idxx-2))
+                            cancapture=true
+                        }
                     }
-                    /*if(logicgrid[idxy+1][idxx-1]==3 && logicgrid[idxy+2][idxx-2]==1 && idxy<=6 && idxx>=){
-                        captures.push("y"+idxy+"x"+idxx+"c"+"y"+idxy+2+"x"+idxx-2)
-                        cancapture=true
-                    }
-                    */
-                    if(logicgrid[idxy+1][idxx+1]==2 && logicgrid[idxy+2][idxx+2]==1 && idxy<=5 && idxx<=5){
-                        captures.push("y"+idxy+"x"+idxx+"c"+"y"+(idxy+2)+"x"+(idxx+2))
-                        cancapture=true
+                    if(idxy<=5 && idxx<=5){
+                        if(isBetween(2,3,logicgrid[idxy+1][idxx+1]) && logicgrid[idxy+2][idxx+2]==1){
+                            captures.push("y"+idxy+"x"+idxx+"c"+"y"+(idxy+2)+"x"+(idxx+2))
+                            cancapture=true
+                        }
                     }
                     /*
                     if(logicgrid[idxy+1][idxx+1]==3 && logicgrid[idxy+2][idxx+2]==1){
@@ -292,18 +301,21 @@ function check_legal_moves(logicgrid,turn){
                     }
                     */
                     if(cancapture==false){
-                        if(logicgrid[idxy+1][idxx-1]==1 && idxy<=6 && idxx>=1){
-                            noncaptures.push("y"+idxy+"x"+idxx+" "+"y"+(idxy+1)+"x"+(idxx-1))
+                        if(idxy<=6 && idxx>=1){
+                            if(logicgrid[idxy+1][idxx-1]==1){
+                                noncaptures.push("y"+idxy+"x"+idxx+" "+"y"+(idxy+1)+"x"+(idxx-1))
                         }
-
-                        if(logicgrid[idxy+1][idxx+1]==1 && idxy<=6 && idxx<=6){
-                            noncaptures.push("y"+idxy+"x"+idxx+" "+"y"+(idxy+1)+"x"+(idxx+1))
+                        }
+                        if(idxy<=6 && idxx<=6){
+                            if(logicgrid[idxy+1][idxx+1]==1){
+                                noncaptures.push("y"+idxy+"x"+idxx+" "+"y"+(idxy+1)+"x"+(idxx+1))
+                            }
                         }
 
                     }
                 }
 
-                const isBetween = (num1,num2,value) => value >= num1 && value <= num2 
+                
 
                 if(x==5){
                     for(let i=1;i<=7;i++){
@@ -519,6 +531,7 @@ function firstclick(event){
 
 function secondclick(event){
     secondclickbool=false;
+    capturemade=false;
     mouseposition(event);
     legalmoves.forEach(y => {
         //console.log(y[8]+y[6])
@@ -526,6 +539,10 @@ function secondclick(event){
         if(parseInt(y[6])===coordinates[1] && parseInt(y[8])===coordinates[0] && secondclickbool==false && parseInt(y[1])===oldcoordinates[1] && parseInt(y[3])===oldcoordinates[0]){
             //console.log(y[8]+y[6])
             //console.log(coordinates)
+            if(y[4]=="c"){
+                console.log("captured!")
+                capturemade=true;
+            }
             make_move(y);
             secondclickbool=true;
             clickmade=true;
@@ -535,6 +552,7 @@ function secondclick(event){
     if(secondclickbool==false){
         c=document.getElementById("gameCanvas");
         c.removeEventListener("click", secondclick);
+        c.addEventListener("click",firstclick);
         firstclick(event);
     }
     else{
@@ -542,7 +560,19 @@ function secondclick(event){
         update_gameboard_gui(gameboard);
         c=document.getElementById("gameCanvas");
         c.removeEventListener("click", secondclick);
-        
+        if(capturemade==true){
+            checknewcapture=check_legal_moves(gameboard,turn);
+            checknewcapture.forEach(extramove =>{
+                if(extramove[4]=="c"){
+                    if(turn=="white"){
+                        turn="black";
+                    }
+                    else{
+                        turn="white";
+                    }
+                }
+            });
+        }
         if(turn=="white"){
             turn="black";
         }
