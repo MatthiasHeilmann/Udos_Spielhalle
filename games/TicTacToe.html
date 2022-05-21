@@ -84,17 +84,25 @@
                     </h3>
                 </div>
                 <div id="settings">
-                    <div class="switch" id="div_switch">
-                        <input id="switch1" type="checkbox" onclick="switchSpielmodus();">
-                        <label for="switch1">
-                            <span class="buttonbackground">
-                            <span class="buttonslider"></span>
-                            </span>
-                        </label>
-                    </div>        
-                    <h3 id="txt_spielmodus">Spielmodus: Gegen Udo</h3>
-                    <button class="game_button" id="reset" onclick="reset()">Neustart</button>
-                    <button class="game_button">Hauptmenü</button>
+                    <ul>
+                        <li>
+                            <div id="spielmodus">
+                                <div class="switch" id="div_switch">
+                                    <input id="switch1" type="checkbox" onclick="switchSpielmodus();">
+                                    <label for="switch1">
+                                        <span class="buttonbackground">
+                                        <span class="buttonslider"></span>
+                                        </span>
+                                    </label>
+                                </div>        
+                                <h3 id="txt_spielmodus">Spielmodus: Gegen Udo</h3>
+                            </div>
+                        </li>
+                        <li>
+                            <button class="game_button" id="reset" onclick="reset()">Neustart</button>
+                            <button class="game_button">Hauptmenü</button>
+                        </li>
+                    </ul>
                 </div>
             </div>
             

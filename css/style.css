@@ -35,22 +35,6 @@ p{
     padding-left: 5%;
     padding-right: 5%;
 }
-button{
-    width: auto;
-    height: 50px;
-    border-radius: 5px;
-    margin: 15px;
-    font-size: 20px;
-    color: rgb(16, 139, 183);
-    border-color: rgb(16, 139, 183);
-    padding-left: 10px;
-    padding-right: 10px;
-}
-button:hover{
-    background-color: rgb(16, 139, 183);
-    color: white;
-    cursor: pointer;
-}
 /* sections */
 section{
     min-height: 100%;
@@ -99,6 +83,24 @@ li{list-style-type: none;}
 }
 .static:hover {
     opacity:0;
+}
+button {
+    background-color: rgb(16, 139, 183);
+    border-radius: 5px;
+    border: 2px solid black;
+    width: auto;
+    height: 50px;
+    font-family: "Bangers", cursive;
+    text-transform: uppercase;
+    font-size: 25px;
+    transition-duration: 0.2s;
+    float: center;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+button:hover {
+    cursor: pointer;
+    color: white;
 }
 /* HEADER *********************/
 header{

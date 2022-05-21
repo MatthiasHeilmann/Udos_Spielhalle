@@ -182,7 +182,7 @@ function checkSquare(square, currentId) {
 
 //check verloren
 function gameOver(square) {
-   alert("Game over!")
+   // alert("Game over!")
    isGameOver = true
    reset();
 
