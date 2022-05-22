@@ -54,6 +54,7 @@ window.onload = ()=> {
                 ypos=fulllist[1];
                 if(xpos>8 || xpos<0 || ypos>8 || ypos<0){
                     alive=false;
+                    lose();
                 }
                 else{
                     ///////////Shrinking Algorithm
@@ -91,6 +92,7 @@ window.onload = ()=> {
                     ///////////
                     if(fieldstate[xpos][ypos]>0){
                         alive=false;
+                        lose();
                     }
                     else if (fieldstate[xpos][ypos]==-1){
                         fruit=false;
@@ -177,6 +179,13 @@ function update_position(xpos,ypos,dir){
     }
     poslist=[xpos,ypos];
     return poslist;
+}
+
+function lose(){
+    document.getElementById("verloren").style.display="inline";
+    document.getElementById("verloren").style.visibility="visible";
+    document.getElementById("post_game").style.backgroundColor="rgb(189,15,22)";
+    document.getElementById("reset").style.animation = "bounce 1.5s infinite";
 }
 
 //////////////////////////////////////////////////
