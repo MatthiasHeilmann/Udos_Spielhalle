@@ -1,5 +1,10 @@
+//LEFT TO DO:  online
+
+
+
 //initialiye the gameboard, 1==dark square, 0==light square, [0][0] is a8, [0][1] is b8 and so on
 gameboard=[];
+
 gameboard.push([0,4,0,4,0,4,0,4]);
 gameboard.push([4,0,4,0,4,0,4,0]);
 gameboard.push([0,4,0,4,0,4,0,4]);
@@ -8,6 +13,17 @@ gameboard.push([0,1,0,1,0,1,0,1]);
 gameboard.push([2,0,2,0,2,0,2,0]);
 gameboard.push([0,2,0,2,0,2,0,2]);
 gameboard.push([2,0,2,0,2,0,2,0]);
+
+/*
+gameboard.push([0,1,0,1,0,1,0,1]);
+gameboard.push([1,0,1,0,5,0,1,0]);
+gameboard.push([0,1,0,1,0,1,0,1]);
+gameboard.push([2,0,1,0,2,0,1,0]);
+gameboard.push([0,1,0,1,0,1,0,1]);
+gameboard.push([1,0,1,0,5,0,1,0]);
+gameboard.push([0,2,0,1,0,1,0,1]);
+gameboard.push([1,0,1,0,1,0,1,0]);
+*/
 
 coordinates=[];
 oldcoordinates=[];
@@ -23,7 +39,6 @@ window.onload = ()=> {
     cc = c.getContext('2d');
     cc.font = '20py Arial';
     update_gameboard_gui(gameboard);
-    turn="white";
     game_loop(gameboard,c);
 }
 
@@ -55,38 +70,67 @@ function update_gameboard_gui(logicgrid){
                     cc.beginPath();
                     cc.ellipse((ind1*70+35),(ind2*70)+35,30,20,0,0,2*Math.PI);
                     cc.fill();
+
+                    cc.strokeStyle='rgb(0,0,0)';
+                    cc.beginPath();
+                    cc.ellipse((ind1*70+35),(ind2*70)+35,30,20,0,0,2*Math.PI);
+                    cc.stroke();
                 }
                 if (y==3){
                     cc.fillStyle='rgb(255,255,255)';
                     cc.beginPath();
-                    cc.ellipse((ind1*70+35),(ind2*70)+25,30,20,0,0,2*Math.PI);
-                    cc.fill();
-                    cc.beginPath();
                     cc.ellipse((ind1*70+35),(ind2*70)+45,30,20,0,0,2*Math.PI);
                     cc.fill();
+                    cc.strokeStyle='rgb(0,0,0)';
+                    cc.beginPath();
+                    cc.ellipse((ind1*70+35),(ind2*70)+45,30,20,0,0,2*Math.PI);
+                    cc.stroke();
 
+                    cc.fillStyle='rgb(255,255,255)';
+                    cc.beginPath();
+                    cc.ellipse((ind1*70+35),(ind2*70)+25,30,20,0,0,2*Math.PI);
+                    cc.fill();
+                    cc.strokeStyle='rgb(0,0,0)';
+                    cc.beginPath();
+                    cc.ellipse((ind1*70+35),(ind2*70)+25,30,20,0,0,2*Math.PI);
+                    cc.stroke();
                 }
                 if (y==4){
                     cc.fillStyle='rgb(0, 0, 0)';
                     cc.beginPath();
-                    cc.ellipse((ind1*70+35),(ind2*70)+33,30,20,0,0,2*Math.PI);
+                    cc.ellipse((ind1*70+35),(ind2*70)+35,30,20,0,0,2*Math.PI);
                     cc.fill();
+
+                    cc.strokeStyle='rgb(255,255,255)';
+                    cc.beginPath();
+                    cc.ellipse((ind1*70+35),(ind2*70)+35,30,20,0,0,2*Math.PI);
+                    cc.stroke();
 
                 }
                 if (y==5){
-                    cc.fillStyle='rgb(0, 0, 0)';
-                    cc.beginPath();
-                    cc.ellipse((ind1*70+35),(ind2*70)+25,30,20,0,0,2*Math.PI);
-                    cc.fill();
+                    cc.fillStyle='rgb(0,0,0)';
                     cc.beginPath();
                     cc.ellipse((ind1*70+35),(ind2*70)+45,30,20,0,0,2*Math.PI);
                     cc.fill();
+                    cc.strokeStyle='rgb(255,255,255)';
+                    cc.beginPath();
+                    cc.ellipse((ind1*70+35),(ind2*70)+45,30,20,0,0,2*Math.PI);
+                    cc.stroke();
+
+                    cc.fillStyle='rgb(0,0,0)';
+                    cc.beginPath();
+                    cc.ellipse((ind1*70+35),(ind2*70)+25,30,20,0,0,2*Math.PI);
+                    cc.fill();
+                    cc.strokeStyle='rgb(255,255,255)';
+                    cc.beginPath();
+                    cc.ellipse((ind1*70+35),(ind2*70)+25,30,20,0,0,2*Math.PI);
+                    cc.stroke();
 
                 }
                 
             }
-            cc.fillStyle='rgb(255,0,0)';
-            cc.fillText("y"+ycoord.toString()+" "+"x"+xcoord.toString(),ind1*70, ind2*70+30);
+            //cc.fillStyle='rgb(255,0,0)';
+            //cc.fillText("y"+ycoord.toString()+" "+"x"+xcoord.toString(),ind1*70, ind2*70+30);
             
             
         });
@@ -98,7 +142,8 @@ function check_legal_moves(logicgrid,turn){
     cancapture=false;
     captures=[];
     noncaptures=[];
-    console.log(logicgrid);
+    //console.log(logicgrid);
+    const isBetween = (num1,num2,value) => value >= num1 && value <= num2 ;
     logicgrid.forEach((y,idxy) => {
         y.forEach((x,idxx) => {
             //white side
@@ -110,24 +155,114 @@ function check_legal_moves(logicgrid,turn){
                     //check for board boundaries
 
                     //check for possible captures with regular pieces
-                    if(logicgrid[idxy-1][idxx-1]>=4 && logicgrid[idxy-2][idxx-2]==1 && idxy>=2 && idxx>=2){
-                        captures.push("y"+idxy+"x"+idxx+"c"+"y"+(idxy-2)+"x"+(idxx-2))
-                        cancapture=true
+                    if(idxy>=2 && idxx>=2){
+                        if(logicgrid[idxy-1][idxx-1]>=4 && logicgrid[idxy-2][idxx-2]==1){
+                            captures.push("y"+idxy+"x"+idxx+"c"+"y"+(idxy-2)+"x"+(idxx-2))
+                            cancapture=true
+                        }
                     }
-                    if(logicgrid[idxy-1][idxx+1]>=4 && logicgrid[idxy-2][idxx+2]==1 && idxy>=2 && idxx<=5){
-                        captures.push("y"+idxy+"x"+idxx+"c"+"y"+(idxy-2)+"x"+(idxx+2))
-                        cancapture=true
+                    if(idxy>=2 && idxx<=5){
+                        if(logicgrid[idxy-1][idxx+1]>=4 && logicgrid[idxy-2][idxx+2]==1){
+                            captures.push("y"+idxy+"x"+idxx+"c"+"y"+(idxy-2)+"x"+(idxx+2))
+                            cancapture=true
+                        }
+                     }
+                    if(cancapture==false){
+                        //console.log(logicgrid[idxy-1][idxx-1])
+                        if(idxy>=1 && idxx>=1){
+                            if(logicgrid[idxy-1][idxx-1]==1){
+                                noncaptures.push("y"+idxy+"x"+idxx+" "+"y"+(idxy-1)+"x"+(idxx-1))
+                            }
+                        }
+                        if(idxy>=1 && idxx<=6){
+                            if(logicgrid[idxy-1][idxx+1]==1){
+                                noncaptures.push("y"+idxy+"x"+idxx+" "+"y"+(idxy-1)+"x"+(idxx+1))
+                            }
+                        }
+
+                    }
+                }
+                if(x==3){
+                    for(let i=1;i<=7;i++){
+                        if(idxy-i-1>=0 && idxx-i-1>=0){
+                            if(logicgrid[idxy-i][idxx-i]>=4 && logicgrid[idxy-i-1][idxx-i-1]==1){
+                                captures.push("y"+idxy+"x"+idxx+"c"+"y"+(idxy-i-1)+"x"+(idxx-i-1))
+                                cancapture=true
+                                break;
+                            }
+                            if(logicgrid[idxy-i][idxx-i]!=1){break;}
+                        }
+                        
+                    }
+                    for(let i=1;i<=7;i++){
+                        if(idxy-i-1>=0 && idxx+i+1<=7){
+                            if(logicgrid[idxy-i][idxx+i]>=4 && logicgrid[idxy-i-1][idxx+i+1]==1){
+                                captures.push("y"+idxy+"x"+idxx+"c"+"y"+(idxy-i-1)+"x"+(idxx+i+1))
+                                cancapture=true
+                                break;
+                            }
+                            if(logicgrid[idxy-i][idxx+i]!=1){break;}
+                        }
+                        
+
+                    }
+                    for(let i=1;i<=7;i++){
+                        if(idxy+i+1<=7 && idxx-i-1>=0){
+                            console.log(idxx.toString()+idxy.toString()+i.toString())
+                            if(logicgrid[idxy+i][idxx-i]>=4 && logicgrid[idxy+i+1][idxx-i-1]==1){
+                                captures.push("y"+idxy+"x"+idxx+"c"+"y"+(idxy+i+1)+"x"+(idxx-i-1))
+                                cancapture=true
+                                break;
+                            }
+                            if(logicgrid[idxy+i][idxx-i]!=1){break;}
+                        }
+                        
+                    }
+                    for(let i=1;i<=7;i++){
+                        if(idxy+i+1<=7 && idxx+i+1<=7){
+                            if(logicgrid[idxy+i][idxx+i]>=4 && logicgrid[idxy+i+1][idxx+i+1]==1){
+                                captures.push("y"+idxy+"x"+idxx+"c"+"y"+(idxy+i+1)+"x"+(idxx+i+1))
+                                cancapture=true
+                                break;
+                            }
+                            if(logicgrid[idxy+i][idxx+i]!=1){break;}
+                        }
+                        
                     }
                     if(cancapture==false){
-                        console.log(logicgrid[idxy-1][idxx-1])
-                        if(logicgrid[idxy-1][idxx-1]==1 && idxy>=1 && idxx>=1){
-                            noncaptures.push("y"+idxy+"x"+idxx+" "+"y"+(idxy-1)+"x"+(idxx-1))
+                        for(let i=0;i<=6;i++){
+                            if(idxy-i-1>=0 && idxx-i-1>=0){
+                                if(logicgrid[idxy-i-1][idxx-i-1]==1){
+                                    noncaptures.push("y"+idxy+"x"+idxx+" "+"y"+(idxy-i-1)+"x"+(idxx-i-1))
+                                }
+                                else{break;}
+                            }
                         }
-
-                        if(logicgrid[idxy-1][idxx+1]==1 && idxy>=1 && idxx<=6){
-                            noncaptures.push("y"+idxy+"x"+idxx+" "+"y"+(idxy-1)+"x"+(idxx+1))
+                        for(let i=0;i<=6;i++){
+                            if(idxy-i-1>=0 && idxx+i+1<=7){
+                                if(logicgrid[idxy-i-1][idxx+i+1]==1){
+                                    noncaptures.push("y"+idxy+"x"+idxx+" "+"y"+(idxy-i-1)+"x"+(idxx+i+1))
+                                }
+                                else{break;}
+                            }
                         }
-
+                        for(let i=0;i<=6;i++){
+                            if(idxy+i+1<=7 && idxx-i-1>=0){
+                                //console.log(idxx.toString()+idxy.toString()+i.toString())
+                                if(logicgrid[idxy+i+1][idxx-i-1]==1){
+                                    noncaptures.push("y"+idxy+"x"+idxx+" "+"y"+(idxy+i+1)+"x"+(idxx-i-1))
+                                }
+                                else{break;}
+                            }
+                        }
+                        for(let i=0;i<=6;i++){
+                            if(idxy+i+1<=7 && idxx+i+1<=7){
+                                if(logicgrid[idxy+i+1][idxx+i+1]==1){
+                                    noncaptures.push("y"+idxy+"x"+idxx+" "+"y"+(idxy+i+1)+"x"+(idxx+i+1))
+                                }
+                                else{break;}
+                            }
+                        }
                     }
                 }
             }   
@@ -147,18 +282,17 @@ function check_legal_moves(logicgrid,turn){
                     //check for board boundaries
 
                     //check for possible captures with regular pieces
-                    if(logicgrid[idxy+1][idxx-1]==2 && logicgrid[idxy+2][idxx-2]==1 && idxy<=5 && idxx>=2){
-                        captures.push("y"+idxy+"x"+idxx+"c"+"y"+(idxy+2)+"x"+(idxx-2))
-                        cancapture=true
+                    if(idxy<=5 && idxx>=2){
+                        if(isBetween(2,3,logicgrid[idxy+1][idxx-1]) && logicgrid[idxy+2][idxx-2]==1){
+                            captures.push("y"+idxy+"x"+idxx+"c"+"y"+(idxy+2)+"x"+(idxx-2))
+                            cancapture=true
+                        }
                     }
-                    /*if(logicgrid[idxy+1][idxx-1]==3 && logicgrid[idxy+2][idxx-2]==1 && idxy<=6 && idxx>=){
-                        captures.push("y"+idxy+"x"+idxx+"c"+"y"+idxy+2+"x"+idxx-2)
-                        cancapture=true
-                    }
-                    */
-                    if(logicgrid[idxy+1][idxx+1]==2 && logicgrid[idxy+2][idxx+2]==1 && idxy<=5 && idxx<=5){
-                        captures.push("y"+idxy+"x"+idxx+"c"+"y"+(idxy+2)+"x"+(idxx+2))
-                        cancapture=true
+                    if(idxy<=5 && idxx<=5){
+                        if(isBetween(2,3,logicgrid[idxy+1][idxx+1]) && logicgrid[idxy+2][idxx+2]==1){
+                            captures.push("y"+idxy+"x"+idxx+"c"+"y"+(idxy+2)+"x"+(idxx+2))
+                            cancapture=true
+                        }
                     }
                     /*
                     if(logicgrid[idxy+1][idxx+1]==3 && logicgrid[idxy+2][idxx+2]==1){
@@ -167,14 +301,103 @@ function check_legal_moves(logicgrid,turn){
                     }
                     */
                     if(cancapture==false){
-                        if(logicgrid[idxy+1][idxx-1]==1 && idxy<=6 && idxx>=1){
-                            noncaptures.push("y"+idxy+"x"+idxx+" "+"y"+(idxy+1)+"x"+(idxx-1))
+                        if(idxy<=6 && idxx>=1){
+                            if(logicgrid[idxy+1][idxx-1]==1){
+                                noncaptures.push("y"+idxy+"x"+idxx+" "+"y"+(idxy+1)+"x"+(idxx-1))
+                        }
+                        }
+                        if(idxy<=6 && idxx<=6){
+                            if(logicgrid[idxy+1][idxx+1]==1){
+                                noncaptures.push("y"+idxy+"x"+idxx+" "+"y"+(idxy+1)+"x"+(idxx+1))
+                            }
                         }
 
-                        if(logicgrid[idxy+1][idxx+1]==1 && idxy<=6 && idxx<=6){
-                            noncaptures.push("y"+idxy+"x"+idxx+" "+"y"+(idxy+1)+"x"+(idxx+1))
-                        }
+                    }
+                }
 
+                
+
+                if(x==5){
+                    for(let i=1;i<=7;i++){
+                        if(idxy-i-1>=0 && idxx-i-1>=0){
+                            if(isBetween(2,3,logicgrid[idxy-i][idxx-i]) && logicgrid[idxy-i-1][idxx-i-1]==1){
+                                captures.push("y"+idxy+"x"+idxx+"c"+"y"+(idxy-i-1)+"x"+(idxx-i-1))
+                                cancapture=true
+                                break;
+                            }
+                            if(logicgrid[idxy-i][idxx-i]!=1){break;}
+                        }
+                        
+                    }
+                    for(let i=1;i<=7;i++){
+                        if(idxy-i-1>=0 && idxx+i+1<=7){
+                            if(isBetween(2,3,logicgrid[idxy-i][idxx+i]) && logicgrid[idxy-i-1][idxx+i+1]==1){
+                                captures.push("y"+idxy+"x"+idxx+"c"+"y"+(idxy-i-1)+"x"+(idxx+i+1))
+                                cancapture=true
+                                break;
+                            }
+                            if(logicgrid[idxy-i][idxx+i]!=1){break;}
+                        }
+                        
+
+                    }
+                    for(let i=1;i<=7;i++){
+                        if(idxy+i+1<=7 && idxx-i-1>=0){
+                            console.log(idxx.toString()+idxy.toString()+i.toString())
+                            if(isBetween(2,3,logicgrid[idxy+i][idxx-i]) && logicgrid[idxy+i+1][idxx-i-1]==1){
+                                captures.push("y"+idxy+"x"+idxx+"c"+"y"+(idxy+i+1)+"x"+(idxx-i-1))
+                                cancapture=true
+                                break;
+                            }
+                            if(logicgrid[idxy+i][idxx-i]!=1){break;}
+                        }
+                        
+                    }
+                    for(let i=1;i<=7;i++){
+                        if(idxy+i+1<=7 && idxx+i+1<=7){
+                            if(isBetween(2,3,logicgrid[idxy+i][idxx+i]) && logicgrid[idxy+i+1][idxx+i+1]==1){
+                                captures.push("y"+idxy+"x"+idxx+"c"+"y"+(idxy+i+1)+"x"+(idxx+i+1))
+                                cancapture=true
+                                break;
+                            }
+                            if(logicgrid[idxy+i][idxx+i]!=1){break;}
+                        }
+                        
+                    }
+                    if(cancapture==false){
+                        for(let i=0;i<=6;i++){
+                            if(idxy-i-1>=0 && idxx-i-1>=0){
+                                if(logicgrid[idxy-i-1][idxx-i-1]==1){
+                                    noncaptures.push("y"+idxy+"x"+idxx+" "+"y"+(idxy-i-1)+"x"+(idxx-i-1))
+                                }
+                                else{break;}
+                            }
+                        }
+                        for(let i=0;i<=6;i++){
+                            if(idxy-i-1>=0 && idxx+i+1<=7){
+                                if(logicgrid[idxy-i-1][idxx+i+1]==1){
+                                    noncaptures.push("y"+idxy+"x"+idxx+" "+"y"+(idxy-i-1)+"x"+(idxx+i+1))
+                                }
+                                else{break;}
+                            }
+                        }
+                        for(let i=0;i<=6;i++){
+                            if(idxy+i+1<=7 && idxx-i-1>=0){
+                                //console.log(idxx.toString()+idxy.toString()+i.toString())
+                                if(logicgrid[idxy+i+1][idxx-i-1]==1){
+                                    noncaptures.push("y"+idxy+"x"+idxx+" "+"y"+(idxy+i+1)+"x"+(idxx-i-1))
+                                }
+                                else{break;}
+                            }
+                        }
+                        for(let i=0;i<=6;i++){
+                            if(idxy+i+1<=7 && idxx+i+1<=7){
+                                if(logicgrid[idxy+i+1][idxx+i+1]==1){
+                                    noncaptures.push("y"+idxy+"x"+idxx+" "+"y"+(idxy+i+1)+"x"+(idxx+i+1))
+                                }
+                                else{break;}
+                            }
+                        }
                     }
                 }
             }
@@ -198,7 +421,7 @@ function check_promotion(){
                 gameboard[0][idxx]=3;
             }
             if(x==4 && idxy==7){
-                gameboard[0][idxx]=5;
+                gameboard[7][idxx]=5;
             }
         });
     });
@@ -210,7 +433,7 @@ function check_gamegoing(logicgrid){
     logicgrid.forEach((y,idxy) => {
         y.forEach((x,idxx) => {
             if(x==2 || x==3){
-                nrwhite++
+                nrwhite++;
             }
             if(x==4 || x==5){
                 nrblack++;
@@ -264,7 +487,12 @@ function parse_moves(listmoves,coords){
     legalmovechosen=false;
     listmoves.forEach(y => {
         if(y[1]===coords[1].toString() && y[3]===coords[0].toString()){
-            cc.fillStyle='rgb(0, 0, 255)';
+            if(y[4]=="c"){
+                cc.fillStyle='rgb(189, 15, 22)';
+            }
+            else{
+            cc.fillStyle='rgb(16, 139, 183)';
+            }
             cc.fillRect(y[8]*70,y[6]*70, 69 ,69);
             legalmovechosen=true;
         }
@@ -303,6 +531,7 @@ function firstclick(event){
 
 function secondclick(event){
     secondclickbool=false;
+    capturemade=false;
     mouseposition(event);
     legalmoves.forEach(y => {
         //console.log(y[8]+y[6])
@@ -310,43 +539,60 @@ function secondclick(event){
         if(parseInt(y[6])===coordinates[1] && parseInt(y[8])===coordinates[0] && secondclickbool==false && parseInt(y[1])===oldcoordinates[1] && parseInt(y[3])===oldcoordinates[0]){
             //console.log(y[8]+y[6])
             //console.log(coordinates)
+            if(y[4]=="c"){
+                console.log("captured!")
+                capturemade=true;
+            }
             make_move(y);
             secondclickbool=true;
             clickmade=true;
         }
     })
 
-    check_promotion();
-    update_gameboard_gui(gameboard);
-    c=document.getElementById("gameCanvas");
-    c.removeEventListener("click", secondclick);
-    
-    if(turn=="white"){
-        turn="black";
+    if(secondclickbool==false){
+        c=document.getElementById("gameCanvas");
+        c.removeEventListener("click", secondclick);
+        c.addEventListener("click",firstclick);
+        firstclick(event);
     }
     else{
-        turn="white";
+        check_promotion();
+        update_gameboard_gui(gameboard);
+        c=document.getElementById("gameCanvas");
+        c.removeEventListener("click", secondclick);
+        if(capturemade==true){
+            checknewcapture=check_legal_moves(gameboard,turn);
+            checknewcapture.forEach(extramove =>{
+                if(extramove[4]=="c"){
+                    if(turn=="white"){
+                        turn="black";
+                    }
+                    else{
+                        turn="white";
+                    }
+                }
+            });
+        }
+        if(turn=="white"){
+            turn="black";
+        }
+        else{
+            turn="white";
+        }
+        
+        game_loop(gameboard,c);
     }
-    
-    game_loop(gameboard,c);
-    
     //while(secondclick==false){
         //pass
     //}
 
 }
 
-
-
-
-
-
-
 function game_loop(logicgrid,context){
     if(check_gamegoing(logicgrid)==true){
         clickmade=false;
         legalmoves=check_legal_moves(logicgrid, turn);
-        console.log(legalmoves);
+        //console.log(legalmoves);
         //onclick function for each square displaying legal moves, second click makes the move
         context.addEventListener("click", firstclick)
         
