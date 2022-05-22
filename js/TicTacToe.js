@@ -69,6 +69,7 @@ function reset(){
 function switchSpielmodus(){
     if(zuege>0){
         cb.checked= !cb.checked;
+        document.getElementById("txt_spielmodus").style.animation = "forbidden 1s 1";
     }else{
         if(cb.checked){
             Spielmodus=0;
@@ -133,7 +134,7 @@ function besetzen(row,col){
                     besetzenO(row,col);
                 }else{
                     console.log("forbidden");
-                    document.getElementById("txt_spielmodus").style.animation = "forbidden 1s";
+                    document.getElementById("txt_spielmodus").style.animation = "forbidden 1s 1";
                 }
             }
             if(Spielmodus==1){
