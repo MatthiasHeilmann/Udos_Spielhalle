@@ -4,7 +4,7 @@
 
 //initialize the gameboard, 1==dark square, 0==light square, [0][0] is a8, [0][1] is b8 and so on
 gameboard=[];
-/*
+
 gameboard.push([0,4,0,4,0,4,0,4]);
 gameboard.push([4,0,4,0,4,0,4,0]);
 gameboard.push([0,4,0,4,0,4,0,4]);
@@ -13,16 +13,16 @@ gameboard.push([0,1,0,1,0,1,0,1]);
 gameboard.push([2,0,2,0,2,0,2,0]);
 gameboard.push([0,2,0,2,0,2,0,2]);
 gameboard.push([2,0,2,0,2,0,2,0]);
-*/
 
-gameboard.push([0,1,0,1,0,1,0,1]);
-gameboard.push([1,0,1,0,1,0,1,0]);
-gameboard.push([0,1,0,1,0,1,0,1]);
-gameboard.push([3,0,1,0,1,0,1,0]);
-gameboard.push([0,4,0,4,0,1,0,1]);
-gameboard.push([1,0,1,0,1,0,1,0]);
-gameboard.push([0,1,0,1,0,3,0,1]);
-gameboard.push([1,0,1,0,1,0,1,0]);
+
+// gameboard.push([0,1,0,1,0,1,0,1]);
+// gameboard.push([1,0,1,0,1,0,1,0]);
+// gameboard.push([0,1,0,1,0,1,0,1]);
+// gameboard.push([3,0,1,0,1,0,1,0]);
+// gameboard.push([0,4,0,4,0,1,0,1]);
+// gameboard.push([1,0,1,0,1,0,1,0]);
+// gameboard.push([0,1,0,1,0,3,0,1]);
+// gameboard.push([1,0,1,0,1,0,1,0]);
 
 
 coordinates=[];

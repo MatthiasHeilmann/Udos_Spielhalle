@@ -1,7 +1,7 @@
-body{
+/* body{
     overflow: hidden;
     align-items: center;
-}
+} */
 #content_container{
     text-align: center; 
 }
@@ -38,4 +38,8 @@ h1{
 .option-elements p{
     font-family: 'Bangers', cursive;
     text-transform: lowercase;
+}
+.game_button{
+    margin-left: 10px;
+    margin-right: 10px;
 }
