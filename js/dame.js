@@ -2,9 +2,9 @@
 
 
 
-//initialiye the gameboard, 1==dark square, 0==light square, [0][0] is a8, [0][1] is b8 and so on
+//initialize the gameboard, 1==dark square, 0==light square, [0][0] is a8, [0][1] is b8 and so on
 gameboard=[];
-
+/*
 gameboard.push([0,4,0,4,0,4,0,4]);
 gameboard.push([4,0,4,0,4,0,4,0]);
 gameboard.push([0,4,0,4,0,4,0,4]);
@@ -13,17 +13,17 @@ gameboard.push([0,1,0,1,0,1,0,1]);
 gameboard.push([2,0,2,0,2,0,2,0]);
 gameboard.push([0,2,0,2,0,2,0,2]);
 gameboard.push([2,0,2,0,2,0,2,0]);
-
-/*
-gameboard.push([0,1,0,1,0,1,0,1]);
-gameboard.push([1,0,1,0,5,0,1,0]);
-gameboard.push([0,1,0,1,0,1,0,1]);
-gameboard.push([2,0,1,0,2,0,1,0]);
-gameboard.push([0,1,0,1,0,1,0,1]);
-gameboard.push([1,0,1,0,5,0,1,0]);
-gameboard.push([0,2,0,1,0,1,0,1]);
-gameboard.push([1,0,1,0,1,0,1,0]);
 */
+
+gameboard.push([0,1,0,1,0,1,0,1]);
+gameboard.push([1,0,1,0,1,0,1,0]);
+gameboard.push([0,1,0,1,0,1,0,1]);
+gameboard.push([3,0,1,0,1,0,1,0]);
+gameboard.push([0,4,0,4,0,1,0,1]);
+gameboard.push([1,0,1,0,1,0,1,0]);
+gameboard.push([0,1,0,1,0,3,0,1]);
+gameboard.push([1,0,1,0,1,0,1,0]);
+
 
 coordinates=[];
 oldcoordinates=[];
@@ -456,14 +456,14 @@ function mouseposition(event){
     //console.log(event.clientX)
     //console.log(event.clientY)
     coordinates=getCorrespondingCoordinates(event.clientX,event.clientY);
-    //console.log(coordinates);
+    console.log(coordinates);
 }
 
 function getCorrespondingCoordinates(x, y){
-    c=document.getElementById("gameCanvas")
-    crect=c.getClientRects();
-    const offsetX = crect[0].width/window.innerWidth;
-    const offsetY = crect[0].height/window.innerHeight;
+    let c=document.getElementById("gameCanvas")
+    let crect=c.getClientRects();
+    const offsetX = crect[0].width/c.width;
+    const offsetY = crect[0].height/c.height;
     //console.log(crect)
     //console.log(offsetX)
     a=getVectorCoordinate(Math.round((x - crect[0].x) /offsetX),Math.round(y - crect[0].y) / offsetY);
@@ -473,8 +473,8 @@ function getCorrespondingCoordinates(x, y){
 
 //70 is the Tile-height and -width
 function getVectorCoordinate(x, y){
-    let cordX = Math.floor(x / 40);
-    let cordY = Math.floor(y / 90);
+    let cordX = Math.floor(x / 70);
+    let cordY = Math.floor(y / 70);
     //console.log(cordX)
     //console.log(cordY)
     return [cordX,cordY];
@@ -532,6 +532,7 @@ function firstclick(event){
 function secondclick(event){
     secondclickbool=false;
     capturemade=false;
+    oldcapture="";
     mouseposition(event);
     legalmoves.forEach(y => {
         //console.log(y[8]+y[6])
@@ -542,6 +543,7 @@ function secondclick(event){
             if(y[4]=="c"){
                 console.log("captured!")
                 capturemade=true;
+                oldcapture=y;
             }
             make_move(y);
             secondclickbool=true;
@@ -563,7 +565,8 @@ function secondclick(event){
         if(capturemade==true){
             checknewcapture=check_legal_moves(gameboard,turn);
             checknewcapture.forEach(extramove =>{
-                if(extramove[4]=="c"){
+                if(extramove[4]=="c" && extramove[1]==oldcapture[6] && extramove[3]==oldcapture[8]){
+                    console.log(extramove[1]+oldcapture[6]+extramove[3]+oldcapture[8])
                     if(turn=="white"){
                         turn="black";
                     }
