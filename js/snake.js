@@ -39,7 +39,7 @@ window.onload = ()=> {
         columns=[]
         for (let x=0;x<450;x=x+50){
             rectangle = (x,i,49,49)
-            cc.fillStyle='yellow';
+            cc.fillStyle='rgb(200,99,18)';
             cc.fillRect(x,i,49,49);
             columns.push(rectangle);
         grid.push(columns)
@@ -113,16 +113,16 @@ window.onload = ()=> {
                 i.forEach(x => {
                     ind2+=1;
                     if (x>0){
-                        cc.fillStyle='blue';
+                        cc.fillStyle='rgb(16, 139, 183)';
                     }
                     if (x==0){
-                        cc.fillStyle='yellow';
+                        cc.fillStyle='rgb(200,99,18)';
                     }
                     if (x==-1){
-                        cc.fillStyle='yellow';
+                        cc.fillStyle='rgb(200,99,18)';
                     }
                     if (x==snakelength){
-                        cc.fillStyle='pink';
+                        cc.fillStyle='rgb(200,118,140)';
                     }
                     cc.fillRect(ind1*50, ind2*50, 49 ,49);
                 });
@@ -139,16 +139,16 @@ function update_rect(logicgrid,snek){
         i.forEach(x => {
             ind2+=1;
             if (x>0){
-                cc.fillStyle='green';
+                cc.fillStyle='rgb(16, 139, 183)';
             }
             if (x==0){
-                cc.fillStyle='yellow';   
+                cc.fillStyle='rgb(200,99,18)';   
             }
             if (x==-1){
-                cc.fillStyle='red';
+                cc.fillStyle='rgb(189,15,22)';
             }
             if (x==snek){
-                cc.fillStyle='purple';
+                cc.fillStyle='rgb(200,118,140)';
             }
             cc.fillRect(ind1*50, ind2*50, 49 ,49);
         });
@@ -186,6 +186,7 @@ function lose(){
     document.getElementById("verloren").style.visibility="visible";
     document.getElementById("post_game").style.backgroundColor="rgb(189,15,22)";
     document.getElementById("reset").style.animation = "bounce 1.5s infinite";
+    document.getElementById("gameCanvas").style.animation = "shake 0.82s cubic-bezier(.36,.07,.19,.97) both"
 }
 
 //////////////////////////////////////////////////
