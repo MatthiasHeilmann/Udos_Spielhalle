@@ -61,20 +61,3 @@ button:hover {
     cursor: pointer;
     color: white;
 }
-@keyframes bounce{
-    0% {
-        transform: translateY(0);
-    }
-    10% {
-        transform: translateY(-5px);
-    }
-    20%{
-        transform: translateY(0);
-    }
-    30% {
-        transform: translateY(-5px);
-    }
-    40% {
-        transform: translateY(0);
-    }
-}

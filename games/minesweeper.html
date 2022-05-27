@@ -8,8 +8,9 @@
         <link rel="icon" type="image/png" href="../sources/Udo_Gesicht.png">
         <!-- CSS -->
         <link href="../css/style.css" type="text/css" rel="stylesheet">
-        <link rel="stylesheet" href="../css/minesweeper.css">
         <link href="../css/nav.css" type="text/css" rel="stylesheet">
+        <link href="../css/animations.css" type="text/css" rel="stylesheet">
+        <link rel="stylesheet" href="../css/minesweeper.css">
         <!-- FONTS -->
         <link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap" rel="stylesheet">
@@ -49,8 +50,11 @@
             <div class="content" id="content_container">
                 <h1>Minesweeper</h1>
                 <div class="container">
-                    <div class="grid"></div>
-                    <div class="bottom">Minen übrig: <span class="minesLeft"></span>
+                    <div class="grid" id="game"></div>
+                    <div class="bottom">
+                        <span id="text">
+                            Minen übrig: <span class="minesLeft"></span>
+                        </span> 
                         <button id="btn" onClick="window.location.reload();">Reset</button>
                     </div>
                 </div>  

@@ -67,7 +67,7 @@ function reset(){
     document.getElementById("post_game").style.visibility="hidden";
 }
 function switchSpielmodus(){
-    if(zuege>0){
+    if(zuege>0&&zuege<9){
         cb.checked= !cb.checked;
         document.getElementById("txt_spielmodus").style.animation = "forbidden 1s 1";
     }else{
@@ -77,6 +77,9 @@ function switchSpielmodus(){
         }else{
             Spielmodus=1;
             document.getElementById("txt_spielmodus").innerHTML="Spielmodus: Gegen Udo";
+        }
+        if(zuege==9){
+            reset();
         }
     }
     // console.log("neuer Spielmodus: "+Spielmodus);

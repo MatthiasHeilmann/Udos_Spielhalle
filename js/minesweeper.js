@@ -185,7 +185,7 @@ function gameOver(square) {
    // alert("Game over!")
    isGameOver = true
    reset();
-
+   
    //show all bomb location
    squares.forEach(square => {
       if (square.classList.contains("mine")) {
@@ -194,6 +194,8 @@ function gameOver(square) {
          field.style.backgroundColor = "rgb(189,15,22)"
       }
    })
+   document.getElementById("game").style.animation = "shake 0.82s cubic-bezier(.36,.07,.19,.97) both"
+   document.getElementById("text").innerHTML = "Du hast Verloren!"
 }
 
 //check gewonnen mit flags
@@ -204,7 +206,8 @@ function checkForWin() {
          matches ++
       }
       if (matches === mines) {
-         alert("Gewonnen!")
+         // alert("Gewonnen!")
+         document.getElementById("text").innerHTML = "Du hast Gewonnen!"
          isGameOver = true
       }
    }
@@ -220,7 +223,7 @@ function checkForWinnn() {
       }
    }
    if (checks == (width*width - mines)) {
-      alert("Gewonnen!")
+      //alert("Gewonnen!")
       isGameOver = true
    }
 }

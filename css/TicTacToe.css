@@ -4,8 +4,10 @@ h2{
 #main_section{
     background-color: white;
     margin: auto;
-    margin-bottom: 40px;
+    /* margin-bottom: 40px; */
     text-align: center;
+    min-height: 100%;
+    padding-bottom: 10%;
 }
 #game{
     width: auto;
@@ -78,38 +80,4 @@ td{
 .game_button{
     margin-left: 10px;
     margin-right: 10px;
-}
-@keyframes bounce{
-    0% {
-        transform: translateY(0);
-    }
-    10% {
-        transform: translateY(-5px);
-    }
-    20%{
-        transform: translateY(0);
-    }
-    30% {
-        transform: translateY(-5px);
-    }
-    40% {
-        transform: translateY(0);
-    }
-}
-@keyframes forbidden{
-    0% {
-        transform: translateX(0);
-    }
-    10% {
-        transform: translateX(-5px);
-    }
-    20%{
-        transform: translateX(0);
-    }
-    30% {
-        transform: translateX(-5px);
-    }
-    40% {
-        transform: translateX(0);
-    }
 }

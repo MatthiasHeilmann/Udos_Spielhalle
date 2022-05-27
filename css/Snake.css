@@ -1,5 +1,4 @@
 body{
-    overflow: hidden;
     align-items: center;
 }
 #content_container{
@@ -36,21 +35,4 @@ h1{
 .post_game_winner{
     visibility: hidden;
     display: none;
-}
-@keyframes bounce{
-    0% {
-        transform: translateY(0);
-    }
-    10% {
-        transform: translateY(-5px);
-    }
-    20%{
-        transform: translateY(0);
-    }
-    30% {
-        transform: translateY(-5px);
-    }
-    40% {
-        transform: translateY(0);
-    }
 }
