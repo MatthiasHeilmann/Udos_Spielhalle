@@ -17,6 +17,9 @@ h1,h2,h3{
     font-family: 'Bangers', cursive;
     text-transform: uppercase;
 }
+a{
+    text-decoration: none;
+}
 h2{
     text-align: center;
     margin: 0;
