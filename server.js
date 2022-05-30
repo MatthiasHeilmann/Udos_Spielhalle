@@ -40,7 +40,7 @@ io.of('sv').on('connection', (socket) => {
     socket.on('disconnect', () => {
         console.log("sv User disconnected: " + socket.id);
         // Disconnect connected socket
-        sockets[sockets[socket.id].connectedSocket]?.disconnect();
+        sockets[sockets[socket.id].connectedSocket]?.socket.disconnect();
     });
 
     socket.on('svSetName', (name) => {
@@ -61,23 +61,24 @@ io.of('sv').on('connection', (socket) => {
     });
 
     socket.on('svSendGameRequest', (hostId) => {
-        sockets[hostId].emit('svGameRequest', {name: socket.name, clientId: socket.id});
+        sockets[hostId].socket.emit('svGameRequest', {name: sockets[socket.id].name, clientId: socket.id});
     });
 
     socket.on('svSendAnswerGameRequest', (clientId, allowJoin) => {
-        sockets[clientId].emit('svAnswerGameRequest', allowJoin);
+        sockets[clientId].socket.emit('svAnswerGameRequest', allowJoin);
     });
 
     socket.on('svJoinGame', (hostId) => {
         sockets[socket.id].connectedSocket = hostId;
         sockets[hostId].connectedSocket = socket.id;
+        console.log(hostId + " + " + socket.id + " are now married");
     });
 
     socket.on('svSendFire', (coordinates) => {
-        sockets[sockets[socket].connectedSocket].emit('svFire', coordinates);
+        sockets[sockets[socket.id].connectedSocket].socket.emit('svFire', coordinates);
     });
 
-    socket.on('svSendAnswer', (coordinates, result) => {
-        sockets[sockets[socket].connectedSocket].emit('svAnswer', {coordinates, result});
+    socket.on('svSendAnswer', (answer) => {
+        sockets[sockets[socket.id].connectedSocket].socket.emit('svAnswer', answer);
     });
 });

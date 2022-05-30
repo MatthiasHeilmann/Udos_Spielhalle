@@ -1,4 +1,4 @@
-import {defaultSize} from "/js/svCanvasDrawer.js";
+import {defaultSize} from "./svCanvasDrawer.js";
 
 export const Direction = {
     Default: 0,
@@ -111,7 +111,7 @@ class Tile {
         if(this.#ownerDestroyed) return this.#destroyedColour
         if (this.#isShot) return this.#shotColour;
 
-        return this.#shipColours[this.#ownerId] || this.#defaultColour;
+        return this.#shipColours[this.#ownerId-1] || this.#defaultColour;
     }
 
     destroy(){
@@ -146,9 +146,6 @@ export class Ship {
     }
 
     getTileVectors() {
-        console.log("Get vectors for ");
-        console.log(this.#startingPosition);
-        console.log("l:" + this.#length + ", d: " + this.#direction);
         let tileVectors = [];
         for (let i = 0; i < this.#length; i++) {
             switch (this.#direction) {
@@ -191,7 +188,7 @@ export class Ship {
                     break;
             }
         } catch (error) {
-            console.log("Tile is not part of this ship");
+            //Tile is not part of this ship
         }
         return tile || null;
     }
@@ -210,7 +207,9 @@ export class Ship {
     hitTile(coordinate){
         let hitTile = this.getTileByVector(coordinate);
 
-        if(hitTile === null) console.error("No Tile was hit but tried to set anyways: " + coordinate.x + ", " + coordinate.y)
+        if(hitTile === null)
+            console.error("No Tile was hit but tried to set anyways: "
+                + coordinate.x + ", " + coordinate.y)
 
         hitTile.shoot()
 
@@ -279,6 +278,7 @@ export const Placements = {
             if(hitTile !== null){
                 let allHit = true;
                 for(let tile of ship.tiles){
+                    if(tile === hitTile) continue;
                     if(!tile.isShot) allHit = false;
                 }
                 return allHit? 2 : 1;
@@ -306,20 +306,20 @@ export const Placements = {
      * uses getShipIdByVectors() and generateDirectionByVectors() to build a ship
      * and then passes it to placeShip()
      * @param coordinates {[Vector]}
-     * @return {{ship: Ship, result: number}} 0 for success,
+     * @return {[Ship, number]}
      * 1 if the ship cannot be placed there,
      * 2 if the amount of Ships (total or of just this kind) is maxed
      */
     placeShipByVectors(coordinates){
         const shipId = this.getShipIdByVectors(coordinates);
         const shipDir = this.generateDirectionByVectors(coordinates);
-        console.log("Placing with : " + Direction.getDirectionName(shipDir));
+
         if(shipId === ShipId.Default || shipDir === Direction.Default){
             this.addError("Illegal shipId or direction");
-            return {ship: null, result: 1};
+            return [null, 1];
         }
         let ship = new Ship(coordinates[0], shipDir, shipId);
-        return {ship, result: this.placeShip(ship)};
+        return [ship, this.placeShip(ship)];
     },
     /**
      *
@@ -346,7 +346,8 @@ export const Placements = {
 
         shipCounts[0] = placedShips.push(ship);
         shipCounts[ship.shipId]++;
-        console.log("Ship added: " + ship);
+        console.log("Ship added: ");
+        console.log(ship);
         return 0;
     },
     
@@ -356,9 +357,8 @@ export const Placements = {
      * @return {boolean}
      */
     canPlace(ship) {
-        console.log("Adding tiles: ");
         let shipCoordinates = ship.getTileVectors();
-        console.log(shipCoordinates);
+
         for(let coordinate of shipCoordinates){
             if(!this.checkPosition(coordinate)) return false;
         }
@@ -372,8 +372,6 @@ export const Placements = {
      * @return {boolean}
      */
     checkPosition(coordinate) {
-        console.log("Checking for")
-        console.log(JSON.stringify(placedShips))
         // Coordinates in bounds
         if(coordinate.x >= defaultSize
         || coordinate.x < 0
@@ -387,8 +385,6 @@ export const Placements = {
         for(let ship of placedShips){
             // coordinate is on top of a ship
             if(ship.getTileByVector(coordinate) !== null){
-                console.log("Fucked up: ")
-                console.log(ship.getTileByVector(coordinate));
                 this.positionError("already placed ship here", coordinate)
                 return false;
             }
@@ -454,8 +450,6 @@ export const Placements = {
                 return Direction.Default;
         }
 
-        console.log("Direction:")
-        console.log(vDirection);
         if (vDirection.x !== 0)
             return vDirection.x > 0 ? Direction.East : Direction.West;
         if (vDirection.y !== 0)

@@ -1,5 +1,5 @@
-import {CanvasDrawer} from "/js/svCanvasDrawer.js";
-import {Vector, ShipId, Direction, Placements} from "/js/svShips.js"
+import {CanvasDrawer} from "./svCanvasDrawer.js";
+import {Direction, Placements, Vector} from "/js/schiffeversenken/svShips.js"
 
 class Grid {
     highlightColour = "lightgrey";
@@ -27,6 +27,7 @@ class Grid {
      */
     constructor(canvas) {
         this.drawer = new CanvasDrawer(canvas);
+
         $(canvas).on("mouseenter", () => {
             $(canvas).on("mousemove", (e) => {
                 let currentPosition = this.getVectorFromCoordinate(e.pageX, e.pageY);
@@ -36,14 +37,12 @@ class Grid {
                     !this.lastCursorPosition.distanceFrom(currentPosition))
                     return;
 
-                this.highlightTile(this.lastCursorPosition, this.undrawColour);
                 this.highlightTile(currentPosition, this.highlightColour);
 
                 this.lastCursorPosition = currentPosition;
                 this.update();
             });
         }).on("mouseleave", () => {
-            this.highlightTile(this.lastCursorPosition, this.undrawColour);
             this.update();
             this.lastCursorPosition = Vector.defaultVector;
         });
@@ -75,32 +74,7 @@ class Grid {
     }
 
     getVectorFromCoordinate(x, y) {
-        let pos = this.drawer.getVectorCoordinate(x, y);
-        return new Vector(pos.x, pos.y)
-    }
-
-    /**
-     * @param tiles {[Vector]}
-     * @param colours {[String]}
-     */
-    addShip(tiles, colours){
-        for(let i = 0; i < tiles.length; i++){
-            this.paintQueue.push({coordinate: tiles[i], colour: colours[i], callback: null, remove: false})
-        }
-    }
-
-    /**
-     * @param tiles {[Vector]}
-     * @param colours {[String]}
-     */
-    updateShip(tiles, colours){
-        for(let i = 0; i < tiles.length; i++){
-            let index = this.paintQueueContains(tiles[i]);
-            if(index !== -1){
-                this.paintQueue[index].colour = colours[i];
-            }
-        }
-        this.update();
+        return this.drawer.getVectorCoordinate(x, y);
     }
 
     /**
@@ -125,6 +99,10 @@ class Grid {
 
     repaint() {
         this.drawer.clear();
+    }
+
+    updateCanvas(){
+        this.drawer.update();
     }
 
     clear(){
@@ -158,10 +136,11 @@ class PlayerGrid extends Grid {
         super(canvas);
 
         $(canvas).on("mouseenter", () => {
+            if(!this.placementMode) return;
             $(canvas).on("mousemove", (e) => {
                 let currentPosition = this.getVectorFromCoordinate(e.pageX, e.pageY);
 
-                if (!this.isDrawing || !this.placementMode
+                if (!this.isDrawing
                     || (this.lastDrawPosition &&
                         !this.lastDrawPosition.distanceFrom(currentPosition))) {
                     return;
@@ -216,12 +195,39 @@ class PlayerGrid extends Grid {
     }
 
     /**
+     * @param tiles {[Vector]}
+     * @param colours {[String]}
+     */
+    addShip(tiles, colours){
+        for(let i = 0; i < tiles.length; i++){
+            this.paintQueue.push({coordinate: tiles[i], colour: colours[i]
+                , callback: this.drawer.drawTile.bind(this.drawer), remove: false})
+        }
+        this.addSurroundingTiles(tiles);
+        this.update();
+    }
+
+    /**
+     * @param tiles {[Vector]}
+     * @param colours {[String]}
+     */
+    updateShip(tiles, colours){
+        for(let i = 0; i < tiles.length; i++){
+            let index = this.paintQueueContains(tiles[i]);
+            if(index !== -1){
+                this.paintQueue[index].colour = colours[i];
+            }
+        }
+        this.update();
+    }
+
+    /**
      * @param tiles {[Vector]} the Tiles to surround
      */
     addSurroundingTiles(tiles){
         let horizontal;
         let offset = 0;
-        console.log(tiles);
+
         switch (Placements.generateDirectionByVectors(tiles)){
             case Direction.West:
                 offset = 2;
@@ -286,8 +292,8 @@ class PlayerGrid extends Grid {
                                         , start.y + (offset*(!horizontal))));
             }
             else if(i === newLength-1){
-                extendedTiles.push(new Vector(start.x - (offset*horizontal)
-                                        , start.y - (offset*(!horizontal))));
+                extendedTiles.push(new Vector(end.x - (offset*horizontal)
+                                        , end.y - (offset*(!horizontal))));
             }
             else{
                 extendedTiles.push(tiles.shift());
@@ -336,7 +342,7 @@ class EnemyGrid extends Grid {
 
         $(canvas).on("click", (e) => {
            if(this.playerIsShooting){
-                initializeShotTaken(this.getVectorFromCoordinate(e.pageX, e.pageY));
+               initializeShotTaken(this.getVectorFromCoordinate(e.pageX, e.pageY));
            }
         });
     }
@@ -377,26 +383,36 @@ class EnemyGrid extends Grid {
 
 
 const connectButton = document.getElementById("connect");
+const togglePlayerButton = document.querySelector("#game button");
 const playerCanvas = document.querySelector("#game canvas.player");
 const enemyCanvas = document.querySelector("#game canvas.enemy");
 const playerDrawer = new PlayerGrid(playerCanvas);
 const enemyDrawer = new EnemyGrid(enemyCanvas);
 
-$('#connect').on("click", (e) => {
+$(connectButton).on('click', (e) => {
     const nameField = $('#name input');
     const asHostField = $('#asHost input');
 
     if (!nameField[0].value) {
         alert("No Name set")
-        nameField.parent().addClass("error").end().addClass("error");
+        nameField.parent().addClass('error').end().addClass('error');
     } else {
         // Connect function called in svSocket.js
         initializeConnection({name: nameField[0].value, asHost: asHostField[0].checked});
-        nameField.parent().removeClass("error").end().removeClass("error");
-        asHostField.attr("disabled", "");
-        $(connectButton).attr("disabled", "");
+        nameField.parent().removeClass('error')
+            .end().removeClass('error').attr("disabled");
+        asHostField.attr('disabled', '');
+        $(connectButton).attr('disabled', '');
     }
 });
+
+$(togglePlayerButton).on('click', (e) => {
+    toggleCanvas();
+})
+
+$('#reload_lobby').on('click', () => {
+    lOnReloadOpenGames();
+})
 
 /**
  * @param v {Vector}
@@ -429,15 +445,19 @@ function initializeDisconnect(){
 }
 
 window.uiInitialize = function () {
-
+    $('.enemy').css('display', 'none');
 }
 
 window.uiEnableDrawingMode = function (mode){
     playerDrawer.enableDrawingMode(mode);
-    if(mode)
-        connectButton.setAttribute("disabled", "true");
-    else
+    if(mode) {
+        $('#number_container').css("visibility", "visible");
+        connectButton.setAttribute("disabled", "");
+    }
+    else {
+        $('#number_container').css("visibility", "hidden");
         connectButton.removeAttribute("disabled");
+    }
 }
 
 window.uiEnableShooting = function (mode){
@@ -445,14 +465,24 @@ window.uiEnableShooting = function (mode){
 }
 
 window.uiUpdateGameState = function (gameState){
-    // TODO updateGameState(gameState) on UI
+    $('#gamestate').text(gameState);
 }
 
 /**
+ * @param changedShip {number}
  * @param numbers {number}
  */
-window.uiUpdateShipNumbers = function (...numbers){
-    // TODO updateShipNumber(numbers)
+window.uiUpdateShipNumbers = function (changedShip, ...numbers){
+    $('#bs_number p')[1].innerText = numbers[0];
+    $('#cr_number p')[1].innerText = numbers[1];
+    $('#de_number p')[1].innerText = numbers[2];
+    $('#sb_number p')[1].innerText = numbers[3];
+
+    $('#number_container div').each((index, div) => {
+        $(div).css("color", ((index+1) === changedShip?
+            (numbers[index] >= 0? "green" : "red")
+            : "black"));
+    });
 }
 
 window.uiUpdateShip = function (coordinates, newColours){
@@ -469,7 +499,7 @@ window.uiAddShip = function (coordinates, colours){
  * @param fromPlayer {boolean}
  */
 window.uiOnShot = function (tile, fromPlayer){
-    (fromPlayer? playerDrawer:enemyDrawer).addShotCoordinate(tile);
+    (fromPlayer? enemyDrawer:playerDrawer).addShotCoordinate(tile);
 }
 
 /**
@@ -486,19 +516,121 @@ window.uiOnDestroyed = function (tile){
     enemyDrawer.addDestroyedTile(tile);
 }
 
+/**
+ * @param asHost {boolean}
+ * @param insertList {[{name: string, id: number}]} id as clientId or hostId
+ */
+window.uiUpdateLobbyList = function(asHost, insertList){
+    const table = $('#lobbyList');
+    if(asHost){
+        insertClient(insertList[0], table);
+    }
+    else{
+        resetLobbyTable(asHost);
+        insertHosts(insertList, table);
+    }
+    $('#game').css("display", "none");
+    $('#lobby').css("display", "");
+}
+
+/**
+ * @param asHost {boolean}
+ */
+window.uiShowLobbyList = function (asHost){
+    resetLobbyTable(asHost);
+
+    $('#game').css('display', 'none');
+    $('#lobby').css('display', '');
+    $('#reload_lobby').css('display', asHost? 'none' : '');
+}
+
+function resetLobbyTable(asHost){
+    $('#lobbyList').html(`<tr>` +
+        `<th>${asHost? 'Host Name' : 'Client Name'}</th>` +
+        `<th> </th>` +
+        `</tr>`
+    );
+}
+
+/**
+ * @param client {{name: string, clientId: number}}
+ * @param table {JQuery<HTMLElement>}
+ */
+function insertClient(client, table){
+    const row = $(document.createElement("tr"));
+    const nameData = $(document.createElement("td"));
+    const buttonData = $(document.createElement("td"));
+    const clientName = $(document.createElement("p"));
+    const allowButton = $(document.createElement("button"));
+    const declineButton = $(document.createElement("button"));
+
+    clientName.text(client.name);
+    allowButton.text('Accept');
+    allowButton.on('click', () => {
+        lOnAnswerGameRequest(client.clientId, true);
+    });
+    declineButton.text('Decline');
+    declineButton.on('click', () => {
+        lOnAnswerGameRequest(client.clientId, false);
+    });
+
+    nameData.append(clientName);
+    buttonData.append(allowButton);
+    buttonData.append(declineButton);
+    row.append(nameData, buttonData);
+    table.append(row);
+}
+
+/**
+ * @param hostList {[{name: string, hostId: number}]}
+ * @param table {JQuery<HTMLElement>}
+ */
+function insertHosts(hostList, table){
+    for(let host of hostList){
+        const row = $(document.createElement("tr"));
+        const nameData = $(document.createElement("td"));
+        const buttonData = $(document.createElement("td"));
+        const hostName = $(document.createElement("p"));
+        const joinButton = $(document.createElement("button"));
+
+        hostName.text(host.name);
+        joinButton.text('Join');
+        joinButton.on('click', () => {
+            lOnSendGameRequest(host.hostId);
+        });
+
+        nameData.append(hostName);
+        buttonData.append(joinButton);
+        row.append(nameData, buttonData);
+        table.append(row);
+    }
+}
+
 window.uiConnectionBuild = function (){
+    $('#game').css("display", "");
+    $('#lobby').css("display", "none");
+
     connectButton.removeAttribute("disabled");
     connectButton.textContent = "Disconnect";
-    // TODO toggle enemy field
-    // Button.setEnabled
-    // Button.text = "Show Enemy"
+    togglePlayerButton.removeAttribute("disabled");
 }
 
 window.uiConnectionLost = function (){
     connectButton.textContent = "Connect";
 
-    // TODO toggle to player grid
+    setPlayerVisible(true);
     // TODO enable clear field button
+}
+
+function toggleCanvas(){
+    let playerVisible = ($(playerCanvas).css("display") !== "none");
+    setPlayerVisible(!playerVisible);
+}
+
+function setPlayerVisible(mode){
+    $('.player').css("display", mode? "" : "none");
+    $('.enemy').css("display", (!mode)? "" : "none");
+    (mode? playerDrawer: enemyDrawer).updateCanvas();
 }
 
 window.uiClear = function () {

@@ -10,6 +10,7 @@ export class CanvasDrawer{
     size = defaultSize;
     
     constructor(canvas){
+        this.canvas = canvas;
         this.canvasBoundings = canvas.getBoundingClientRect();
         /**
          * @type CanvasRenderingContext2D
@@ -49,13 +50,13 @@ export class CanvasDrawer{
         this.context.strokeStyle = "black";
         this.context.beginPath();
 
-        // Draw vertical lines
+        // Draw line from top left to bottom right
         this.context.moveTo( tileX + 0.5, tileY);
         this.context.lineTo(tileX + this.tileWidth + 0.5, tileY + this.tileHeight);
 
-        // Draw horizontal lines
+        // Draw top right to bottom left
         this.context.moveTo(tileX + this.tileWidth,  tileY + 0.5);
-        this.context.lineTo(this.width, tileY + this.tileHeight + 0.5);
+        this.context.lineTo(tileX, tileY + this.tileHeight + 0.5);
 
         this.context.stroke();
     }
@@ -63,7 +64,7 @@ export class CanvasDrawer{
     #drawRect(x, y, width, height, colour){
         // Paint a new rectangle without overdrawing the lines
         this.context.beginPath();
-        this.context.rect(x+1.5, y+1.5, width-1.5, height-1.5);
+        this.context.rect(x+1, y+1, width-1, height-1);
         this.context.fillStyle = colour;
         this.context.fill();
     }
@@ -96,7 +97,7 @@ export class CanvasDrawer{
         const offsetX = this.canvasBoundings.width/this.width;
         const offsetY = this.canvasBoundings.height/this.height;
         return {x: Math.round((x - this.x) /offsetX),
-                y: Math.round(y - this.y) / offsetY};
+                y: Math.round((y - this.y) / offsetY)};
     }
 
     /**
@@ -120,6 +121,12 @@ export class CanvasDrawer{
     getVectorCoordinate(x, y){
         let pos = this.#getCorrespondingCoordinates(x, y);
         return this.#getVectorCoordinate(pos.x, pos.y);
+    }
+
+    update(){
+        this.canvasBoundings = this.canvas.getBoundingClientRect();
+        this.x = this.canvasBoundings.x;
+        this.y = this.canvasBoundings.y;
     }
 
     clear(){

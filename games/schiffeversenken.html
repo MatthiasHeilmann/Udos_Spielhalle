@@ -23,10 +23,42 @@
     </header>
     <section id="main_section">
         <div id="content_container">
-            <div id="game">
-                <canvas class="player"></canvas>
-                <canvas class="enemy"></canvas>
+            <div id="number_container">
+                <div id="bs_number">
+                    <p>Schlachtschiffe</p>
+                    <p>1</p>
+                </div>
+                <div id="cr_number">
+                    <p>Kreuzer</p>
+                    <p>2</p>
+                </div>
+                <div id="de_number">
+                    <p>Zerstörer</p>
+                    <p>3</p>
+                </div>
+                <div id="sb_number">
+                    <p>U-Boote</p>
+                    <p>4</p>
+                </div>
             </div>
+            <div id="lobby" style="display: none">
+                <button id="reload_lobby"></button>
+                <table id="lobbyList">
+
+                </table>
+            </div>
+            <div id="game">
+                <button id="toggle_canvas"></button>
+                <fieldset class="player">
+                    <legend>Player</legend>
+                    <canvas class="player"></canvas>
+                </fieldset>
+                <fieldset class="enemy">
+                    <legend>Enemy</legend>
+                    <canvas class="enemy"></canvas>
+                </fieldset>
+            </div>
+            <div id="gamestate">Gamestate</div>
             <div id="inputs">
                 <label id="name">
                     Name <br>
@@ -42,8 +74,8 @@
             </div>
         </div>
     </section>
-    <script src="../js/svSocket.js" defer></script>
-    <script src="../js/svUI.js" type="module" defer></script>
-    <script src="../js/svLogic.js" type="module" defer></script>
+    <script src="../js/schiffeversenken/svSocket.js" defer></script>
+    <script src="../js/schiffeversenken/svUI.js" type="module" defer></script>
+    <script src="../js/schiffeversenken/svLogic.js" type="module" defer></script>
 </body>
 </html>

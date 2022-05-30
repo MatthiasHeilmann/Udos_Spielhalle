@@ -3,7 +3,7 @@ const socket = io('/sv');
 const Call = {
     AnswerGameRequest: "answerGameRequest",
     SendOpenGames: "sendOpenGames",
-    AskJoinGame: "askJoinGame",
+    GameRequest: "gameRequest",
     Fire: "fire",
     Answer: "answer"
 };
@@ -13,7 +13,10 @@ const Call = {
  * @type {String}
  */
 let listenCall = "";
-let selectedHost = 0;
+/**
+ * @type {{hostId: number, accepted: boolean}}
+ */
+let selectedHost = {};
 
 socket.on('disconnect', () => {
     lDisconnect();
@@ -27,34 +30,41 @@ function sConnect(config){
     socket.on('svFire', (coordinates) => {
         if(listenCall !== Call.Fire) return;
         lGetFire(coordinates)
+        console.log("Got Fire")
+        console.log(coordinates)
     });
 
     socket.on('svAnswer', (answer) => {
         if(listenCall !== Call.Answer) return;
         lGetAnswer(answer.coordinates, answer.result);
+        console.log("Got Answer")
+        console.log(answer);
     });
 
     if(config.asHost){
         socket.on('svGameRequest', (client) => {
-            if(listenCall !== Call.AskJoinGame) return;
-            lOnConnectRequest(client);
+            if(listenCall !== Call.GameRequest) return;
+            lOnGetGameRequest(client);
         });
 
         socket.emit('svCreateOpenGame');
+        sListenOn(Call.GameRequest);
     }
     else{
-        socket.on('svSendOpenGames', (listHosts) => {
+        socket.on('svSendOpenGames', (hostList) => {
             if(listenCall !== Call.SendOpenGames) return;
-            // TODO Hosts in Liste darstellen
+            lOnGetOpenGames(hostList);
         });
 
         socket.on('svAnswerGameRequest', (allowJoin) => {
             if(listenCall !== Call.AnswerGameRequest) return;
-            socket.emit('svJoinGame', selectedHost);
+            if(allowJoin) {
+                socket.emit('svJoinGame', selectedHost.hostId);
+                lOnConnection();
+            }
         });
 
-        sListenOn(Call.SendOpenGames);
-        socket.emit('svGetOpenGames');
+        sReloadOpenGames()
     }
 }
 
@@ -62,14 +72,22 @@ function sListenOn(call){
     listenCall = call;
 }
 
+function sReloadOpenGames(){
+    sListenOn(Call.SendOpenGames);
+    socket.emit('svGetOpenGames');
+}
+
 function sSendGameRequest(hostId){
     socket.emit('svSendGameRequest', hostId);
-    selectedHost = hostId;
+    selectedHost = {hostId, accepted: false};
     listenCall = Call.AnswerGameRequest;
 }
 
 function sSendAnswerGameRequest(clientId, answer = false){
     socket.emit('svSendAnswerGameRequest', clientId, answer);
+    if(answer){
+        lOnConnection();
+    }
 }
 
 function sSendFire(coordinates){

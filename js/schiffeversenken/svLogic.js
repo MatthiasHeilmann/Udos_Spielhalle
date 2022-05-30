@@ -18,6 +18,7 @@ function setup(){
     uiEnableDrawingMode(true);
     lUpdateShipNumbers(ShipId.Default);
     softSetup();
+    testPlacement();
 }
 
 function softSetup(){
@@ -54,7 +55,8 @@ window.lUpdateShipNumbers = function (shipId){
     let deNumber = Placements.getSpareShipCount(ShipId.Destroyer);
     let sbNumber = Placements.getSpareShipCount(ShipId.Submarine);
 
-    uiUpdateShipNumbers(bsNumber - (shipId === ShipId.Battleship)
+    uiUpdateShipNumbers(shipId
+                        , bsNumber - (shipId === ShipId.Battleship)
                         , crNumber - (shipId === ShipId.Cruiser)
                         , deNumber - (shipId === ShipId.Destroyer)
                         , sbNumber - (shipId === ShipId.Submarine)
@@ -65,6 +67,8 @@ window.lUpdateShipNumbers = function (shipId){
  * @param coordinate {Vector}
  */
 window.lSendFire = function (coordinate){
+    console.log("Sending Fire")
+    console.log(coordinate);
     sSendFire({x: coordinate.x, y: coordinate.y});
     uiOnShot(coordinate, true);
     changeGameState(GameState.Attacked);
@@ -147,14 +151,18 @@ function updateShip(coordinate){
     uiUpdateShip(ship.getTileVectors(), ship.colours);
 }
 
+function addShip(ship){
+    lAddShip(ship.getTileVectors());
+}
+
 /**
  * @param coordinates {[Vector]}
  * @return {boolean}
  */
 window.lAddShip = function(coordinates){
-    let {ship, placeState} = Placements.placeShipByVectors(coordinates);
+    let [ship, placeState] = Placements.placeShipByVectors(coordinates);
 
-    if(placeState){
+    if(placeState === 0){
         addShipToUI(ship);
         return true;
     }
@@ -172,17 +180,12 @@ function addShipToUI(ship){
 }
 
 /**
- * @param client {{name: String, clientId: number}}
- */
-window.lOnConnectRequest = function (client){
-    // TODO ask for permission
-}
-
-/**
  * @param config {{name: String, asHost: boolean}}
  */
 window.lConnect = function (config){
     playerConfig = config;
+    sConnect(playerConfig);
+    uiShowLobbyList(config.asHost);
     changeGameState(GameState.Connecting);
 }
 
@@ -197,6 +200,29 @@ window.lOnConnection = function (){
     uiConnectionBuild();
 }
 
+window.lOnReloadOpenGames = function(){
+    sReloadOpenGames();
+}
+
+window.lOnGetOpenGames = function (hostList){
+    uiUpdateLobbyList(playerConfig.asHost, hostList);
+}
+
+/**
+ * @param client {{name: String, clientId: number}}
+ */
+window.lOnGetGameRequest = function (client){
+    uiUpdateLobbyList(playerConfig.asHost, [client]);
+}
+
+window.lOnSendGameRequest = function (hostId){
+    sSendGameRequest(hostId);
+}
+
+window.lOnAnswerGameRequest = function (clientId, allowJoin){
+    sSendAnswerGameRequest(clientId, allowJoin);
+}
+
 function changeGameState(gameState){
     switch (gameState){
         case GameState.Buildphase:
@@ -204,7 +230,7 @@ function changeGameState(gameState){
             softSetup();
             break;
         case GameState.Connecting:
-            uiUpdateGameState("connecting to " + playerConfig.asHost? "host" : "client");
+            uiUpdateGameState("connecting to " + (playerConfig.asHost? "client" : "host"));
             break;
         case GameState.Attacking:
             uiUpdateGameState("attacking");
@@ -232,3 +258,5 @@ function changeGameState(gameState){
         setup();
     }
 }
+
+setup();
