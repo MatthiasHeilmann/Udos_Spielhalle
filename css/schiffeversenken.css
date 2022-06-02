@@ -6,6 +6,15 @@
     --red: rgb(158,6,36);
 }
 
+#main_section{
+    background-color: white;
+    margin: auto;
+    /* margin-bottom: 40px; */
+    text-align: center;
+    min-height: 100%;
+    padding-bottom: 10%;
+}
+
 #reload_lobby{
     position: relative;
     height: 30px;
