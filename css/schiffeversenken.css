@@ -1,0 +1,147 @@
+:root{
+    --white: rgb(255,255,255);
+    --black: rgb(0,0,0);
+    --gray: rgb(204,204,204);
+    --blue: rgb(41,60,127);
+    --red: rgb(158,6,36);
+}
+
+#reload_lobby{
+    position: relative;
+    height: 30px;
+    width: 30px;
+    top: 0;
+    right: 0;
+    padding: 0;
+}
+
+#reload_lobby::before{
+    display: inline-block;
+    height: 26px;
+    width: 26px;
+    content: "";
+    background-position: center;
+    background-repeat: no-repeat;
+    background-image: url("../sources/arrow-clockwise.svg");
+    background-size: 80%, 80%;
+}
+
+#lobby{
+
+}
+
+#lobby table, tr, th, td{
+    border: 1px solid black;
+    border-collapse: collapse;
+    font-weight: normal;
+    width: 100%;
+}
+
+#lobby th{
+    background-color: var(--gray);
+}
+
+#lobby tr:nth-child(odd){
+    background-color: #f2f2f2;
+}
+
+#lobby tr:hover{
+    background-color: #ddd;
+}
+
+#number_container{
+    display: flex;
+    flex-direction: row;
+}
+
+#number_container div{
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#number_container div p{
+    width: max-content;
+    margin: 1%;
+}
+
+#game{
+    position: relative;
+}
+
+#toggle_canvas{
+    position: absolute;
+    height: 30px;
+    width: 30px;
+    top: 0;
+    right: 0;
+    padding: 0;
+}
+
+#toggle_canvas::before{
+    display: inline-block;
+    height: 26px;
+    width: 26px;
+    content: "";
+    background-position: center;
+    background-repeat: no-repeat;
+    background-image: url("../sources/arrow-left-right.svg");
+    background-size: 80%, 80%;
+}
+
+fieldset{
+    top: 0;
+    width: 400px;
+    height: 400px;
+    padding: 1px;
+    border: none;
+    margin: 5px auto 0 auto;
+}
+
+canvas{
+    width: 100%;
+    height: 100%;
+    border: 1px black solid;
+}
+
+.player{
+    position: relative;
+}
+
+.enemy{
+    position: relative;
+}
+
+.error{
+    color: var(--red) !important;
+    border-color: var(--red) !important;
+}
+
+div#inputs{
+     display: flex;
+     flex-direction: row;
+ }
+
+#inputs div#connectInputs{
+    display: flex;
+    flex-direction: column;
+}
+
+label{
+    font-size: 12px;
+    margin: auto 5% auto 5%;
+    text-align: center;
+    user-select: none;
+}
+
+input{
+    border: 2px solid var(--gray);
+    border-image: initial;
+    border-radius: 5px;
+    outline: 0px;
+}
+
+input:hover, input:focus {
+    border: 2px solid var(--blue);
+}

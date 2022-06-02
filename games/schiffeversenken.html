@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Schiffeversenken</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../css/style.css" type="text/css" rel="stylesheet">
+    <link href="../css/all.min.css" type="text/css" rel="stylesheet">
+    <link href="../css/schiffeversenken.css" type="text/css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300&display=swap" rel="stylesheet">
+    <script src="/socket.io/socket.io.js"></script>
+</head>
+<body>
+    <header>
+        <div class="content">
+            <div id="logo-div">
+                <a href="/">
+                    <img src="../sources/Logo.png" alt="logo" id="logo">
+                </a>
+            </div>
+        </div>
+    </header>
+    <section id="main_section">
+        <div id="content_container">
+            <div id="number_container">
+                <div id="bs_number">
+                    <p>Schlachtschiffe</p>
+                    <p>1</p>
+                </div>
+                <div id="cr_number">
+                    <p>Kreuzer</p>
+                    <p>2</p>
+                </div>
+                <div id="de_number">
+                    <p>Zerstörer</p>
+                    <p>3</p>
+                </div>
+                <div id="sb_number">
+                    <p>U-Boote</p>
+                    <p>4</p>
+                </div>
+            </div>
+            <div id="lobby" style="display: none">
+                <button id="reload_lobby"></button>
+                <table id="lobbyList">
+
+                </table>
+            </div>
+            <div id="game">
+                <button id="toggle_canvas"></button>
+                <fieldset class="player">
+                    <legend>Player</legend>
+                    <canvas class="player"></canvas>
+                </fieldset>
+                <fieldset class="enemy">
+                    <legend>Enemy</legend>
+                    <canvas class="enemy"></canvas>
+                </fieldset>
+            </div>
+            <div id="gamestate">Gamestate</div>
+            <div id="inputs">
+                <label id="name">
+                    Name <br>
+                    <input type="text" placeholder="Gib einen Namen ein" name="name">
+                </label>
+                <div id="connectInputs">
+                    <label id="asHost">
+                        Als Host
+                        <input type="checkbox">
+                    </label>
+                    <button id="connect">connect</button>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script src="../js/schiffeversenken/svSocket.js" defer></script>
+    <script src="../js/schiffeversenken/svUI.js" type="module" defer></script>
+    <script src="../js/schiffeversenken/svLogic.js" type="module" defer></script>
+</body>
+</html>

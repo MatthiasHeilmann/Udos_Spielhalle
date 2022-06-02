@@ -1,4 +1,12 @@
-html, body{
+root{
+    --white: rgb(255,255,255);
+    --black: rgb(0,0,0);
+    --greay: rgb(204,204,204);
+    --blue: rgb(41,60,127);
+    --red: rgb(158,6,36);
+}
+
+html, body {
     height: 100%;
     margin: 0;
     padding: 0;
@@ -9,7 +17,7 @@ body{
     background: url(../sources/background_main.jpg);
     background-position: center center;
     background-size: cover;
-    background-attachment:scroll;
+    background-attacment:scroll;
     background-repeat: repeat-y;
 }
 .vorschau,.button{transition: all 300ms;-webkit-transition: all 300ms;-moz-transition: all 300ms;-o-transition: all 300ms}
@@ -114,11 +122,10 @@ header{
     top: 0;
     left: 0;
     background-image: url(../sources/background_header.jpg);
-	background-position: bottom center; 
-	background-repeat: no-repeat; 
-	background-size:cover; 
-	background-attachment:fixed;
-
+    background-position: bottom center; 
+    background-repeat: no-repeat; 
+    background-size:cover; 
+    background-attachment:fixed;
     position: fixed;
     box-shadow: 0 1px 5px darkgray;
     z-index: 2;
