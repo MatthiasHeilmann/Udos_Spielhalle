@@ -1,20 +1,22 @@
 var besetzt;
 var XO;
-var zuege=0;
+var zuege;
 var Spielmodus=1;
-var playing=true;
-const field00="TicTacToe_00";
-const field01="TicTacToe_01";
-const field02="TicTacToe_02";
-const field10="TicTacToe_10";
-const field11="TicTacToe_11";
-const field12="TicTacToe_12";
-const field20="TicTacToe_20";
-const field21="TicTacToe_21";
-const field22="TicTacToe_22";
-const winnerColor="red";
-const cellColor1="#CCCCCC";
-const cellColor2="#737272";
+var playing=1;
+const FIELD_00="TicTacToe_00";
+const FIELD_01="TicTacToe_01";
+const FIELD_02="TicTacToe_02";
+const FIELD_10="TicTacToe_10";
+const FIELD_11="TicTacToe_11";
+const FIELD_12="TicTacToe_12";
+const FIELD_20="TicTacToe_20";
+const FIELD_21="TicTacToe_21";
+const FIELD_22="TicTacToe_22";
+const WINNER_COLOR="rgb(189,15,22)";
+const CELL_COLOR_0="lightgray";
+const PLAYER_COLOR_1="rgb(16, 139, 183)";
+const PLAYER_COLOR_2="rgb(200,99,18)";
+const cb = document.querySelector('#switch1');
 
 window.onload = ()=> {newGame();};
 function newGame(){
@@ -28,9 +30,59 @@ function newGame(){
         [false,false,false],
         [false,false,false]
     ];
+    zuege=0;
+    playing=1;
+    boinkStop();
 }
 function reset(){
-    document.location.reload();
+    newGame();
+    document.getElementById(FIELD_00).style.background=CELL_COLOR_0;
+    document.getElementById(FIELD_00).innerHTML="";
+    document.getElementById(FIELD_01).style.background=CELL_COLOR_0;
+    document.getElementById(FIELD_01).innerHTML="";
+    document.getElementById(FIELD_02).style.background=CELL_COLOR_0;
+    document.getElementById(FIELD_02).innerHTML="";
+    document.getElementById(FIELD_10).style.background=CELL_COLOR_0;
+    document.getElementById(FIELD_10).innerHTML="";
+    document.getElementById(FIELD_11).style.background=CELL_COLOR_0;
+    document.getElementById(FIELD_11).innerHTML="";
+    document.getElementById(FIELD_12).style.background=CELL_COLOR_0;
+    document.getElementById(FIELD_12).innerHTML="";
+    document.getElementById(FIELD_20).style.background=CELL_COLOR_0;
+    document.getElementById(FIELD_20).innerHTML="";
+    document.getElementById(FIELD_21).style.background=CELL_COLOR_0;
+    document.getElementById(FIELD_21).innerHTML="";
+    document.getElementById(FIELD_22).style.background=CELL_COLOR_0;
+    document.getElementById(FIELD_22).innerHTML="";
+    document.getElementById("txt_spielmodus").style.color="black";
+    document.getElementById("X_won").style.display="none";
+    document.getElementById("X_won").style.visibility="hidden";
+    document.getElementById("Udo_won").style.display="none";
+    document.getElementById("Udo_won").style.visibility="hidden";
+    document.getElementById("O_won").style.display="none";
+    document.getElementById("O_won").style.visibility="hidden";
+    document.getElementById("unentschieden").style.display="none";
+    document.getElementById("unentschieden").style.visibility="hidden";
+    // document.getElementById("post_game").style.display="none";
+    document.getElementById("post_game").style.visibility="hidden";
+}
+function switchSpielmodus(){
+    if(zuege>0&&zuege<9){
+        cb.checked= !cb.checked;
+        document.getElementById("txt_spielmodus").style.animation = "forbidden 1s 1";
+    }else{
+        if(cb.checked){
+            Spielmodus=0;
+            document.getElementById("txt_spielmodus").innerHTML="Spielmodus: 1v1";
+        }else{
+            Spielmodus=1;
+            document.getElementById("txt_spielmodus").innerHTML="Spielmodus: Gegen Udo";
+        }
+        if(zuege==9){
+            reset();
+        }
+    }
+    // console.log("neuer Spielmodus: "+Spielmodus);
 }
 
 function print(){
@@ -38,32 +90,78 @@ function print(){
         console.log(XO[i][0]+XO[i][1]+XO[i][2]);
     }
 }
+function boink(){
+    document.getElementById("reset").style.animation = "bounce 1.5s infinite";
+}
+function boinkStop(){
+    document.getElementById("reset").style.animation = "paused";
+}
+
+function playerWon(player){
+    console.log(player+" won!");
+    playing=0;
+    if(player=="X"){
+        document.getElementById("X_won").style.display="inline";
+        document.getElementById("X_won").style.visibility="visible";
+        document.getElementById("post_game").style.backgroundColor="rgb(200,99,18)";
+    }else if(player=="O"){
+        if(Spielmodus==1){
+            document.getElementById("Udo_won").style.display="inline";
+            document.getElementById("Udo_won").style.visibility="visible";
+            document.getElementById("post_game").style.backgroundColor="rgb(189,15,22)";
+
+        }else{
+            document.getElementById("O_won").style.display="inline";
+            document.getElementById("O_won").style.visibility="visible";
+            document.getElementById("post_game").style.backgroundColor="rgb(16, 139, 183)";
+        }
+    }else{
+        document.getElementById("unentschieden").style.display="inline";
+        document.getElementById("unentschieden").style.visibility="visible";
+        document.getElementById("post_game").style.backgroundColor="rgb(200,118,140)";
+    }
+    document.getElementById("txt_spielmodus").style.color="black";
+    document.getElementById("post_game").style.display="inline";
+    document.getElementById("post_game").style.visibility="visible";
+    boink();
+}
 
 function besetzen(row,col){
-    if(playing){
+    if(playing==1){
+        // console.log("besetzen"+row+col);
         if(!besetzt[row][col]){
             if((zuege%2)==0){
                 besetzenX(row,col);
             }else{
-                besetzenO(row,col);
+                if(Spielmodus!=1){
+                    besetzenO(row,col);
+                }else{
+                    console.log("forbidden");
+                    document.getElementById("txt_spielmodus").style.animation = "forbidden 1s 1";
+                }
             }
             if(Spielmodus==1){
-                botPlay();
+                playing=2;
+                setTimeout(botPlay,1000);
+                playing=1;
             }
         }
     }
 }
 function besetzenX(row,col){
+    // console.log("besetzenX"+row+col);
     zuege++;
     besetzt[row][col]=true;
     XO[row][col]="X";
     document.getElementById("TicTacToe_"+row+col).innerHTML="X";
-    document.getElementById("TicTacToe_"+row+col).style.background=cellColor1;
+    document.getElementById("TicTacToe_"+row+col).style.color=PLAYER_COLOR_2;
     var win;
     win=getGewinner();
         if(win=="X"){
-            console.log("X won!");
-            playing=false;
+            playerWon("X");
+        }
+        if(zuege==9&&win!="X"){
+            playerWon("unentschieden");
         }
 }
 function besetzenO(row,col){
@@ -71,111 +169,113 @@ function besetzenO(row,col){
     besetzt[row][col]=true;
     XO[row][col]="O";
     document.getElementById("TicTacToe_"+row+col).innerHTML="O";
-    document.getElementById("TicTacToe_"+row+col).style.background=cellColor2;
+    document.getElementById("TicTacToe_"+row+col).style.color=PLAYER_COLOR_1;
     var win;
     win=getGewinner();
         if(win=="O"){
-            console.log("O won!");
-            playing=false;
+            playerWon("O");
+        }
+        if(zuege==9&&win!="O"){
+            playerWon("unentschieden");
         }
 }
   
 function getGewinner(){
     if(XO[0][0]=="X" && XO[1][1]=="X" && XO[2][2]=="X"){
-        document.getElementById(field00).style.background=winnerColor;
-        document.getElementById(field11).style.background=winnerColor;
-        document.getElementById(field22).style.background=winnerColor;
+        document.getElementById(FIELD_00).style.background=WINNER_COLOR;
+        document.getElementById(FIELD_11).style.background=WINNER_COLOR;
+        document.getElementById(FIELD_22).style.background=WINNER_COLOR;
         zuege=9;
         return "X";
     }else if(XO[0][0]=="X" && XO[0][1]=="X" && XO[0][2]=="X"){
-        document.getElementById(field00).style.background=winnerColor;
-        document.getElementById(field01).style.background=winnerColor;
-        document.getElementById(field02).style.background=winnerColor;
+        document.getElementById(FIELD_00).style.background=WINNER_COLOR;
+        document.getElementById(FIELD_01).style.background=WINNER_COLOR;
+        document.getElementById(FIELD_02).style.background=WINNER_COLOR;
         zuege=9;
         return "X";
     }else if(XO[0][0]=="X" && XO[1][0]=="X" && XO[2][0]=="X"){
-        document.getElementById(field00).style.background=winnerColor;
-        document.getElementById(field10).style.background=winnerColor;
-        document.getElementById(field20).style.background=winnerColor;
+        document.getElementById(FIELD_00).style.background=WINNER_COLOR;
+        document.getElementById(FIELD_10).style.background=WINNER_COLOR;
+        document.getElementById(FIELD_20).style.background=WINNER_COLOR;
         zuege=9;
         return "X";
     }else if(XO[0][1]=="X" && XO[1][1]=="X" && XO[2][1]=="X"){
-        document.getElementById(field01).style.background=winnerColor;
-        document.getElementById(field11).style.background=winnerColor;
-        document.getElementById(field21).style.background=winnerColor;
+        document.getElementById(FIELD_01).style.background=WINNER_COLOR;
+        document.getElementById(FIELD_11).style.background=WINNER_COLOR;
+        document.getElementById(FIELD_21).style.background=WINNER_COLOR;
         zuege=9;
         return "X";
     }else if(XO[0][2]=="X" && XO[1][2]=="X" && XO[2][2]=="X"){
-        document.getElementById(field02).style.background=winnerColor;
-        document.getElementById(field12).style.background=winnerColor;
-        document.getElementById(field22).style.background=winnerColor;
+        document.getElementById(FIELD_02).style.background=WINNER_COLOR;
+        document.getElementById(FIELD_12).style.background=WINNER_COLOR;
+        document.getElementById(FIELD_22).style.background=WINNER_COLOR;
         zuege=9;
         return "X";
     }else if(XO[0][2]=="X" && XO[1][1]=="X" && XO[2][0]=="X"){
-        document.getElementById(field02).style.background=winnerColor;
-        document.getElementById(field11).style.background=winnerColor;
-        document.getElementById(field20).style.background=winnerColor;
+        document.getElementById(FIELD_02).style.background=WINNER_COLOR;
+        document.getElementById(FIELD_11).style.background=WINNER_COLOR;
+        document.getElementById(FIELD_20).style.background=WINNER_COLOR;
         zuege=9;
         return "X";
     }else if(XO[1][0]=="X" && XO[1][1]=="X" && XO[1][2]=="X"){
-        document.getElementById(field10).style.background=winnerColor;
-        document.getElementById(field11).style.background=winnerColor;
-        document.getElementById(field12).style.background=winnerColor;
+        document.getElementById(FIELD_10).style.background=WINNER_COLOR;
+        document.getElementById(FIELD_11).style.background=WINNER_COLOR;
+        document.getElementById(FIELD_12).style.background=WINNER_COLOR;
         zuege=9;
         return "X";
     }else if(XO[2][0]=="X" && XO[2][1]=="X" && XO[2][2]=="X"){
-        document.getElementById(field20).style.background=winnerColor;
-        document.getElementById(field21).style.background=winnerColor;
-        document.getElementById(field22).style.background=winnerColor;
+        document.getElementById(FIELD_20).style.background=WINNER_COLOR;
+        document.getElementById(FIELD_21).style.background=WINNER_COLOR;
+        document.getElementById(FIELD_22).style.background=WINNER_COLOR;
         zuege=9;
         return "X";
     }
     else if(XO[0][0]=="O" && XO[1][1]=="O" && XO[2][2]=="O"){
-        document.getElementById(field00).style.background=winnerColor;
-        document.getElementById(field11).style.background=winnerColor;
-        document.getElementById(field22).style.background=winnerColor;
+        document.getElementById(FIELD_00).style.background=WINNER_COLOR;
+        document.getElementById(FIELD_11).style.background=WINNER_COLOR;
+        document.getElementById(FIELD_22).style.background=WINNER_COLOR;
         zuege=9;
         return "O";
     }else if(XO[0][0]=="O" && XO[0][1]=="O" && XO[0][2]=="O"){
-        document.getElementById(field00).style.background=winnerColor;
-        document.getElementById(field01).style.background=winnerColor;
-        document.getElementById(field02).style.background=winnerColor;
+        document.getElementById(FIELD_00).style.background=WINNER_COLOR;
+        document.getElementById(FIELD_01).style.background=WINNER_COLOR;
+        document.getElementById(FIELD_02).style.background=WINNER_COLOR;
         zuege=9;
         return "O";
     }else if(XO[0][0]=="O" && XO[1][0]=="O" && XO[2][0]=="O"){
-        document.getElementById(field00).style.background=winnerColor;
-        document.getElementById(field10).style.background=winnerColor;
-        document.getElementById(field20).style.background=winnerColor;
+        document.getElementById(FIELD_00).style.background=WINNER_COLOR;
+        document.getElementById(FIELD_10).style.background=WINNER_COLOR;
+        document.getElementById(FIELD_20).style.background=WINNER_COLOR;
         zuege=9;
         return "O";
     }else if(XO[0][1]=="O" && XO[1][1]=="O" && XO[2][1]=="O"){
-        document.getElementById(field01).style.background=winnerColor;
-        document.getElementById(field11).style.background=winnerColor;
-        document.getElementById(field21).style.background=winnerColor;
+        document.getElementById(FIELD_01).style.background=WINNER_COLOR;
+        document.getElementById(FIELD_11).style.background=WINNER_COLOR;
+        document.getElementById(FIELD_21).style.background=WINNER_COLOR;
         zuege=9;
         return "O";
     }else if(XO[0][2]=="O" && XO[1][2]=="O" && XO[2][2]=="O"){
-        document.getElementById(field02).style.background=winnerColor;
-        document.getElementById(field12).style.background=winnerColor;
-        document.getElementById(field22).style.background=winnerColor;
+        document.getElementById(FIELD_02).style.background=WINNER_COLOR;
+        document.getElementById(FIELD_12).style.background=WINNER_COLOR;
+        document.getElementById(FIELD_22).style.background=WINNER_COLOR;
         zuege=9;
         return "O";
     }else if(XO[0][2]=="O" && XO[1][1]=="O" && XO[2][0]=="O"){
-        document.getElementById(field02).style.background=winnerColor;
-        document.getElementById(field11).style.background=winnerColor;
-        document.getElementById(field20).style.background=winnerColor;
+        document.getElementById(FIELD_02).style.background=WINNER_COLOR;
+        document.getElementById(FIELD_11).style.background=WINNER_COLOR;
+        document.getElementById(FIELD_20).style.background=WINNER_COLOR;
         zuege=9;
         return "O";
     }else if(XO[1][0]=="O" && XO[1][1]=="O" && XO[1][2]=="O"){
-        document.getElementById(field10).style.background=winnerColor;
-        document.getElementById(field11).style.background=winnerColor;
-        document.getElementById(field12).style.background=winnerColor;
+        document.getElementById(FIELD_10).style.background=WINNER_COLOR;
+        document.getElementById(FIELD_11).style.background=WINNER_COLOR;
+        document.getElementById(FIELD_12).style.background=WINNER_COLOR;
         zuege=9;
         return "O";
     }else if(XO[2][0]=="O" && XO[2][1]=="O" && XO[2][2]=="O"){
-        document.getElementById(field20).style.background=winnerColor;
-        document.getElementById(field21).style.background=winnerColor;
-        document.getElementById(field22).style.background=winnerColor;
+        document.getElementById(FIELD_20).style.background=WINNER_COLOR;
+        document.getElementById(FIELD_21).style.background=WINNER_COLOR;
+        document.getElementById(FIELD_22).style.background=WINNER_COLOR;
         zuege=9;
         return "O";
     }else{return "nope";}
@@ -234,397 +334,284 @@ function botPlay(){
     }
     if(zuege==3){
         var gefahr= erkenneGefahr();        //wenn Gefahr besteht zu verlieren, dementsprechend handeln;
-        if(gefahr==1){
-            besetzenO(2,2);
-        }else if(gefahr==2){
-            besetzenO(2,1);
-        }else if(gefahr==3){
-            besetzenO(2,0);
-        }else if(gefahr==4){
-            besetzenO(1,0);
-        }else if(gefahr==5){
-            besetzenO(0,0);
-        }else if(gefahr==6){
-            besetzenO(0,1);
-        }else if(gefahr==7){
-            besetzenO(0,2);
-        }else if(gefahr==8){
-            besetzenO(1,2);
-        }else if(gefahr==9){
-            besetzenO(2,2);
-        }else if(gefahr==10){
-            besetzenO(1,1);
-        }else if(gefahr==11){
-            besetzenO(0,0);
-        }else if(gefahr==12){
-            besetzenO(0,2);
-        }else if(gefahr==13){
-            besetzenO(2,0);
-        }else if(gefahr==14){
-            besetzenO(1,1);
-        }else if(gefahr==15){
-            besetzenO(0,0);
-        }else if(gefahr==16){
-            besetzenO(2,2);
-        }else if(gefahr==17){
-            besetzenO(2,0);
-        }else if(gefahr==18){
-            besetzenO(0,2);
-        }else if(gefahr==19){
-            besetzenO(1,1);
-        }else if(gefahr==20){
-            besetzenO(1,1);
-        }else if(gefahr==21){
-            besetzenO(0,1);
-        }else if(gefahr==22){
-            besetzenO(2,1);
-        }else if(gefahr==23){
-            besetzenO(1,0);
-        }else if(gefahr==24){
-            besetzenO(1,2);
-        }else{                              //Wenn keine Gefahr besteht zu verlieren, müssen alle Fälle abgedeckt werden und vorrauschauend handeln;
-            if(bef==1){
-                if(besetzt[2][1]){
-                    besetzenO(1,2);
-                    bef=9;
-                }else if(besetzt[2][2]){
-                    besetzenO(1,0);
-                    bef=10;
-                }else if(besetzt[1][2]){
-                    besetzenO(0,1);
-                    bef=11;
+        switch (gefahr) {
+            case 1:besetzenO(2,2);break;
+            case 2:besetzenO(2,1);break;
+            case 3:besetzenO(2,0);break;
+            case 4:besetzenO(1,0);break;
+            case 5:besetzenO(0,0);break;
+            case 6:besetzenO(0,1);break;
+            case 7:besetzenO(0,2);break;
+            case 8:besetzenO(1,2);break;
+            case 9:besetzenO(2,2);break;
+            case 10:besetzenO(1,1);break;
+            case 11:besetzenO(0,0);break;
+            case 12:besetzenO(0,2);break;
+            case 13:besetzenO(2,0);break;
+            case 14:besetzenO(1,1);break;
+            case 15:besetzenO(0,0);break;
+            case 16:besetzenO(2,2);break;
+            case 17:besetzenO(2,0);break;
+            case 18:besetzenO(0,2);break;
+            case 19:besetzenO(1,1);break;
+            case 20:besetzenO(1,1);break;
+            case 21:besetzenO(0,1);break;
+            case 22:besetzenO(2,1);break;
+            case 23:besetzenO(1,0);break;
+            case 24:besetzenO(1,2);break;
+            default:                            //Wenn keine Gefahr besteht zu verlieren, müssen alle Fälle abgedeckt werden und vorrauschauend handeln;
+                switch (bef) {
+                    case 1:
+                        if(besetzt[2][1]){
+                            besetzenO(1,2);
+                            bef=9;
+                        }else if(besetzt[2][2]){
+                            besetzenO(1,0);
+                            bef=10;
+                        }else if(besetzt[1][2]){
+                            besetzenO(0,1);
+                            bef=11;
+                        }
+                        break;
+                    case 2:
+                        if(besetzt[1][2]){
+                            besetzenO(0,1);
+                            bef=12;
+                        }else if(besetzt[0][2]){
+                            besetzenO(2,1);
+                            bef=13;
+                        }else if(besetzt[0][1]){
+                            besetzenO(1,0);
+                            bef=14;
+                        }
+                        break;
+                    case 3:
+                        if(besetzt[0][1]){
+                            besetzenO(1,0);
+                            bef=15;
+                        }else if(besetzt[0][0]){
+                            besetzenO(2,1);
+                            bef=16;
+                        }else if(besetzt[1][0]){
+                            besetzenO(2,1);
+                            bef=17;
+                        }
+                        break;
+                    case 4:
+                        if(besetzt[1][0]){
+                            besetzenO(2,1);
+                            bef=18;
+                        }else if(besetzt[2][0]){
+                            besetzenO(0,1);
+                            bef=19;
+                        }else if(besetzt[2][1]){
+                            besetzenO(1,2);
+                            bef=20;
+                        } 
+                        break;
+                    case 5:
+                        if(besetzt[2][0]){
+                            besetzenO(1,1);
+                            bef=21;
+                        }else if(besetzt[2][1]){
+                            besetzenO(0,2);
+                            bef=22;
+                        }else if(besetzt[2][2]){
+                            besetzenO(0,2);
+                            bef=23;
+                        }else if(besetzt[0][2]){
+                            besetzenO(1,1);
+                            bef=24;
+                        }else if(besetzt[0][1]){
+                            besetzenO(1,1);
+                            bef=25;
+                        }
+                        break;
+                    case 6:
+                        if(besetzt[0][0]){
+                            besetzenO(1,1);
+                            bef=26;
+                        }else if(besetzt[1][0]){
+                            besetzenO(2,2);
+                            bef=27;
+                        }   else if(besetzt[2][0]){
+                            besetzenO(2,2);
+                            bef=28;
+                        }else if(besetzt[2][2]){
+                            besetzenO(1,1);
+                            bef=29;
+                        }else if(besetzt[1][2]){
+                            besetzenO(1,1);
+                            bef=30;
+                        }
+                        break;
+                    case 7:
+                        if(besetzt[0][2]){
+                            besetzenO(1,1);
+                            bef=31;
+                        }else if(besetzt[0][1]){
+                            besetzenO(2,0);
+                            bef=32;
+                        }else if(besetzt[0][0]){
+                            besetzenO(2,0);
+                            bef=33;
+                        }else if(besetzt[2][0]){
+                            besetzenO(1,1);
+                            bef=34;
+                        }else if(besetzt[2][1]){
+                            besetzenO(1,1);
+                            bef=35;
+                        }
+                        break;
+                    case 8:
+                        if(besetzt[2][2]){
+                            besetzenO(1,1);
+                            bef=36;
+                        }else if(besetzt[1][2]){
+                            besetzenO(0,0);
+                            bef=37;
+                        }else if(besetzt[0][2]){
+                            besetzenO(0,0);
+                            bef=38;
+                        }else if(besetzt[0][0]){
+                            besetzenO(1,1);
+                            bef=39;
+                        }else if(besetzt[1][0]){
+                            besetzenO(1,1);
+                            bef=40;
+                        }
+                        break;
+                    default:randombesetzenO();break;
                 }
-            }else if(bef==2){
-                if(besetzt[1][2]){
-                    besetzenO(0,1);
-                    bef=12;
-                }else if(besetzt[0][2]){
-                    besetzenO(2,1);
-                    bef=13;
-                }else if(besetzt[0][1]){
-                    besetzenO(1,0);
-                    bef=14;
-                }
-            }else if(bef==3){
-                if(besetzt[0][1]){
-                    besetzenO(1,0);
-                    bef=15;
-                }else if(besetzt[0][0]){
-                    besetzenO(2,1);
-                    bef=16;
-                }else if(besetzt[1][0]){
-                    besetzenO(2,1);
-                    bef=17;
-                }
-            }else if(bef==4){
-                if(besetzt[1][0]){
-                    besetzenO(2,1);
-                    bef=18;
-                }else if(besetzt[2][0]){
-                    besetzenO(0,1);
-                    bef=19;
-                }else if(besetzt[2][1]){
-                    besetzenO(1,2);
-                    bef=20;
-                }   
-            }else if(bef==5){
-                if(besetzt[2][0]){
-                    besetzenO(1,1);
-                    bef=21;
-                }else if(besetzt[2][1]){
-                    besetzenO(0,2);
-                    bef=22;
-                }else if(besetzt[2][2]){
-                    besetzenO(0,2);
-                    bef=23;
-                }else if(besetzt[0][2]){
-                    besetzenO(1,1);
-                    bef=24;
-                }else if(besetzt[0][1]){
-                    besetzenO(1,1);
-                    bef=25;
-                }
-            }else if(bef==6){
-                if(besetzt[0][0]){
-                    besetzenO(1,1);
-                    bef=26;
-                }else if(besetzt[1][0]){
-                    besetzenO(2,2);
-                    bef=27;
-                }   else if(besetzt[2][0]){
-                    besetzenO(2,2);
-                    bef=28;
-                }else if(besetzt[2][2]){
-                    besetzenO(1,1);
-                    bef=29;
-                }else if(besetzt[1][2]){
-                    besetzenO(1,1);
-                    bef=30;
-                }
-            }else if(bef==7){
-                if(besetzt[0][2]){
-                    besetzenO(1,1);
-                    bef=31;
-                }else if(besetzt[0][1]){
-                    besetzenO(2,0);
-                    bef=32;
-                }else if(besetzt[0][0]){
-                    besetzenO(2,0);
-                    bef=33;
-                }else if(besetzt[2][0]){
-                    besetzenO(1,1);
-                    bef=34;
-                }else if(besetzt[2][1]){
-                    besetzenO(1,1);
-                    bef=35;
-                }
-            }else if(bef==8){
-                if(besetzt[2][2]){
-                    besetzenO(1,1);
-                    bef=36;
-                }else if(besetzt[1][2]){
-                    besetzenO(0,0);
-                    bef=37;
-                }else if(besetzt[0][2]){
-                    besetzenO(0,0);
-                    bef=38;
-                }else if(besetzt[0][0]){
-                    besetzenO(1,1);
-                    bef=39;
-                }else if(besetzt[1][0]){
-                    besetzenO(1,1);
-                    bef=40;
-                }
-            }else{
-                randombesetzenO();
-            }
+            break;
         }
     }
     if(zuege==5){
+        //Wenn die Möglichkeit besteht zu gewinnen, wird diese ergriffen;
         var gefahr= erkenneGefahr();
         var Win= erkenneWin();
-        if(Win==1){                          //Wenn die Möglichkeit besteht zu gewinnen, wird diese ergriffen;
-            besetzenO(2,2);
-        }else if(Win==2){
-            besetzenO(2,1);
-        }else if(Win==3){
-            besetzenO(2,0);
-        }else if(Win==4){
-            besetzenO(1,0);
-        }else if(Win==5){
-            besetzenO(0,0);
-        }else if(Win==6){
-            besetzenO(0,1);
-        }else if(Win==7){
-            besetzenO(0,2);
-        }else if(Win==8){
-            besetzenO(1,2);
-        }else if(Win==9){
-            besetzenO(2,2);
-        }else if(Win==10){
-            besetzenO(1,1);
-        }else if(Win==11){
-            besetzenO(0,0);
-        }else if(Win==12){
-            besetzenO(0,2);
-        }else if(Win==13){
-            besetzenO(2,0);
-        }else if(Win==14){
-            besetzenO(1,1);
-        }else if(Win==15){
-            besetzenO(0,0);
-        }else if(Win==16){
-            besetzenO(2,2);
-        }else if(Win==17){
-            besetzenO(2,0);
-        }else if(Win==18){
-            besetzenO(0,2);
-        }else if(Win==19){
-            besetzenO(1,1);
-        }else if(Win==20){
-            besetzenO(1,1);
-        }else if(Win==21){
-            besetzenO(0,1);
-        }else if(Win==22){
-            besetzenO(2,1);
-        }else if(Win==23){
-            besetzenO(1,0);
-        }
-        else if(gefahr==1){                  //Gefahren zu verlieren abchecken;
-            besetzenO(2,2);
-        }else if(gefahr==2){
-            besetzenO(2,1);
-        }else if(gefahr==3){
-            besetzenO(2,0);
-        }else if(gefahr==4){
-            besetzenO(1,0);
-        }else if(gefahr==5){
-            besetzenO(0,0);
-        }else if(gefahr==6){
-            besetzenO(0,1);
-        }else if(gefahr==7){
-            besetzenO(0,2);
-        }else if(gefahr==8){
-            besetzenO(1,2);
-        }else if(gefahr==9){
-            besetzenO(2,2);
-        }else if(gefahr==10){
-            besetzenO(1,1);
-        }else if(gefahr==11){
-            besetzenO(0,0);
-        }else if(gefahr==12){
-            besetzenO(0,2);
-        }else if(gefahr==13){
-            besetzenO(2,0);
-        }else if(gefahr==14){
-            besetzenO(1,1);
-        }else if(gefahr==15){
-            besetzenO(0,0);
-        }else if(gefahr==16){
-            besetzenO(2,2);
-        }else if(gefahr==17){
-            besetzenO(2,0);
-        }else if(gefahr==18){
-            besetzenO(0,2);
-        }else if(gefahr==19){
-            besetzenO(1,1);
-        }else if(gefahr==20){
-            besetzenO(1,1);
-        }else if(gefahr==21){
-            besetzenO(0,1);
-        }else if(gefahr==22){
-            besetzenO(2,1);
-        }else if(gefahr==23){
-            besetzenO(1,0);
-        }else if(gefahr==24){
-            besetzenO(1,2);
-        }
-        else if(bef==11){                      //ein paar Sonderfälle bei denen Gefahr bestehen könnte;
-            besetzenO(2,0);
-            bef=41;
-        }else if(bef==14){
-            besetzenO(2,2);
-            bef=42;
-        }else if(bef==17){
-            besetzenO(0,2);
-            bef=43;
-        }else if(bef==28){
-            besetzenO(1,1);
-            bef=44;
-        }else if(bef==33){
-            besetzenO(1,1);
-            bef=45;
-        }else if(bef==38){
-            besetzenO(1,1);
-            bef=46;
-        }
-        else{                              //ansonsten kann von diesem Zug an keine Falle mehr bereitet werden;
-            randombesetzenO();              //es wird ein random Feld besetzt;
+        switch (Win) {
+            case 1:besetzenO(2,2);break;
+            case 2:besetzenO(2,1);break;
+            case 3:besetzenO(2,0);break;
+            case 4:besetzenO(1,0);break;
+            case 5:besetzenO(0,0);break;
+            case 6:besetzenO(0,1);break;
+            case 7:besetzenO(0,2);break;
+            case 8:besetzenO(1,2);break;
+            case 9:besetzenO(2,2);break;
+            case 10:besetzenO(1,1);break;
+            case 11:besetzenO(0,0);break;
+            case 12:besetzenO(0,2);break;
+            case 13:besetzenO(2,0);break;
+            case 14:besetzenO(1,1);break;
+            case 15:besetzenO(0,0);break;
+            case 16:besetzenO(2,2);break;
+            case 17:besetzenO(2,0);break;
+            case 18:besetzenO(0,2);break;
+            case 19:besetzenO(1,1);break;
+            case 20:besetzenO(1,1);break;
+            case 21:besetzenO(0,1);break;
+            case 22:besetzenO(2,1);break;
+            case 23:besetzenO(1,0);break;
+            default:
+                switch (gefahr) {
+                    case 1:besetzenO(2,2);break;
+                    case 2:besetzenO(2,1);break;
+                    case 3:besetzenO(2,0);break;
+                    case 4:besetzenO(1,0);break;
+                    case 5:besetzenO(0,0);break;
+                    case 6:besetzenO(0,1);break;
+                    case 7:besetzenO(0,2);break;
+                    case 8:besetzenO(1,2);break;
+                    case 9:besetzenO(2,2);break;
+                    case 10:besetzenO(1,1);break;
+                    case 11:besetzenO(0,0);break;
+                    case 12:besetzenO(0,2);break;
+                    case 13:besetzenO(2,0);break;
+                    case 14:besetzenO(1,1);break;
+                    case 15:besetzenO(0,0);break;
+                    case 16:besetzenO(2,2);break;
+                    case 17:besetzenO(2,0);break;
+                    case 18:besetzenO(0,2);break;
+                    case 19:besetzenO(1,1);break;
+                    case 20:besetzenO(1,1);break;
+                    case 21:besetzenO(0,1);break;
+                    case 22:besetzenO(2,1);break;
+                    case 23:besetzenO(1,0);break;
+                    case 24:besetzenO(1,2);break;
+                    default:
+                        switch (bef) {
+                            case 11:besetzenO(2,0);bef=41;break;
+                            case 14:besetzenO(2,2);bef=42;break;
+                            case 17:besetzenO(0,2);bef=43;break;
+                            case 28:besetzenO(1,1);bef=44;break;
+                            case 33:besetzenO(1,1);bef=45;break;
+                            case 38:besetzenO(1,1);bef=46;break;
+                            default:randombesetzenO();break;}
+                    break;
+                }
+            break;
         }
     }
     if(zuege==7){
         var gefahr= erkenneGefahr();
         var Win= erkenneWin();
-        if(Win==1){                         //Sieg priorisieren;
-            besetzenO(2,2);
-        }else if(Win==2){
-            besetzenO(2,1);
-        }else if(Win==3){
-            besetzenO(2,0);
-        }else if(Win==4){
-            besetzenO(1,0);
-        }else if(Win==5){
-            besetzenO(0,0);
-        }else if(Win==6){
-            besetzenO(0,1);
-        }else if(Win==7){
-            besetzenO(0,2);
-        }else if(Win==8){
-            besetzenO(1,2);
-        }else if(Win==9){
-            besetzenO(2,2);
-        }else if(Win==10){
-            besetzenO(1,1);
-        }else if(Win==11){
-            besetzenO(0,0);
-        }else if(Win==12){
-            besetzenO(0,2);
-        }else if(Win==13){
-            besetzenO(2,0);
-        }else if(Win==14){
-            besetzenO(1,1);
-        }else if(Win==15){
-            besetzenO(0,0);
-        }else if(Win==16){
-            besetzenO(2,2);
-        }else if(Win==17){
-            besetzenO(2,0);
-        }else if(Win==18){
-            besetzenO(0,2);
-        }else if(Win==19){
-            besetzenO(1,1);
-        }else if(Win==20){
-            besetzenO(1,1);
-        }else if(Win==21){
-            besetzenO(0,1);
-        }else if(Win==22){
-            besetzenO(2,1);
-        }else if(Win==23){
-            besetzenO(1,0);
-        }
-        else if(gefahr==1){                     //verhindern zu verlieren;
-            besetzenO(2,2);
-        }else if(gefahr==2){
-            besetzenO(2,1);
-        }else if(gefahr==3){
-            besetzenO(2,0);
-        }else if(gefahr==4){
-            besetzenO(1,0);
-        }else if(gefahr==5){
-            besetzenO(0,0);
-        }else if(gefahr==6){
-            besetzenO(0,1);
-        }else if(gefahr==7){
-            besetzenO(0,2);
-        }else if(gefahr==8){
-            besetzenO(1,2);
-        }else if(gefahr==9){
-            besetzenO(2,2);
-        }else if(gefahr==10){
-            besetzenO(1,1);
-        }else if(gefahr==11){
-            besetzenO(0,0);
-        }else if(gefahr==12){
-            besetzenO(0,2);
-        }else if(gefahr==13){
-            besetzenO(2,0);
-        }else if(gefahr==14){
-            besetzenO(1,1);
-        }else if(gefahr==15){
-            besetzenO(0,0);
-        }else if(gefahr==16){
-            besetzenO(2,2);
-        }else if(gefahr==17){
-            besetzenO(2,0);
-        }else if(gefahr==18){
-            besetzenO(0,2);
-        }else if(gefahr==19){
-            besetzenO(1,1);
-        }else if(gefahr==20){
-            besetzenO(1,1);
-        }else if(gefahr==21){
-            besetzenO(0,1);
-        }else if(gefahr==22){
-            besetzenO(2,1);
-        }else if(gefahr==23){
-            besetzenO(1,0);
-        }else if(gefahr==24){
-            besetzenO(1,2);
-        }else{
-            randombesetzenO();               //random Feld besetzen;
+        switch (Win) {
+            case 1:besetzenO(2,2);break;
+            case 2:besetzenO(2,1);break;
+            case 3:besetzenO(2,0);break;
+            case 4:besetzenO(1,0);break;
+            case 5:besetzenO(0,0);break;
+            case 6:besetzenO(0,1);break;
+            case 7:besetzenO(0,2);break;
+            case 8:besetzenO(1,2);break;
+            case 9:besetzenO(2,2);break;
+            case 10:besetzenO(1,1);break;
+            case 11:besetzenO(0,0);break;
+            case 12:besetzenO(0,2);break;
+            case 13:besetzenO(2,0);break;
+            case 14:besetzenO(1,1);break;
+            case 15:besetzenO(0,0);break;
+            case 16:besetzenO(2,2);break;
+            case 17:besetzenO(2,0);break;
+            case 18:besetzenO(0,2);break;
+            case 19:besetzenO(1,1);break;
+            case 20:besetzenO(1,1);break;
+            case 21:besetzenO(0,1);break;
+            case 22:besetzenO(2,1);break;
+            case 23:besetzenO(1,0);break;
+            default:
+                switch (gefahr) {
+                    case 1:besetzenO(2,2);break;
+                    case 2:besetzenO(2,1);break;
+                    case 3:besetzenO(2,0);break;
+                    case 4:besetzenO(1,0);break;
+                    case 5:besetzenO(0,0);break;
+                    case 6:besetzenO(0,1);break;
+                    case 7:besetzenO(0,2);break;
+                    case 8:besetzenO(1,2);break;
+                    case 9:besetzenO(2,2);break;
+                    case 10:besetzenO(1,1);break;
+                    case 11:besetzenO(0,0);break;
+                    case 12:besetzenO(0,2);break;
+                    case 13:besetzenO(2,0);break;
+                    case 14:besetzenO(1,1);break;
+                    case 15:besetzenO(0,0);break;
+                    case 16:besetzenO(2,2);break;
+                    case 17:besetzenO(2,0);break;
+                    case 18:besetzenO(0,2);break;
+                    case 19:besetzenO(1,1);break;
+                    case 20:besetzenO(1,1);break;
+                    case 21:besetzenO(0,1);break;
+                    case 22:besetzenO(2,1);break;
+                    case 23:besetzenO(1,0);break;
+                    case 24:besetzenO(1,2);break;
+                    default:randombesetzenO();break;
+                }
+            break;
         }
     }
-
 }
 
 function erkenneGefahr(){

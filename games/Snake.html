@@ -2,14 +2,14 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>Pong</title>
+        <title>Snake</title>
         <link rel="icon" type="image/png" href="../sources/Udo_Gesicht.png">
         <!-- CSS -->
         <link href="../css/style.css" type="text/css" rel="stylesheet">
         <link href="../css/all.min.css" type="text/css" rel="stylesheet">
         <link href="../css/nav.css" type="text/css" rel="stylesheet">
         <link href="../css/animations.css" type="text/css" rel="stylesheet">
-        <link href="../css/PingPong.css" type="text/css" rel="stylesheet">
+        <link href="../css/Snake.css" type="text/css" rel="stylesheet">
         <!-- FONTS -->
         <link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap" rel="stylesheet">
@@ -45,33 +45,28 @@
                 </ul>   
             </div>
         </header>
-
         <section id="main_section">
-            <h1>Pong</h1>
+            <h1>Snake</h1>
             <div class="content" id="content_container">
-                <iframe id="iframe_pingpong_game" src="PingPong_game.html">
-                    <p>Ihr Browser unterstützt keinen iframe!</p>
-                </iframe>
+                <canvas id="gameCanvas" width="450" height="450" style="cursor: pointer">Your browser does not support the HTML canvas tag.</canvas>
+                
+                <div id="post_game">
+                    <h3 class="post_game_winner" id="gewonnen">
+                        Du hast gewonnen, Gratuliere!
+                    </h3>
+                    <h3 class="post_game_winner" id="verloren">
+                        Du hast verloren! Versuch's doch nocheinmal!
+                    </h3>
+                </div>
+                
                 <div class="option-div">
-                    <ul class="option-list">
-                        <li class="option-elements">
-                            <p id="gametime">Spielzeit: 0s</p>
-                        </li>
-                        <li class="option-elements">
-                            <button class="game_button" id="pause" onclick="pause()">Pause</button>
-                        </li>
-                        <li class="option-elements">
-                            <button class="game_button" id="reset" onclick="newGame()">Neustart</button>
-                        </li>
-                        <li class="option-elements">
-                            <a href="../main.html">
-                                <button class="game_button" id="menue">Hauptmenü</button>
-                            </a>
-                        </li>
-                    </ul>
+                    <button class="game_button" id="reset" onClick="window.location.reload();">Neustart</button>
+                    <a href="../main.html">
+                        <button class="game_button" id="menue">Hauptmenü</button>
+                    </a>
                 </div>
             </div>
         </section>
     </body>
-    <script src="../js/pingpong.js"></script>
+    <script src="../js/snake.js"></script>
 </html>

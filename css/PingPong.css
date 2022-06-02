@@ -1,3 +1,45 @@
+/* body{
+    overflow: hidden;
+    align-items: center;
+} */
 #content_container{
-    margin: 0;
+    text-align: center; 
+}
+iframe{
+    overflow: hidden;
+    height: 485px;
+    width: 640px;
+    border: 0cm;
+}
+section{
+    min-height: 100%;
+    background-color: white;
+}
+h1{
+    text-align: center;
+    color: rgb(16, 139, 183);
+    -webkit-text-stroke: 0.5px black;
+}
+.option-div{
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+}
+.options-list{
+    width: 30%;
+    margin-left: 50%;
+}
+.option-elements{
+    float: left;
+    width: 120px;
+    margin: auto;
+}
+.option-elements p{
+    font-family: 'Bangers', cursive;
+    text-transform: lowercase;
+}
+.game_button{
+    margin-left: 10px;
+    margin-right: 10px;
 }

@@ -1,0 +1,33 @@
+.sprechblase{
+    padding: 1rem;
+    margin-left: 34px;
+    margin-right: 10%;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 15px;
+    position: relative;
+    background: rgb(16, 139, 183);
+    border: 2px solid #000000;
+}    
+.sprechblase:after, .sprechblase:before{
+    right: 100%;
+    top: 50%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+}    
+.sprechblase:after{
+    border-color: rgba(15, 213, 9, 0);
+    border-right-color: rgb(16, 139, 183);
+    border-width: 20px;
+    margin-top: -20px;
+}    
+.sprechblase:before{
+    border-color: rgba(0, 0, 0, 0);
+    border-right-color: #000000;
+    border-width: 23px;
+    margin-top: -23px;
+}

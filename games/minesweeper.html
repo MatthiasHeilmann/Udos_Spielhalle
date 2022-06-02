@@ -1,15 +1,16 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>Pong</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Minesweeper</title>
         <link rel="icon" type="image/png" href="../sources/Udo_Gesicht.png">
         <!-- CSS -->
         <link href="../css/style.css" type="text/css" rel="stylesheet">
-        <link href="../css/all.min.css" type="text/css" rel="stylesheet">
         <link href="../css/nav.css" type="text/css" rel="stylesheet">
         <link href="../css/animations.css" type="text/css" rel="stylesheet">
-        <link href="../css/PingPong.css" type="text/css" rel="stylesheet">
+        <link rel="stylesheet" href="../css/minesweeper.css">
         <!-- FONTS -->
         <link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap" rel="stylesheet">
@@ -45,33 +46,20 @@
                 </ul>   
             </div>
         </header>
-
         <section id="main_section">
-            <h1>Pong</h1>
             <div class="content" id="content_container">
-                <iframe id="iframe_pingpong_game" src="PingPong_game.html">
-                    <p>Ihr Browser unterstützt keinen iframe!</p>
-                </iframe>
-                <div class="option-div">
-                    <ul class="option-list">
-                        <li class="option-elements">
-                            <p id="gametime">Spielzeit: 0s</p>
-                        </li>
-                        <li class="option-elements">
-                            <button class="game_button" id="pause" onclick="pause()">Pause</button>
-                        </li>
-                        <li class="option-elements">
-                            <button class="game_button" id="reset" onclick="newGame()">Neustart</button>
-                        </li>
-                        <li class="option-elements">
-                            <a href="../main.html">
-                                <button class="game_button" id="menue">Hauptmenü</button>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
+                <h1>Minesweeper</h1>
+                <div class="container">
+                    <div class="grid" id="game"></div>
+                    <div class="bottom">
+                        <span id="text">
+                            Minen übrig: <span class="minesLeft"></span>
+                        </span> 
+                        <button id="btn" onClick="window.location.reload();">Reset</button>
+                    </div>
+                </div>  
             </div>
         </section>
     </body>
-    <script src="../js/pingpong.js"></script>
 </html>
+<script src="../js/minesweeper.js"></script>

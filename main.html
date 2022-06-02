@@ -4,68 +4,246 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Udos Spielhalle</title>
+        <link rel="icon" type="image/png" href="sources/Udo_Gesicht.png">
+        <!-- CSS -->
         <link href="css/style.css" type="text/css" rel="stylesheet">
         <link href="css/all.min.css" type="text/css" rel="stylesheet">
+        <link href="css/nav.css" type="text/css" rel="stylesheet">
+        <link href="css/sprechblase.css" type="text/css" rel="stylesheet">
+        <!-- FONTS -->
+        <link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap" rel="stylesheet">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" rel="stylesheet">
     </head>
     <body>
+    <!-- Header ---------------------------->
         <header>
-            <div class="content">
-                <div id="logo-div">
-                    <a href="/">
-                        <img src="sources/Logo.png" alt="logo" id="logo">
-                    </a>
-                </div>
+            <div class="content" ></div>
+                <ul id="header-list">
+                    <li>
+                        <div id="logo-div">
+                            <a href="#home">
+                                <img src="sources/Udo_Gesicht.png" alt="logo" id="logo">
+                                <h2 id="title">Udos Spielhalle</h2>
+                            </a>
+                        </div>
+                    </li>
+                    <li id="navbar">
+                        <nav>
+                            <div class="dropdown">
+                                <span class="label"><i class="fa-solid fa-gamepad"></i>Games</span>
+                                <ul class="items">
+                                <li><a href="#home_Pong"><i class="fa-solid fa-circle"></i> Pong </a></li>
+                                <li><a href="#home_Schiffeversenken"><i class="fa-solid fa-ship"></i> Schiffeversenken </a></li>
+                                <li><a href="#home_TicTacToe"><i class="fa-solid fa-x"></i> Tic Tac Toe </a></li>
+                                <li><a href="#home_Minesweeper"><i class="fa-solid fa-land-mine-on"></i> Minesweeper </a></li>
+                                <li><a href="#home_Snake"><i class="fa-brands fa-python"></i> Snake </a></li>
+                                <li><a href="#home_Dame"><i class="fa-solid fa-chess-queen"></i> Dame </a></li>
+                                </ul>
+                            </div>
+                        </nav>
+                    </li>
+                </ul>   
             </div>
         </header>
 
-        <section id="main_section">
-            <div class="content" id="content_container">
-                <ul>
-                    <li>
-                        <div class="vorschau_games" id="vorschau_PingPong">
-                            <h3>PingPong</h3>
-                            <a href="games/PingPong.html">
-                                <img src="sources/placeholder.jpg" class="vorschau_bild">
-                            </a>
+    <!-- Home ------------------------------>
+        <section id="home">
+            <h1>Willkommen in Udos Spielhalle!</h1>
+            <ul>
+                <li>
+                    <img class="static" src="sources/gifs/udo_hype_static.png">
+                    <img class="active" src="sources/gifs/udo_hype.gif" alt="Udo_gif">
+                </li>
+                <li>
+                    <div class="sprechblase">
+                        <p id="udo-blase">
+                            Hi, ich bin Udo!
+                            <br>ich freue mich, dass du meine Spielhalle gefunden hast! 
+                            <br> Sieh dich doch etwas um und fordere mich oder deine Freunde heraus!
+                            <br> Viel Spaß!
+                        </p>
+                    </div>
+                </li>
+            </ul>
+        </section>
+
+    <!-- Pong ------------------------------>
+        <section id="home_Pong">
+            <ul>
+                <li>
+                    <a href="/games/PingPong.html">
+                        <div id="vorschau_div" >
+                            <img class="vorschau" src="sources/gifs/Vorschau_Pong.gif" href="games/PingPong.html">
                         </div>
-                    </li>
-                    <li>
-                        <div class="vorschau_games" id="vorschau_Schiffeversenken">
-                            <h3>Schiffeversenken</h3>
-                            <a href="./games/schiffeversenken.html">
-                                <img src="sources/placeholder.jpg" class="vorschau_bild">
-                            </a>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="vorschau_games" id="vorschau_TicTacToe">
-                            <h3>TicTacToe</h3>
-                            <a href="games/TicTacToe.html">
-                                <img src="sources/placeholder.jpg" class="vorschau_bild">
-                            </a>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="vorschau_games" id="vorschau_Minesweeper">
-                            <h3>Minesweeper</h3>
-                            <img src="sources/placeholder.jpg" class="vorschau_bild">
-                        </div>
-                    </li>
-                    <li>
-                        <div class="vorschau_games" id="vorschau_Snake">
-                            <h3>Snake</h3>
-                            <img src="sources/placeholder.jpg" class="vorschau_bild">
-                        </div>
-                    </li>
-                    <li>
-                        <div class="vorschau_games" id="vorschau_Dame">
-                            <h3>Dame</h3>
-                            <img src="sources/placeholder.jpg" class="vorschau_bild">
-                        </div>
-                    </li>
-                </ul>
+                    </a>
+                    
+                </li>
+                <li>
+                    <div class="vorschau_title">
+                        <h2>Pong</h2>
+                        <P>Spiele jetzt das legendäre Spiel Pong!</P>
+                        <a href="/games/PingPong.html">
+                            <button class="button_spielen">Spielen</button>
+                        </a>
+                    </div>
+                </li>
+            </ul>
+            <div class="vorschau_info_text">
+                <p>
+                    Das Spielprinzip von Pong ist simpel und ähnelt dem des Tischtennis: Ein Punkt („Ball“) bewegt sich auf dem Bildschirm hin und her. Jeder der beiden Spieler steuert einen senkrechten Strich („Schläger“), den er mit einem Drehknopf (Paddle) nach oben und unten verschieben kann. Lässt man den „Ball“ am „Schläger“ vorbei, erhält der Gegner einen Punkt. Das programmtechnisch aufwändigste an Pong war die Anzeige des aktuellen Punktestandes. Da das Originalspiel nie von der USK geprüft wurde, ist in Deutschland die originale Version formal freigegeben ab 18 Jahren. Dies gilt jedoch nicht für die Version von 1999, die „ohne Altersbeschränkung“ freigegeben wurde.
+                </p>
             </div>
         </section>
 
+    <!-- SV --------------------------------->
+        <section id="home_Schiffeversenken">
+            <ul>
+                <li>
+                    <a href="/games/Schiffeversenken.html">
+                        <div>
+                            <img class="vorschau" id="schiffeversenken-active" src="sources/placeholder.jpg">
+                        </div>
+                    </a>
+                    
+                </li>
+                <li>
+                    <div class="vorschau_title">
+                        <h2>Schiffe&shy;versenken</h2>
+                        <P>Spiele jetzt das legendäre Spiel Schiffeversenken!</P>
+                        <a href="/games/Snake.html">
+                            <button class="button_spielen">Spielen</button>
+                        </a>
+                    </div>
+                </li>
+            </ul>
+            <div class="vorschau_info_text">
+                <p>
+                    Schiffe versenken, auch Schiffchen versenken, Flottenmanöver, Kreuzerkrieg oder Seeschlacht genannt, ist ein Spiel, das klassischerweise mit Zettel und Stift gespielt wird. Es besitzt strategische Elemente, auch wenn man die einfache Version nicht unbedingt als strategisch relevant bezeichnen kann.
+                </p>
+            </div>
+        </section>
+
+    <!-- TTT ------------------------------->
+        <section id="home_TicTacToe">
+            <ul>
+                <li>
+                    <a href="/games/TicTacToe.html">
+                        <div>
+                            <img class="vorschau" id="tictactoe-active" src="sources/gifs/Vorschau_TicTacToe.gif">
+                        </div>
+                    </a>
+                    
+                </li>
+                <li>
+                    <div class="vorschau_title">
+                        <h2>Tic Tac Toe</h2>
+                        <P>Spiele jetzt das legendäre Spiel Tic Tac Toe!</P>
+                        <a href="/games/TicTacToe.html">
+                            <button class="button_spielen">Spielen</button>
+                        </a>
+                    </div>
+                </li>
+            </ul>
+            <div class="vorschau_info_text">
+                <p>Auf einem quadratischen, 3×3 Felder großen Spielfeld setzen die beiden Spieler abwechselnd ihr Zeichen (ein Spieler Kreuze, der andere Kreise) in ein freies Feld. Der Spieler, der als Erster drei Zeichen in eine Zeile, Spalte oder Diagonale setzen kann, gewinnt. Wenn allerdings beide Spieler optimal spielen, kann keiner gewinnen, und es kommt zu einem Unentschieden. Das heißt, alle neun Felder sind gefüllt, ohne dass ein Spieler die erforderlichen Zeichen in einer Reihe, Spalte oder Diagonalen setzen konnte.</p>
+            </div>
+        </section>
+
+    <!-- MS -------------------------------->
+        <section id="home_Minesweeper">
+            <ul>
+                <li>
+                    <a href="/games/minesweeper.html">
+                        <div>
+                            <img class="vorschau" id="minesweeper-active" src="sources/gifs/Vorschau_Minesweeper.gif">
+                        </div>
+                    </a>
+                    
+                </li>
+                <li>
+                    <div class="vorschau_title">
+                        <h2>Minesweeper</h2>
+                        <P>Spiele jetzt das legendäre Spiel Minesweeper!</P>
+                        <a href="/games/minesweeper.html">
+                            <button class="button_spielen">Spielen</button>
+                        </a>
+                    </div>
+                </li>
+            </ul>
+            <div class="vorschau_info_text">
+                <p>
+                    Minesweeper ist ein simples, dem Betriebssystem Microsoft Windows bis einschließlich der Version Windows 7 beigelegtes Computerspiel, bei dem Spieler durch eine Kombination aus logischem Denken und (bisweilen) zufälligem Raten herausfinden sollen, unter welchen Feldern Minen versteckt sind. Das Ziel ist, alle Felder aufzudecken, hinter welchen keine Minen verborgen sind. Als zusätzliche Herausforderung läuft eine Stoppuhr, sodass das Spiel zumeist auf Zeit gespielt wird.
+                </p>
+            </div>
+        </section>
+
+    <!-- Snake ----------------------------->
+        <section id="home_Snake">
+            <ul>
+                <li>
+                    <a href="/games/Snake.html">
+                        <div>
+                            <img class="vorschau" id="snake-active" src="sources/gifs/Vorschau_Snake.gif">
+                        </div>
+                    </a>
+                    
+                </li>
+                <li>
+                    <div class="vorschau_title">
+                        <h2>Snake</h2>
+                        <P>Spiele jetzt das legendäre Spiel Snake!</P>
+                        <a href="/games/Snake.html">
+                            <button class="button_spielen">Spielen</button>
+                        </a>
+                    </div>
+                </li>
+            </ul>
+            <div class="vorschau_info_text">
+                <p>
+                    Snake ist ein Computerspielklassiker, bei dem eine sich gerade oder rechtwinklig bewegende Schlange durch ein Spielfeld gesteuert wird. Ziel des Spieles ist, die als Futter angebotenen zufällig erscheinenden „Happen“ aufzunehmen und Hindernissen, einschließlich des eigenen Schlangenkörpers, auszuweichen. Während die Schlange mit jedem Happen wächst, wird das Manövrieren bei zunehmend vollerem Spielfeld – und bei evtl. schnellerem Grundtakt, immer schwieriger.
+                </p>
+            </div>
+        </section>
+
+    <!-- Dame ------------------------------>
+        <section id="home_Dame">
+            <ul>
+                <li>
+                    <a href="/games/Dame.html">
+                        <div>
+                            <img class="vorschau" id="dame-active" src="sources/placeholder.jpg">
+                        </div>
+                    </a>
+                    
+                </li>
+                <li>
+                    <div class="vorschau_title">
+                        <h2>Dame</h2>
+                        <P>Spiele jetzt das legendäre Spiel Dame!</P>
+                        <a href="/games/Dame.html">
+                            <button class="button_spielen">Spielen</button>
+                        </a>
+                    </div>
+                </li>
+            </ul>
+            <div class="vorschau_info_text">
+                <p>
+                    Dame ist ein strategisches Brettspiel für zwei Spieler und wird auf einem Schachbrett mit 8×8 oder international 10×10 Feldern gespielt. Dabei werden nur die schwarzen Felder des Spielbretts genutzt, auf denen die typischen scheibenförmigen Spielsteine gezogen werden. Ziel des Spiels ist es, die gegnerischen Steine vollständig durch Überspringen zu schlagen oder bewegungsunfähig zu machen und so das Spiel zu gewinnen.Dame ist ein strategisches Brettspiel für zwei Spieler und wird auf einem Schachbrett mit 8×8 oder international 10×10 Feldern gespielt. Dabei werden nur die schwarzen Felder des Spielbretts genutzt, auf denen die typischen scheibenförmigen Spielsteine gezogen werden. Ziel des Spiels ist es, die gegnerischen Steine vollständig durch Überspringen zu schlagen oder bewegungsunfähig zu machen und so das Spiel zu gewinnen.
+                </p>
+            </div>
+        </section>
+        <a href="#home">
+            <div id="Seitenanfang">
+                <p>
+                    Zurück zum Seitenanfang
+                </p>
+            </div>
+        </a>
+        <footer>
+            <p>
+                &copy; M. Heilmann, L. Müller, S. Schwarz, L. Stadtler
+            </p>
+        </footer>
     </body>
 </html>

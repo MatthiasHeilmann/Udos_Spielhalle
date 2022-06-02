@@ -1,0 +1,63 @@
+.container{
+    width: 525px;
+    margin: 0 auto;
+}
+section{
+    background-color: white;
+}
+h1{
+    text-align: center;
+    color: rgb(16, 139, 183);
+    -webkit-text-stroke: 0.5px black;
+}
+/* h1{
+    margin-left: 140px;
+    margin-bottom: 15px;
+    font-family: "Bangers", cursive;
+    text-transform: uppercase;
+    font-size: 50px;
+    color: rgb(16, 139, 183);
+    -webkit-text-stroke: 0.5px black;
+} */
+.grid {
+    height: 520px;
+    width: 520px;
+    display: flex;
+    flex-wrap: wrap;
+    background-color: rgb(16, 139, 183);
+    border: black solid;
+}
+.checked {
+    background-color: rgb(200,99,18);
+}
+.grid div {
+    height: 50px;
+    width: 50px;
+    border: solid black 1px;
+    text-align: center;
+    line-height: 50px;
+    font-family: "Bangers";
+}
+.bottom {
+    margin-top: 15px;
+    font-family: "Bangers", cursive;
+    text-transform: uppercase;
+    font-size: 30px;
+
+}
+button {
+    background-color: rgb(16, 139, 183);
+    border-radius: 5px;
+    border: 2px solid black;
+    width: 120px;
+    height: 35px;
+    font-family: "Bangers", cursive;
+    text-transform: uppercase;
+    font-size: 25px;
+    transition-duration: 0.2s;
+    float: right;
+}
+button:hover {
+    cursor: pointer;
+    color: white;
+}
