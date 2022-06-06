@@ -26,9 +26,20 @@ h1{
     text-align: center;
     align-items: center;
 }
-.options-list{
-    width: 30%;
-    margin-left: 50%;
+.option-list{
+    width: 680px;
+}
+#pause{
+    margin-right:50px;
+    margin-left: 50px;
+}
+#reset{
+    margin-left: 50px;
+    margin-left: 90px;
+}
+#menue{
+    margin-left: 160px;
+    /* 160 */
 }
 .option-elements{
     float: left;
@@ -42,4 +53,11 @@ h1{
 .game_button{
     margin-left: 10px;
     margin-right: 10px;
+}
+#gametime{
+    margin-top: 0;
+    margin-left: 10px;
+    font-family: "Bangers", cursive;
+    text-transform: uppercase;
+    font-size: 30px;
 }
