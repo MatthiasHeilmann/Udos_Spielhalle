@@ -5,7 +5,7 @@
 //initialize the gameboard, 1==dark square, 0==light square, [0][0] is a8, [0][1] is b8 and so on
 gameboard=[];
 
-gameboard.push([0,4,0,4,0,4,0,4]);
+/* gameboard.push([0,4,0,4,0,4,0,4]);
 gameboard.push([4,0,4,0,4,0,4,0]);
 gameboard.push([0,4,0,4,0,4,0,4]);
 gameboard.push([1,0,1,0,1,0,1,0]);
@@ -13,16 +13,16 @@ gameboard.push([0,1,0,1,0,1,0,1]);
 gameboard.push([2,0,2,0,2,0,2,0]);
 gameboard.push([0,2,0,2,0,2,0,2]);
 gameboard.push([2,0,2,0,2,0,2,0]);
+ */
 
-
-// gameboard.push([0,1,0,1,0,1,0,1]);
-// gameboard.push([1,0,1,0,1,0,1,0]);
-// gameboard.push([0,1,0,1,0,1,0,1]);
-// gameboard.push([3,0,1,0,1,0,1,0]);
-// gameboard.push([0,4,0,4,0,1,0,1]);
-// gameboard.push([1,0,1,0,1,0,1,0]);
-// gameboard.push([0,1,0,1,0,3,0,1]);
-// gameboard.push([1,0,1,0,1,0,1,0]);
+gameboard.push([0,1,0,1,0,1,0,1]);
+gameboard.push([1,0,1,0,1,0,1,0]);
+gameboard.push([0,4,0,1,0,1,0,1]);
+gameboard.push([3,0,1,0,1,0,1,0]);
+gameboard.push([0,4,0,4,0,1,0,1]);
+gameboard.push([1,0,1,0,1,0,1,0]);
+gameboard.push([0,1,0,1,0,3,0,1]);
+gameboard.push([1,0,1,0,1,0,1,0]);
 
 
 coordinates=[];
@@ -582,16 +582,21 @@ function secondclick(event){
         c.removeEventListener("click", secondclick);
         if(capturemade==true){
             checknewcapture=check_legal_moves(gameboard,turn);
+            checkbool=false
             checknewcapture.forEach(extramove =>{
-                if(extramove[4]=="c" && extramove[1]==oldcapture[6] && extramove[3]==oldcapture[8]){
-                    console.log(extramove[1]+oldcapture[6]+extramove[3]+oldcapture[8])
-                    if(turn=="white"){
-                        turn="black";
-                    }
-                    else{
-                        turn="white";
+                if(checkbool==false){
+                    if(extramove[4]=="c" && extramove[1]==oldcapture[6] && extramove[3]==oldcapture[8]){
+                        console.log(extramove[1]+oldcapture[6]+extramove[3]+oldcapture[8])
+                        if(turn=="white"){
+                            turn="black";
+                        }
+                        else{
+                            turn="white";
+                        }
+                        checkbool=true;
                     }
                 }
+                
             });
         }
         if(turn=="white"){
