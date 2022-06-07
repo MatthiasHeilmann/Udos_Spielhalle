@@ -14,7 +14,6 @@ html, body {
     scroll-behavior: smooth;
 }
 body{
-    overflow-y: hidden;
     background: url(../sources/background_main.jpg);
     background-position: center center;
     background-size: cover;
