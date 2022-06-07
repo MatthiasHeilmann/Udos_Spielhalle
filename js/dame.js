@@ -43,9 +43,6 @@ window.onload = ()=> {
 }
 
 
-
-
-
 //functions gui
 
 function update_gameboard_gui(logicgrid){
@@ -55,7 +52,6 @@ function update_gameboard_gui(logicgrid){
         ind1=-1;
         i.forEach((y, xcoord) => {
             ind1+=1;
-            
 
             if (y==0){
                 cc.fillStyle='rgb(250, 216, 162)';
@@ -72,6 +68,11 @@ function update_gameboard_gui(logicgrid){
                     cc.fill();
 
                     cc.strokeStyle='rgb(0,0,0)';
+                    legalmoves.forEach(z=>{
+                        if(z[3]==ind1 && z[1]==ind2){
+                            cc.strokeStyle="rgb(255,0,255)"
+                        }
+                    })
                     cc.beginPath();
                     cc.ellipse((ind1*70+35),(ind2*70)+35,30,20,0,0,2*Math.PI);
                     cc.stroke();
@@ -82,6 +83,11 @@ function update_gameboard_gui(logicgrid){
                     cc.ellipse((ind1*70+35),(ind2*70)+45,30,20,0,0,2*Math.PI);
                     cc.fill();
                     cc.strokeStyle='rgb(0,0,0)';
+                    legalmoves.forEach(z=>{
+                        if(z[3]==ind1 && z[1]==ind2){
+                            cc.strokeStyle="rgb(255,0,255)"
+                        }
+                    })
                     cc.beginPath();
                     cc.ellipse((ind1*70+35),(ind2*70)+45,30,20,0,0,2*Math.PI);
                     cc.stroke();
@@ -90,7 +96,7 @@ function update_gameboard_gui(logicgrid){
                     cc.beginPath();
                     cc.ellipse((ind1*70+35),(ind2*70)+25,30,20,0,0,2*Math.PI);
                     cc.fill();
-                    cc.strokeStyle='rgb(0,0,0)';
+                    
                     cc.beginPath();
                     cc.ellipse((ind1*70+35),(ind2*70)+25,30,20,0,0,2*Math.PI);
                     cc.stroke();
@@ -102,6 +108,11 @@ function update_gameboard_gui(logicgrid){
                     cc.fill();
 
                     cc.strokeStyle='rgb(255,255,255)';
+                    legalmoves.forEach(z=>{
+                        if(z[3]==ind1 && z[1]==ind2){
+                            cc.strokeStyle="rgb(255,0,255)"
+                        }
+                    })
                     cc.beginPath();
                     cc.ellipse((ind1*70+35),(ind2*70)+35,30,20,0,0,2*Math.PI);
                     cc.stroke();
@@ -113,6 +124,11 @@ function update_gameboard_gui(logicgrid){
                     cc.ellipse((ind1*70+35),(ind2*70)+45,30,20,0,0,2*Math.PI);
                     cc.fill();
                     cc.strokeStyle='rgb(255,255,255)';
+                    legalmoves.forEach(z=>{
+                        if(z[3]==ind1 && z[1]==ind2){
+                            cc.strokeStyle="rgb(255,0,255)"
+                        }
+                    })
                     cc.beginPath();
                     cc.ellipse((ind1*70+35),(ind2*70)+45,30,20,0,0,2*Math.PI);
                     cc.stroke();
@@ -121,7 +137,7 @@ function update_gameboard_gui(logicgrid){
                     cc.beginPath();
                     cc.ellipse((ind1*70+35),(ind2*70)+25,30,20,0,0,2*Math.PI);
                     cc.fill();
-                    cc.strokeStyle='rgb(255,255,255)';
+                    
                     cc.beginPath();
                     cc.ellipse((ind1*70+35),(ind2*70)+25,30,20,0,0,2*Math.PI);
                     cc.stroke();
@@ -504,7 +520,9 @@ function parse_moves(listmoves,coords){
         c.addEventListener("click", secondclick); 
 
     }
-
+    else{
+        update_gameboard_gui(gameboard);
+    }
     
     //
 
@@ -591,10 +609,23 @@ function secondclick(event){
 
 }
 
+function show_legal_moves(legalmoves){
+    c=document.getElementById("gameCanvas");
+    cc = c.getContext('2d');
+    cc.fillStyle="rgb(255,0,255)";
+    legalmoves.forEach(y=>{
+        cc.fillRect(y[3]*70,y[1]*70, 69 ,69);
+    })
+
+}
+
 function game_loop(logicgrid,context){
     if(check_gamegoing(logicgrid)==true){
-        clickmade=false;
         legalmoves=check_legal_moves(logicgrid, turn);
+        update_gameboard_gui(gameboard);
+        clickmade=false;
+        
+        //show_legal_moves(legalmoves);
         //console.log(legalmoves);
         //onclick function for each square displaying legal moves, second click makes the move
         context.addEventListener("click", firstclick)
