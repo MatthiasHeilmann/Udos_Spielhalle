@@ -246,6 +246,9 @@ header{
 #home_Dame{
     background-color: white;
 }
+#home_Dame .vorschau_info_text p{
+    padding-top: 10%;
+}
 
 footer{
     text-align: center;
