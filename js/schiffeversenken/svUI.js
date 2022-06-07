@@ -29,6 +29,8 @@ class Grid {
         this.drawer = new CanvasDrawer(canvas);
 
         $(canvas).on("mouseenter", () => {
+            // Update canvas bounding in case of change (e.g. console open)
+            setPlayerVisible(isPlayerVisible());
             $(canvas).on("mousemove", (e) => {
                 let currentPosition = this.getVectorFromCoordinate(e.pageX, e.pageY);
 
@@ -453,10 +455,12 @@ window.uiEnableDrawingMode = function (mode){
     if(mode) {
         $('#number_container').css("visibility", "visible");
         connectButton.setAttribute("disabled", "");
+        // TODO clearField button
     }
     else {
         $('#number_container').css("visibility", "hidden");
         connectButton.removeAttribute("disabled");
+        // TODO clearField button
     }
 }
 
@@ -623,8 +627,11 @@ window.uiConnectionLost = function (){
 }
 
 function toggleCanvas(){
-    let playerVisible = ($(playerCanvas).css("display") !== "none");
-    setPlayerVisible(!playerVisible);
+    setPlayerVisible(!isPlayerVisible());
+}
+
+function isPlayerVisible(){
+    return ($(playerCanvas).css("display") !== "none");
 }
 
 function setPlayerVisible(mode){
