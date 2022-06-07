@@ -172,32 +172,25 @@ export class Ship {
      */
     getTileByVector(v) {
         let tile;
-        console.log("Tile for ");
-        console.log(this.#startingPosition);
-        console.log(v);
 
         switch (this.#direction) {
         case Direction.North:
             if (this.#startingPosition.x - v.x === 0) {
-                console.log("Y Index " + (this.#startingPosition.y - v.y));
                 tile = this.#tiles[this.#startingPosition.y - v.y];
             }
             break;
         case Direction.South:
             if (this.#startingPosition.x - v.x === 0) {
-                console.log("Y Index " + (this.#startingPosition.y - v.y));
                 tile = this.#tiles[v.y - this.#startingPosition.y];
             }
             break;
         case Direction.East:
             if (this.#startingPosition.y - v.y === 0) {
-                console.log("X Index " + (this.#startingPosition.x - v.x));
                 tile = this.#tiles[v.x - this.#startingPosition.x];
             }
             break;
         case Direction.West:
             if (this.#startingPosition.y - v.y === 0) {
-                console.log("X Index " + (this.#startingPosition.x - v.x));
                 tile = this.#tiles[this.#startingPosition.x - v.x];
             }
             break;
@@ -289,8 +282,6 @@ export const Placements = {
         for(let ship of placedShips){
             let hitTile = ship.getTileByVector(vector);
             if(hitTile !== null){
-                console.log("Found Tile")
-                console.log(hitTile);
                 let allHit = true;
                 for(let tile of ship.tiles){
                     if(tile === hitTile) continue;

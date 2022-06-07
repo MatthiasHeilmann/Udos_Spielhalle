@@ -18,6 +18,7 @@ function setup(){
     uiEnableDrawingMode(true);
     lUpdateShipNumbers(ShipId.Default);
     softSetup();
+    testPlacement();
 }
 
 function softSetup(){
@@ -231,6 +232,7 @@ function changeGameState(gameState){
             uiUpdateGameState("connecting to " + (playerConfig.asHost? "client" : "host"));
             break;
         case GameState.Attacking:
+            sListenOn("");
             uiUpdateGameState("attacking");
             uiEnableShooting(true);
             break;

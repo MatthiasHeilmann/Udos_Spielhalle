@@ -6,6 +6,10 @@
     --red: rgb(158,6,36);
 }
 
+body{
+    overflow-y: hidden;
+}
+
 button{
     height: 40px;
 }
@@ -159,7 +163,7 @@ div#inputs{
 }
 
 label{
-    font-size: 12px;
+    font-size: 15px;
     margin: auto 5% auto 5%;
     text-align: center;
     user-select: none;

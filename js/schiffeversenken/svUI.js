@@ -117,7 +117,7 @@ class Grid {
 
 class PlayerGrid extends Grid {
     drawColour = "blue";
-    deniedColour = "#c77dff";
+    deniedColour = "lightgrey";
 
     /**
      * @type {[Vector]}
@@ -247,7 +247,7 @@ class PlayerGrid extends Grid {
 
         let extendedShip = this.generateExtendedShip(tiles, horizontal, offset);
         let surroundingTiles = this.getSurroundingTiles(extendedShip, horizontal);
-        this.surroundingTiles.push(surroundingTiles);
+        this.surroundingTiles.push(...surroundingTiles);
     }
 
     /**
@@ -392,6 +392,10 @@ const enemyCanvas = document.querySelector("#game canvas.enemy");
 const playerDrawer = new PlayerGrid(playerCanvas);
 const enemyDrawer = new EnemyGrid(enemyCanvas);
 
+$(clearFieldButton).on('click', () => {
+    clearPlacedShips();
+});
+
 $(connectButton).on('click', (e) => {
     const nameField = $('#name input');
     const asHostField = $('#asHost input');
@@ -454,12 +458,10 @@ window.uiInitialize = function () {
 window.uiEnableDrawingMode = function (mode){
     playerDrawer.enableDrawingMode(mode);
     if(mode) {
-        console.log("Set drawing mode true")
         $('#number_container').css("visibility", "visible");
         connectButton.setAttribute("disabled", "");
     }
     else {
-        console.log("Set drawing mode false")
         $('#number_container').css("visibility", "hidden");
         connectButton.removeAttribute("disabled");
     }
@@ -642,12 +644,15 @@ function setPlayerVisible(mode){
     (mode? playerDrawer: enemyDrawer).updateCanvas();
 }
 
-function clearCanvas(){
+function clearPlacedShips(){
+    Placements.clear();
     playerDrawer.clear();
-    enemyDrawer.clear();
+    initializeNumberUpdate(null);
+    uiEnableDrawingMode(true);
 }
 
 window.uiClear = function () {
-    clearCanvas();
+    enemyDrawer.clear();
+    playerDrawer.clear();
     uiInitialize();
 }

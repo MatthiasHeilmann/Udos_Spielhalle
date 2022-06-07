@@ -29,6 +29,7 @@ function sConnect(config){
 
     socket.on('svFire', (coordinates) => {
         if(listenCall !== Call.Fire) return;
+        console.log("svFire on " + listenCall);
         lGetFire(coordinates)
         console.log("Got Fire")
         console.log(coordinates)
@@ -69,6 +70,7 @@ function sConnect(config){
 }
 
 function sListenOn(call){
+    console.log("Set call " + call);
     listenCall = call;
 }
 
