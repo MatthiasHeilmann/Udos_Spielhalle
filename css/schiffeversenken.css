@@ -6,6 +6,10 @@
     --red: rgb(158,6,36);
 }
 
+button{
+    height: 40px;
+}
+
 #main_section{
     background-color: white;
     margin: auto;
@@ -63,6 +67,7 @@
 }
 
 #number_container{
+    height: 25px;
     display: flex;
     flex-direction: row;
 }
@@ -87,18 +92,32 @@
     position: absolute;
     height: 30px;
     width: 30px;
-    top: 0;
+    top: 18px;
     right: 1%;
     padding: 0;
+}
 
+#toggle_canvas::before{
+    display: inline-block;
+    height: 26px;
+    width: 26px;
+    content: "";
     background-position: center;
     background-repeat: no-repeat;
     background-image: url("../sources/arrow-left-right.svg");
     background-size: 80%, 80%;
 }
 
-#toggle_canvas:hover{
-    background-color: white;
+#toggle_canvas:hover:before{
+    filter: brightness(0) invert(1);
+}
+
+#clear_player_canvas{
+    position: absolute;
+    font-size: 20px;
+    top: 60px;
+    right: 1%;
+    padding: 0;
 }
 
 fieldset{

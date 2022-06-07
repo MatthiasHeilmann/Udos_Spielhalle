@@ -386,6 +386,7 @@ class EnemyGrid extends Grid {
 
 const connectButton = document.getElementById("connect");
 const togglePlayerButton = document.querySelector("#game button");
+const clearFieldButton = document.querySelector("#clear_player_canvas");
 const playerCanvas = document.querySelector("#game canvas.player");
 const enemyCanvas = document.querySelector("#game canvas.enemy");
 const playerDrawer = new PlayerGrid(playerCanvas);
@@ -453,14 +454,14 @@ window.uiInitialize = function () {
 window.uiEnableDrawingMode = function (mode){
     playerDrawer.enableDrawingMode(mode);
     if(mode) {
+        console.log("Set drawing mode true")
         $('#number_container').css("visibility", "visible");
         connectButton.setAttribute("disabled", "");
-        // TODO clearField button
     }
     else {
+        console.log("Set drawing mode false")
         $('#number_container').css("visibility", "hidden");
         connectButton.removeAttribute("disabled");
-        // TODO clearField button
     }
 }
 
@@ -533,8 +534,8 @@ window.uiUpdateLobbyList = function(asHost, insertList){
         resetLobbyTable(asHost);
         insertHosts(insertList, table);
     }
-    $('#game').css("display", "none");
-    $('#lobby').css("display", "");
+    $('#game').css('display', 'none');
+    $('#lobby').css('display', '');
 }
 
 /**
@@ -616,14 +617,15 @@ window.uiConnectionBuild = function (){
 
     connectButton.removeAttribute("disabled");
     connectButton.textContent = "Disconnect";
+    $(clearFieldButton).css('display', 'none');
     togglePlayerButton.removeAttribute("disabled");
 }
 
 window.uiConnectionLost = function (){
     connectButton.textContent = "Connect";
-
+    $(clearFieldButton).css('display', '');
     setPlayerVisible(true);
-    // TODO enable clear field button
+    uiEnableDrawingMode(true);
 }
 
 function toggleCanvas(){
@@ -640,8 +642,12 @@ function setPlayerVisible(mode){
     (mode? playerDrawer: enemyDrawer).updateCanvas();
 }
 
-window.uiClear = function () {
+function clearCanvas(){
     playerDrawer.clear();
     enemyDrawer.clear();
+}
+
+window.uiClear = function () {
+    clearCanvas();
     uiInitialize();
 }

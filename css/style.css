@@ -14,6 +14,7 @@ html, body {
     scroll-behavior: smooth;
 }
 body{
+    overflow-y: hidden;
     background: url(../sources/background_main.jpg);
     background-position: center center;
     background-size: cover;
@@ -52,7 +53,6 @@ section{
     padding-bottom: 10px;
     width: 60%;
     margin: auto;
-    
 }
 section ul{
     margin: 0;
@@ -111,6 +111,10 @@ button {
 button:active {
     transform: translateY(4px) translateX(4px);
     box-shadow: rgb(5, 108, 147) 0px 0px 0px;
+}
+button[disabled]{
+    background: lightgray;
+    box-shadow: lightgray;
 }
 /* button {
     background-color: rgb(16, 139, 183);

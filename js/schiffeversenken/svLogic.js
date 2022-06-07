@@ -18,13 +18,11 @@ function setup(){
     uiEnableDrawingMode(true);
     lUpdateShipNumbers(ShipId.Default);
     softSetup();
-    testPlacement();
 }
 
 function softSetup(){
     uiConnectionLost();
     uiEnableShooting(false);
-    // TODO uiRepaint()???
 }
 
 function testPlacement(){
