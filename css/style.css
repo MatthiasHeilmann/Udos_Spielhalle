@@ -43,7 +43,8 @@ h1{
     font-size: 80px;
 }
 p{
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Archivo Narrow', sans-serif;
+    font-size: larger;
     padding-left: 5%;
     padding-right: 5%;
 }
@@ -174,7 +175,7 @@ header{
     padding-top: 20px;
     text-align: left;
     color: white;
-    width: 600px;
+    width: 450px;
     margin: 0;
 }
 /* HOME *********************/
@@ -182,7 +183,18 @@ header{
     background-color: white;
     text-align: center;
 }
-#home img{
+#home h1{
+    margin-top: 50px;
+}
+#home ul{
+    margin-top: 50px;
+}
+.static{
+    height: 300px;
+    width: 233px;
+    border-radius: 5px;
+}
+.active{
     height: 300px;
     width: 233px;
     border-radius: 5px;
@@ -190,7 +202,18 @@ header{
 #udo-blase{
     text-align: left;
 }
+#home li{
+    height: 304px;
+}
+#home div{
+    text-align:right;
+}
+#justforfun{
+    /* margin-top: 10px; */
+    margin-right: 5%;
+    height: 100px;
 
+}
 /* Pong *********************/
 #home_Pong{
     background-color: #cccccc;
@@ -226,6 +249,9 @@ header{
 /* Dame *********************/
 #home_Dame{
     background-color: white;
+}
+#home_Dame .vorschau_info_text p{
+    padding-top: 10%;
 }
 
 footer{
