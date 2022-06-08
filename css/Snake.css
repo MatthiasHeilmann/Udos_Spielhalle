@@ -36,3 +36,18 @@ h1{
     visibility: hidden;
     display: none;
 }
+
+canvas { 
+    position: absolute;
+    margin: auto;
+}
+
+#gameCanvas { 
+    z-index: 2;
+    text-align: center;     
+}
+
+#backgroundCanvas { 
+    z-index: 1;
+    text-align: center;  
+}
