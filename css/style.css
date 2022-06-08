@@ -209,8 +209,11 @@ header{
 }
 #justforfun{
     /* margin-top: 10px; */
+    position: fixed;
     margin-right: 5%;
     height: 100px;
+    top: 80%;
+    left: 85%;
 
 }
 /* Pong *********************/
@@ -221,6 +224,9 @@ header{
 /* SV *********************/
 #home_Schiffeversenken{
     background-color: white;
+}
+#home_Schiffeversenken p{
+    padding-top: 5%;
 }
 /* TTT *********************/
 #home_TicTacToe{
