@@ -38,7 +38,7 @@ h2{
 }
 h1{
     margin: 0;
-    padding: 15% 4% 4% 4%;
+    padding: 10% 4% 4% 4%;
     font-size: 80px;
 }
 p{
@@ -183,10 +183,10 @@ header{
     text-align: center;
 }
 #home h1{
-    margin-top: 50px;
+    margin-top: 40px;
 }
 #home ul{
-    margin-top: 50px;
+    /* margin-top: 50px; */
 }
 .static{
     height: 300px;
@@ -209,7 +209,8 @@ header{
 }
 #justforfun{
     /* margin-top: 10px; */
-    position: fixed;
+    /* position: fixed; */
+    transform: rotate(10deg);
     margin-right: 5%;
     height: 100px;
     top: 80%;
