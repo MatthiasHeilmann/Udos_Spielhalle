@@ -38,8 +38,10 @@ h1{
 }
 
 canvas { 
-    position: absolute;
+    /* position: absolute; */
     margin: auto;
+    grid-row: 1;
+    grid-column: 1;
 }
 
 #gameCanvas { 
@@ -50,4 +52,10 @@ canvas {
 #backgroundCanvas { 
     z-index: 1;
     text-align: center;  
+}
+#game{
+    align-items: center;
+    height: 450px;
+    margin: auto;
+    display: grid;
 }
