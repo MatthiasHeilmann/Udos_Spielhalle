@@ -222,6 +222,10 @@ header{
 #home_Schiffeversenken{
     background-color: white;
 }
+
+#home_Schiffeversenken .vorschau_info_text p{
+    padding-top: 100px;
+}
 /* TTT *********************/
 #home_TicTacToe{
     background-color: #cccccc;

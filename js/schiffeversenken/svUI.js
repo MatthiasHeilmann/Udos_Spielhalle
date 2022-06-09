@@ -164,8 +164,8 @@ class PlayerGrid extends Grid {
                 this.isDrawing = true;
             }).on("mouseup", () => {
                 this.isDrawing = false;
-                initializeAddShip(this.drawnTiles)
-                initializeNumberUpdate(null)
+                initializeAddShip(this.drawnTiles);
+                initializeNumberUpdate(null);
                 this.undrawDrawnCoordinates = true;
             })
         });

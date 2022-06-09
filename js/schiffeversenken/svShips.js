@@ -159,7 +159,7 @@ export class Ship {
                     tileVectors.push(new Vector(this.#startingPosition.x, this.#startingPosition.y + i));
                     break;
                 case Direction.West:
-                    tileVectors.push(new Vector(this.#startingPosition - i, this.#startingPosition.y));
+                    tileVectors.push(new Vector(this.#startingPosition.x - i, this.#startingPosition.y));
                     break;
             }
         }
@@ -487,5 +487,6 @@ export const Placements = {
     clear(){
         placedShips = [];
         shipCounts = [0, 0, 0, 0, 0];
+        console.log("All cleared");
     }
 }
