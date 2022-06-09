@@ -18,6 +18,7 @@ function setup(){
     uiEnableDrawingMode(true);
     lUpdateShipNumbers(ShipId.Default);
     softSetup();
+    testPlacement();
 }
 
 function softSetup(){
