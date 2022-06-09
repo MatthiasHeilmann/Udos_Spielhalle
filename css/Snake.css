@@ -36,3 +36,26 @@ h1{
     visibility: hidden;
     display: none;
 }
+
+canvas { 
+    /* position: absolute; */
+    margin: auto;
+    grid-row: 1;
+    grid-column: 1;
+}
+
+#gameCanvas { 
+    z-index: 2;
+    text-align: center;     
+}
+
+#backgroundCanvas { 
+    z-index: 1;
+    text-align: center;  
+}
+#game{
+    align-items: center;
+    height: 450px;
+    margin: auto;
+    display: grid;
+}

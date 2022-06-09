@@ -1,33 +1,32 @@
-.sprechblase{
+.sprechblase {
     padding: 1rem;
-    margin-left: 4%;
-    margin-right: 10%;
-    -webkit-border-radius: 10px;
-    -moz-border-radius: 10px;
-    border-radius: 15px;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    border-radius: 20px;
     position: relative;
     background: rgb(16, 139, 183);
-    border: 2px solid #000000;
-}    
-.sprechblase:after, .sprechblase:before{
-    right: 100%;
-    top: 35%;
+    border: 4px solid rgb(5, 108, 147);
+    margin-right: 10%;
+}
+    
+    .sprechblase:after, .sprechblase:before {
+    top: 100%;
+    left: 65%;
     border: solid transparent;
     content: " ";
     height: 0;
     width: 0;
     position: absolute;
-    pointer-events: none;
-}    
-.sprechblase:after{
-    border-color: rgba(15, 213, 9, 0);
-    border-right-color: rgb(16, 139, 183);
+    pointer-events: none;}
+    
+    .sprechblase:after {
+    border-color: rgba(136, 183, 213, 0);
+    border-top-color: rgb(16, 139, 183);
     border-width: 20px;
-    margin-top: -20px;
-}    
-.sprechblase:before{
-    border-color: rgba(0, 0, 0, 0);
-    border-right-color: #000000;
-    border-width: 23px;
-    margin-top: -23px;
-}
+    margin-left: -20px;}
+    
+    .sprechblase:before {
+    border-color: rgba(194, 225, 245, 0);
+    border-top-color: rgb(5, 108, 147);
+    border-width: 26px;
+    margin-left: -26px;}

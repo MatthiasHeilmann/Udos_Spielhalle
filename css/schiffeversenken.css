@@ -8,6 +8,7 @@
 
 body{
     overflow-y: hidden;
+    font-family: "Bangers", cursive;
 }
 
 button{
@@ -155,6 +156,7 @@ canvas{
 div#inputs{
      display: flex;
      flex-direction: row;
+     margin-left:30%;
  }
 
 #inputs div#connectInputs{
@@ -178,4 +180,13 @@ input{
 
 input:hover, input:focus {
     border: 2px solid var(--blue);
+}
+
+legend p{
+    margin-top: 0;
+    margin-left: 10px;
+    font-family: "Bangers", cursive;
+    text-transform: uppercase;
+    font-size: 30px;
+    margin-bottom: 0;
 }

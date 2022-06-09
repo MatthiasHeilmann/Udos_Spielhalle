@@ -183,10 +183,10 @@ header{
     text-align: center;
 }
 #home h1{
-    margin-top: 50px;
+    /* margin-top: 40px; */
 }
 #home ul{
-    margin-top: 50px;
+    /* margin-top: 50px; */
 }
 .static{
     height: 300px;
@@ -209,8 +209,12 @@ header{
 }
 #justforfun{
     /* margin-top: 10px; */
+    /* position: fixed; */
+    transform: rotate(10deg);
     margin-right: 5%;
     height: 100px;
+    top: 80%;
+    left: 85%;
 
 }
 /* Pong *********************/
@@ -222,9 +226,8 @@ header{
 #home_Schiffeversenken{
     background-color: white;
 }
-
-#home_Schiffeversenken .vorschau_info_text p{
-    padding-top: 100px;
+#home_Schiffeversenken p{
+    padding-top: 5%;
 }
 /* TTT *********************/
 #home_TicTacToe{
