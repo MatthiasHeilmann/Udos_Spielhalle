@@ -1,3 +1,3 @@
 ## Udos Spielhalle
 
-Web-Enginnering project for DHBW Mannheim
+Application project for DHBW Mannheim
